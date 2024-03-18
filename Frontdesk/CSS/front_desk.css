@@ -5,6 +5,7 @@
 
 .modal-body {
     margin-bottom: 3%;
+    text-align: justify;
 }
 
 .modal-footer {
@@ -19,6 +20,14 @@
     padding: 50px 15px 15px 15px;
     background-image: linear-gradient(to bottom, transparent, white);
     z-index: 1041;
+}
+
+.form-check {
+    margin-bottom: 14px;
+}
+
+span {
+    font-weight: 700;
 }
 
 .btn_cancel {
