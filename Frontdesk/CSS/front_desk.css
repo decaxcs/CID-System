@@ -1,0 +1,62 @@
+.modal-header {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.modal-body {
+    margin-bottom: 3%;
+}
+
+.modal-footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-top: none;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 50px 15px 15px 15px;
+    background-image: linear-gradient(to bottom, transparent, white);
+    z-index: 1041;
+}
+
+.btn_cancel {
+    width: 200px;
+    background-color: #fff;
+    color: #22C997;
+    border-color: #22C997;
+}
+
+.btn_cancel:hover {
+    background-color: #22C997;
+    color: #fff;
+    border-color: #22C997;
+}
+
+.btn_save {
+    width: 200px;
+}
+
+#add_CID_label {
+    font-weight: 700;
+    font-size: 3em;
+}
+
+::-webkit-scrollbar {
+    width: 7px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #345AFD;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #345AFD;
+}
