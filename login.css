@@ -75,3 +75,7 @@ body {
 label, .input_underline {
     font-size: 14px;
 }
+
+#toggle_password:hover {
+    cursor: pointer;
+}
