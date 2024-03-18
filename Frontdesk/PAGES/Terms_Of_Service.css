@@ -1,0 +1,37 @@
+/* Custom CSS para sa imahe */
+.image {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+  .img {
+    max-width: 30%;
+    height: 60%;
+    margin-left: -20%;
+  }
+  /* Custom CSS para sa teksto */
+  .techy {
+    font-family: 'Ethnocentric', sans-serif;
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin-top: 20px; /* Dagdag na margin sa itaas ng teksto */
+    margin-left: 7%; /* Dagdag na margin sa kaliwa ng teksto */
+  }
+
+  .Solutions {
+    font-family: 'Poppins', sans-serif;;
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin-top: 40px; /* Dagdag na margin sa itaas ng teksto */
+    margin-left: 9%; /* Dagdag na margin sa kaliwa ng teksto */
+  }
+
+  .modal-title {
+    text-align: center; /* I-center ang teksto sa header ng modal */
+  }
+
+  .modal-footer {
+    justify-content: center; /* I-center ang mga elemento */
+  }
