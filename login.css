@@ -4,7 +4,7 @@ body {
 }
 
 #login_page {
-    background-color: #E7E7E7;
+    background-color: #333;
     display: flex;
     flex-direction: column;
     margin: 0;
@@ -16,7 +16,7 @@ body {
     border-radius: 0.875em;
     width: 80%;
     max-width: 400px;
-    height: 60%;
+    height: 50%;
     margin: auto;
     box-shadow: 0 0 0.625em rgba(0, 0, 0, 0.1);
     align-items: center;
@@ -30,7 +30,7 @@ body {
 }
 
 #username_container {
-    margin-top: 10%;
+    margin-top: 5%;
 }
 
 #password_container {
@@ -62,10 +62,14 @@ body {
 }
 
 .input_underline {
-    width: 100%;
+    width: 90%;
     border: none;
-    border-bottom: 0.0625em solid black;
     outline: none; 
+}   
+
+.input_login {
+    position: relative;
+    border-bottom: 0.0625em solid black;
 }
 
 label, .input_underline {
