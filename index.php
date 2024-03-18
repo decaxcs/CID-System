@@ -10,7 +10,7 @@
 
     <!-- CSS -->
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="login.css">
 
     <title>Login Page</title>
 </head>
@@ -31,8 +31,9 @@
                             USERNAME
                         </label>
                     </div>
-                    <div>
+                    <div class="input_login">
                         <input class="input_underline" id="user_username" placeholder="username" type="text">
+                        <iconify-icon icon="mage:user-fill"></iconify-icon>
                     </div>
                 </div>
 
@@ -42,15 +43,19 @@
                             PASSWORD
                         </label>
                     </div>
-                    <div>
+                    <div class="input_login">
                         <input class="input_underline" id="user_password" placeholder="password" type="password">
+                        <iconify-icon icon="ion:eye-off" id="toggle_password"></iconify-icon>
                     </div>
-                </div>
 
-                <button class="form-control" id="login_button">LOGIN</button>
+                    <button class="form-control" id="login_button">LOGIN</button>
+                </div>
             </div>
         </div>
     </div>
+
+    <!-- JS -->
+    <script src="login.js"></script>
 </body>
 
 </html>
