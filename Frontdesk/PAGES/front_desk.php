@@ -47,9 +47,18 @@
                                     <p class="ongoing_task">On-Going-Task</p>
                                 </div>
                                 <div class="icon_container">
-                                    <iconify-icon icon="fluent:people-team-24-filled" width="62px" height="62px"></iconify-icon>
+                                    <div class="icons">
+                                        <iconify-icon class="large_icon" icon="fluent:people-team-24-filled"
+                                            width="62px" height="62px">
+                                        </iconify-icon>
+                                    </div>
+
                                 </div>
                             </div>
+                        </div>
+                        <div class="card-body more_info" onclick="navigateToLink('#link')">
+                            <p class="me-2">More Info</p>
+                            <iconify-icon class="more_info_icon" icon="icomoon-free:circle-right"></iconify-icon>
                         </div>
                     </div>
                 </div>
@@ -57,6 +66,11 @@
         </div>
     </div>
 
+    <script>
+        function navigateToLink(url) {
+            window.location.href = url;
+        }
+    </script>
     <?php include "add_cid_modal.php"; ?>
 </body>
 
