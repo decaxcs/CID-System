@@ -1,3 +1,21 @@
+.form-check-nested{
+    margin-left: 90px;
+}
+.form-check {
+    margin-bottom: 10px; /* Add spacing between each group of checkboxes */
+}
+
+.form-check-content {
+    display: flex;
+    align-items: center;
+}
+
+.number {
+    margin-right: 10px; /* Add spacing between the number and the checkbox */
+    flex-shrink: 0; /* Prevent the number from shrinking */
+    width: 30px; /* Set the width of the number */
+}
+
 .modal-header {
     border-bottom: none;
     padding-bottom: 0;
