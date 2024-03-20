@@ -422,7 +422,11 @@
                                         <div>20.</div>
                                     </div>
                                     <div class="col">
-                                        <span class="tos_span">When Initiating a warranty claim</span>, please be aware that we have implemented a mandatory inspection procedure. This step ensures that our technical experts can thoroughly assess the issue before proceeding with the claim. This approach enables us to address your concern promptly and accurately. NO OFFICIAL RECEIPT NO WARRANTY </div>
+                                        <span class="tos_span">When Initiating a warranty claim</span>, please be aware
+                                        that we have implemented a mandatory inspection procedure. This step ensures
+                                        that our technical experts can thoroughly assess the issue before proceeding
+                                        with the claim. This approach enables us to address your concern promptly and
+                                        accurately. NO OFFICIAL RECEIPT NO WARRANTY </div>
                                 </div>
                             </label>
                         </div>
@@ -447,33 +451,46 @@
                     </div>
                 </div>
                 <div class="row mt-4 disclaimer-row">
-                    <div class="col">
-                        Disclaimer: By signing this TECHYDAVID IT SOLUTIONS’
-                        TERMS OF SERVICE,
-                        the REPRESENTATIVE confirms discussing terms. As the client, you’ve read, understood, and
-                        agreed all terms.
-                    </div>
-                </div>
-
-                <div class="row row-of-information">
-                    <div class="col">
-                        <p> <span class="tos_span">TIME & DATE:</span> <input type="datetime-local" id="time_date" name="time_date"></p>
-                        <p> <span class="tos_span">CLIENT FULL NAME WITH SIGNATURE:</span> <input type="text" id="client_name" name="client_name"></p>
-                        <p> <span class="tos_span">CONTACT NUMBER:</span> <input type="text" id="contact_number" name="contact_number"></p>
-                        <div class="row">
-                            <div class="col">
-                                <p> <span class="tos_span">PLATINUM MEMBER:</span> <input type="text" id="platinum_member" name="platinum_member"></p>
-                            </div>
-                            <div class="col">
-                                <p> <span class="tos_span">PLATINUM#:</span> <input type="text" id="platinum_number" name="platinum_number"></p>
-                            </div>
-                        </div>
-                        <p> <span class="tos_span">TECHYDAVID IT SOLUTIONS’ REPRESENTATIVE:</span> <input type="text" id="representative"
-                                name="representative"></p>
-                        <p> <span class="tos_span">HOW DO YOU KNOW ABOUT US?:</span> <input type="text" id="how_know" name="how_know"></p>
-                    </div>
-                </div>
-
+    <div class="col">
+        Disclaimer: By signing this TECHYDAVID IT SOLUTIONS’ TERMS OF SERVICE, the REPRESENTATIVE confirms discussing terms. As the client, you’ve read, understood, and agreed all terms.
+    </div>
+</div>
+<div class="row row-of-information">
+    <div class="col">
+        <p> <span class="tos_span">TIME & DATE: <span id="currentDateTime"></span></span></p>
+        <p> <span class="tos_span">CLIENT FULL NAME WITH SIGNATURE:</span> <input type="text" id="client_name" name="client_name"></p>
+        <p> <span class="tos_span">CONTACT NUMBER:</span> <input type="text" id="contact_number" name="contact_number"></p>
+        <div class="row">
+            <div class="col">
+                <p> <span class="tos_span">PLATINUM MEMBER:</span>
+                    <select id="platinum_member" name="platinum_member" class="custom-select">
+                        <option value="Yes">Yes</option>
+                        <option value="No">No</option>
+                    </select>
+                </p>
+            </div>
+            <div class="col">
+                <p> <span class="tos_span">PLATINUM#:</span> <input type="text" id="platinum_number" name="platinum_number"></p>
+            </div>
+        </div>
+        <p> <span class="tos_span">TECHYDAVID IT SOLUTIONS’ REPRESENTATIVE:</span>
+            <select id="representative" name="representative" class="custom-select">
+                <option value="Representative 1">Representative 1</option>
+                <option value="Representative 2">Representative 2</option>
+                <option value="Representative 3">Representative 3</option>
+                <!-- Add more options as needed -->
+            </select>
+        </p>
+        <p> <span class="tos_span">HOW DO YOU KNOW ABOUT US?:</span>
+            <select id="how_know" name="how_know" class="custom-select">
+                <option value="Advertisement">Advertisement</option>
+                <option value="Word of Mouth">Word of Mouth</option>
+                <option value="Online Search">Online Search</option>
+                <!-- Add more options as needed -->
+            </select>
+        </p>
+    </div>
+</div>
 
 
 
@@ -486,3 +503,28 @@
         </div>
     </div>
 </div>
+
+<script>
+    // Kunin ang reference sa span element kung saan ilalagay ang oras at petsa
+    var currentDateTimeSpan = document.getElementById('currentDateTime');
+
+    // Gumawa ng isang bagong Date object para sa kasalukuyang oras
+    var currentDate = new Date();
+
+    // Tumutukoy sa mga buwan gamit ang kanilang pangalan
+    var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October",
+        "November", "December"
+    ];
+
+    // Format ang petsa at oras
+    var year = currentDate.getFullYear();
+    var monthIndex = currentDate.getMonth();
+    var monthName = months[monthIndex];
+    var day = ('0' + currentDate.getDate()).slice(-2);
+    var hours = ('0' + (currentDate.getHours() % 12 || 12)).slice(-2); // Convert to 12-hour format
+    var minutes = ('0' + currentDate.getMinutes()).slice(-2);
+    var ampm = currentDate.getHours() >= 12 ? 'PM' : 'AM';
+
+    // Set ang text content ng span element gamit ang format na ginawa
+    currentDateTimeSpan.textContent = monthName + ' ' + day + ', ' + year + ' - ' + hours + ':' + minutes + ' ' + ampm;
+</script>

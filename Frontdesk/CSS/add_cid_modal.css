@@ -1,59 +1,94 @@
-#representative{
+.custom-select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-color: #f8f9fa;
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+    padding: 8px 12px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.custom-select:focus {
+    outline: none;
+    border-color: #4d94ff;
+}
+#client_name{
     margin-top: 5%;
 }
+#contact_number{
+    margin-top: 5%;
+}
+#platinum_member{
+    margin-top: 10%;
+}
+#platinum_number{
+    margin-top: 10%;
+}
+#representative {
+    margin-top: 6%;
+}
 
-.disclaimer-row{
-    font-family: 'Poppins', sans-serif; /* Dagdag na sans-serif fallback font */
+#how_know{
+    margin-top: 3%;
+}
+
+.disclaimer-row {
+    font-family: 'Poppins', sans-serif;
     margin-bottom: 9%;
     font-size: 16px;
-    font-weight: 600; /* I-correct ang halaga mula sa 600px patungo sa 600 */
+    font-weight: 600;
     font-style: italic;
     text-decoration: underline;
-    color: #333;
-}
-.row-of-information {
-    margin-bottom: 9%; /* I-adjust ang halaga depende sa nais na lapad ng margin */
+    color: #000000;
+    line-height: 24px;
 }
 
- /* Style for the underline */
- input[type="text"] {
-    border: none; /* Remove the default border */
-    border-bottom: 1px solid black; /* Add the underline */
-    outline: none; /* Remove the outline when focused */
+.row-of-information {
+    margin-bottom: 9%;
+}
+
+input[type="text"] {
+    border: none;
+    border-bottom: 1px solid black;
+    outline: none;
 }
 
 input[type="checkbox"]:checked {
-    background-color: #22C997; /* Kulay ng background kapag nakacheck */
-    
+    background-color: #22C997;
+
 }
 
-/* Kulay ng label ng checkbox */
+
 .form-check-label::before {
-    border-color: #22C997; /* Kulay ng border ng checkbox */
+    border-color: #22C997;
 }
 
-/* Kulay ng hover effect */
+
 .form-check-input[type="checkbox"]:hover {
-    background-color: #1EAD87; /* Kulay ng background kapag nasa hover */
+    background-color: #1EAD87;
 }
 
-/* Kulay ng hover effect sa label */
+
 .form-check-label:hover::before {
-    border-color: #1EAD87; /* Kulay ng border kapag nasa hover */
+    border-color: #1EAD87;
 }
 
 input[type="radio"]:checked {
-    background-color: #22C997; /* Kulay ng background kapag pinili */
+    background-color: #22C997;
 }
 
-.form-check-tos-comletion{
+.form-check-tos-comletion {
     margin-bottom: 4%;
 }
-.form-check-nested{
+
+.form-check-nested {
     margin-left: 90px;
 }
+
 .form-check {
-    margin-bottom: 10px; /* Add spacing between each group of checkboxes */
+    margin-bottom: 10px;
 }
 
 .form-check-content {
@@ -63,9 +98,9 @@ input[type="radio"]:checked {
 
 
 .number {
-    margin-right: 10px; /* Add spacing between the number and the checkbox */
-    flex-shrink: 0; /* Prevent the number from shrinking */
-    width: 30px; /* Set the width of the number */
+    margin-right: 10px;
+    flex-shrink: 0;
+    width: 30px;
 }
 
 .modal-header {
