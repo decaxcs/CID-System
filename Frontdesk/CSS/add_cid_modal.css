@@ -11,9 +11,9 @@
 }
 
 .number {
-    margin-right: 10px; /* Add spacing between the number and the checkbox */
-    flex-shrink: 0; /* Prevent the number from shrinking */
-    width: 30px; /* Set the width of the number */
+    margin-right: 10px;
+    flex-shrink: 0;
+    width: 30px;
 }
 
 .modal-header {
