@@ -9,7 +9,7 @@ function openNewTab(url) {
 //Data Table
 $(document).ready(function() {
     $('#recent_cid_table').DataTable( {
-        "lengthMenu": [[3, 5], [3, 5]],
+        "lengthMenu": [[4], [4]],
     });
 });
 
