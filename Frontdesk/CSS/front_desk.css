@@ -9,61 +9,95 @@ p {
 
 #front_desk_page {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     margin: 0;
     height: 100vh;
     flex-grow: 1;
 }
 
 #side_blue_box {
-    position: absolute;
-    left: 0;
-    width: 117px;
+    position: relative;
+    width: 282px;
     height: 100%;
-    background: rgb(52, 90, 253);
-    background: linear-gradient(180deg, rgba(52, 90, 253, 1) 0%, rgba(125, 177, 255, 1) 100%);
+    background: rgb(34, 145, 253);
+    background: linear-gradient(180deg, rgba(34, 145, 253, 1) 0%, rgba(104, 181, 255, 1) 28%, rgba(34, 145, 253, 1) 100%);
     box-shadow: 3px 0px 10px rgba(0, 0, 0, 0.3);
 }
 
-#front_desk_container {
-    height: 100%;
-    margin-left: 117px;
+#logo_container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-top: 20px;
 }
 
-#top_gray_box {
+#logo_text_container {
     display: flex;
-    width: 100%;
-    height: 92px;
-    background-color: #EDEDED;
-    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    line-height: 1;
+    color: #fff;
+    margin-left: 9px;
 }
+
+#company_name {
+    font-family: 'ethnocentric', sans-serif;
+    font-size: 1em;
+}
+
+#company_sub_name {
+    font-family: 'acherusgrotesque', sans-serif;
+    font-size: 0.75em;
+}
+
+#logo_image {
+    width: auto;
+    height: 30px;
+}
+
+#front_desk_container {
+    display: flex;
+    flex-direction: column; /* Ensure child elements stack vertically */
+    width: 100%;
+    height: 100%;
+}
+
+#header {
+    width: 100%;
+    height: 50px;
+    background-color: #fff;
+}
+
 
 #dashboard_title_text {
-    font-size: 1.5em;
-    font-weight: 600;
+    font-size: 1.25em;
+    font-weight: 300;
     color: #345AFD;
+    padding-top: 20px;
     margin-bottom: 0;
-    margin-left: 1.875em;
+    margin-left: 69px;
 }
 
 #dashboard_container {
-    width: 100%;
+    flex-grow: 1; /* This will make the dashboard container take up all available space */
+    background-color: #EBF0F3;
 }
 
 #dashboard_greeting_container {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 100%;
-    height: 150px;
+    width: 100%;    
 }
 
 #greetings {
     color: #345AFD;
     font-weight: 700;
     font-size: 2.625em;
-    margin-top: 23px;
-    margin-left: 99px;
+    margin-top: 20px;
+    margin-left: 69px;
+    line-height: 1;
 }
 
 #front_desk_name {
@@ -80,18 +114,41 @@ p {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    padding: 41px 85px 0px;
+    padding: 40px 69px 0px;
 }
 
-.card {
+#time_date_container {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+}
+.calendar_card {
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    width: 90%;
+}
+
+#time {
+    font-size: 1.875em;
+    color: #fff;
+    text-align: center;
+}
+
+.stats_card {
     border-radius: 10px;
     overflow: hidden;
     width: 319px;
-    box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.3); 
+    box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.3);
     border-bottom: none;
 }
 
-.technician_name {  
+.technician_name {
     font-weight: 600;
     font-size: 1.25em;
 }

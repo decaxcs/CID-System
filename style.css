@@ -23,3 +23,17 @@ iconify-icon {
     font-weight: normal;
     font-style: italic;
 }
+
+@font-face {
+    font-family: 'AcherusGrotesque';
+    src: url('Assets/Fonts/acherusgrotesque/AcherusGrotesque-Regular.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'AcherusGrotesque';
+    src: url('Assets/Fonts/acherusgrotesque/AcherusGrotesque-RegularItalic.otf') format('opentype');
+    font-weight: normal;
+    font-style: italic;
+}
