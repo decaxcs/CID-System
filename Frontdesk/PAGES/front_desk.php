@@ -42,7 +42,14 @@
 
         <div id="front_desk_container">
             <div id="header">
-
+                <div id="notif_container">
+                    <iconify-icon id="notif_icon" icon="ph:bell"></iconify-icon>
+                </div>
+                <div id="profile_container">
+                    <img id="profile_image" src="../../Assets/Images/logo.png" alt="" srcset="">
+                    <p id="user_name">Armein</p>
+                    <iconify-icon id="drop_down_icon" icon="iconamoon:arrow-down-2"></iconify-icon>
+                </div>
             </div>
             <div id="dashboard_container">
                 <p id="dashboard_title_text">DASHBOARD</p>
@@ -50,10 +57,10 @@
                     <p id="greetings">Good Morning, <br>
                         <span id="front_desk_name">Lorem!<span>
                     </p>
-                    <!-- <button type="button" class="btn btn-primary btn_create" data-bs-toggle="modal"
+                    <button type="button" class="btn btn-primary btn_create" data-bs-toggle="modal"
                         data-bs-target="#add_CID_modal">
                         CREATE
-                    </button> -->
+                    </button>
                 </div>
                 <div id="dashboard_card_container">
                     <div class="card stats_card">
@@ -79,10 +86,69 @@
                         </div>
                     </div>
                 </div>
+                <div id="dashboard_table_container">
+                    <div class="card table_card">
+                        <div class="card-body">
+                            <table id="recent_cid_table" class="table table-borderless" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Position</th>
+                                        <th>Office</th>
+                                        <th>Age</th>
+                                        <th>Start date</th>
+                                        <th>Salary</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Tiger Nixon</td>
+                                        <td>System Architect</td>
+                                        <td>Edinburgh</td>
+                                        <td>61</td>
+                                        <td>2011-04-25</td>
+                                        <td>$320,800</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Garrett Winters</td>
+                                        <td>Accountant</td>
+                                        <td>Tokyo</td>
+                                        <td>63</td>
+                                        <td>2011-07-25</td>
+                                        <td>$170,750</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Ashton Cox</td>
+                                        <td>Junior Technical Author</td>
+                                        <td>San Francisco</td>
+                                        <td>66</td>
+                                        <td>2009-01-12</td>
+                                        <td>$86,000</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Cedric Kelly</td>
+                                        <td>Senior Javascript Developer</td>
+                                        <td>Edinburgh</td>
+                                        <td>22</td>
+                                        <td>2012-03-29</td>
+                                        <td>$433,060</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Airi Satou</td>
+                                        <td>Accountant</td>
+                                        <td>Tokyo</td>
+                                        <td>33</td>
+                                        <td>2008-11-28</td>
+                                        <td>$162,700</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-
 
     <script src="../JS/front_desk.js"></script>
 

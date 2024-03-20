@@ -6,15 +6,15 @@ function openNewTab(url) {
     window.open(url, '_blank');
 }
 
-//Calendar Script
-document.addEventListener('DOMContentLoaded', function () {
-    var calendarEl = document.getElementById('calendar');
-    var calendar = new FullCalendar.Calendar(calendarEl, {
-        initialView: 'dayGridMonth',
+//Data Table
+$(document).ready(function() {
+    $('#recent_cid_table').DataTable( {
+        "lengthMenu": [[3, 5], [3, 5]],
     });
-    
-    calendar.render();
 });
+
+//Calendar Script
+
 //Time Script
 function updateTime() {
     var currentTime = new Date();
