@@ -1,3 +1,54 @@
+#representative{
+    margin-top: 5%;
+}
+
+.disclaimer-row{
+    font-family: 'Poppins', sans-serif; /* Dagdag na sans-serif fallback font */
+    margin-bottom: 9%;
+    font-size: 16px;
+    font-weight: 600; /* I-correct ang halaga mula sa 600px patungo sa 600 */
+    font-style: italic;
+    text-decoration: underline;
+    color: #333;
+}
+.row-of-information {
+    margin-bottom: 9%; /* I-adjust ang halaga depende sa nais na lapad ng margin */
+}
+
+ /* Style for the underline */
+ input[type="text"] {
+    border: none; /* Remove the default border */
+    border-bottom: 1px solid black; /* Add the underline */
+    outline: none; /* Remove the outline when focused */
+}
+
+input[type="checkbox"]:checked {
+    background-color: #22C997; /* Kulay ng background kapag nakacheck */
+    
+}
+
+/* Kulay ng label ng checkbox */
+.form-check-label::before {
+    border-color: #22C997; /* Kulay ng border ng checkbox */
+}
+
+/* Kulay ng hover effect */
+.form-check-input[type="checkbox"]:hover {
+    background-color: #1EAD87; /* Kulay ng background kapag nasa hover */
+}
+
+/* Kulay ng hover effect sa label */
+.form-check-label:hover::before {
+    border-color: #1EAD87; /* Kulay ng border kapag nasa hover */
+}
+
+input[type="radio"]:checked {
+    background-color: #22C997; /* Kulay ng background kapag pinili */
+}
+
+.form-check-tos-comletion{
+    margin-bottom: 4%;
+}
 .form-check-nested{
     margin-left: 90px;
 }
@@ -9,6 +60,7 @@
     display: flex;
     align-items: center;
 }
+
 
 .number {
     margin-right: 10px; /* Add spacing between the number and the checkbox */
@@ -38,6 +90,7 @@
     padding: 50px 15px 15px 15px;
     background-image: linear-gradient(to bottom, transparent, white);
     z-index: 1041;
+
 }
 
 .form-check {
@@ -66,6 +119,7 @@
 }
 
 #add_CID_label {
+    margin-left: 6%;
     font-weight: 700;
     font-size: 3em;
 }

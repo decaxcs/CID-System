@@ -59,343 +59,426 @@
                         </div>
                     </div>
                 </div>
-                
-                            <!-- Checkbox 3 -->
-                    <div class="row">
-                        <div class="col">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="tos_mandatory">
-                                <label class="form-check-label" for="tos_mandatory">
-                                    <div class="row">
-                                        <div class="col-auto">
-                                            <div>3.</div>
-                                        </div>
-                                        <div class="col">
-                                            The client is <span class="tos_span">MANDATORY</span> to avail deep cleaning service for units with significant debris and dirt accumulation so that skilled technicians can proceed with diagnosing the issue.
-                                        </div>
+
+                <!-- Checkbox 3 -->
+                <div class="row">
+                    <div class="col">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="tos_mandatory">
+                            <label class="form-check-label" for="tos_mandatory">
+                                <div class="row">
+                                    <div class="col-auto">
+                                        <div>3.</div>
                                     </div>
-                                </label>
-                            </div>
+                                    <div class="col">
+                                        The client is <span class="tos_span">MANDATORY</span> to avail deep cleaning
+                                        service for units with significant debris and dirt accumulation so that skilled
+                                        technicians can proceed with diagnosing the issue.
+                                    </div>
+                                </div>
+                            </label>
                         </div>
                     </div>
-                            <!-- Checkbox 4 -->
-                            <div class="row">
-                        <div class="col">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="tos_ensure_your_data">
-                                <label class="form-check-label" for="tos_ensure_your_data">
-                                    <div class="row">
-                                        <div class="col-auto">
-                                            <div>4.</div>
-                                        </div>
-                                        <div class="col">
-                                        <span class="tos_span">ensure your data is backed up before we access your system.</span> We're not liable for data loss. If you haven't backed up, contact us to arrange it. Be aware that hard drive failure or malware can cause data loss during our check-up. We might need to reinstall your operating sysiem; lel us know if you want dala backed up, bul Lhis incurs exira charges.
-                                        </div>
-                                    </div>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                            <!-- Checkbox 5 -->
-                            <div class="row">
-                        <div class="col">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="tos_Physical_verification">
-                                <label class="form-check-label" for="tos_Physical_verification">
-                                    <div class="row">
-                                        <div class="col-auto">
-                                            <div>5.</div>
-                                        </div>
-                                        <div class="col">
-                                        <span class="tos_span">Physical verification happens at TECHYDAVID I.T SOLUTIONS' Physical Store.</span>
-                                        </div>
-                                    </div>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                            <!-- Checkbox 6 -->
-                            <div class="row">
-                        <div class="col">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="tos_License_Windows">
-                                <label class="form-check-label" for="tos_License_Windows">
-                                    <div class="row">
-                                        <div class="col-auto">
-                                            <div>6.</div>
-                                        </div>
-                                        <div class="col">
-                                        <span class="tos_span">Your system must have a License Windows or Apple OS X Os;</span> we'll install a retail version if needed, with additional costs and time.We can't work on unlicensed Operating System.
-                                        </div>
-                                    </div>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                            <!-- Checkbox 7 -->
-                            <div class="row">
-                        <div class="col">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="tos_remote_repair">
-                                <label class="form-check-label" for="tos_remote_repair">
-                                    <div class="row">
-                                        <div class="col-auto">
-                                            <div>7.</div>
-                                        </div>
-                                        <div class="col">
-                                        <span class="tos_span">REMOTE REPAIR:</span> We'll do our best to solve requested issues remotely. If needed, we'll discuss options for repair. Conditions:Services within Standard Business Hours: 9:00 AM - 8:00 PM, MON - SAT, except Holidays
-                                        </div>
-                                    </div>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                       <!-- Checkbox 8 -->
-                       <div class="row">
-                        <div class="col">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="tos_board_repair_units">
-                                <label class="form-check-label" for="tos_board_repair_units">
-                                    <div class="row">
-                                        <div class="col-auto">
-                                            <div>8.</div>
-                                        </div>
-                                        <div class="col">
-                                        <span class="tos_span">Board Repair Units:</span> Lead time mostly 3-5 months and above depending on the issue, client is informed first to proceed , if client change of mind incurs charges a specific amount.
-                                        </div>
-                                    </div>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                       <!-- Checkbox 9 -->
-                       <div class="row">
-                        <div class="col">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="tos_technical_parts">
-                                <label class="form-check-label" for="tos_technical_parts">
-                                    <div class="row">
-                                        <div class="col-auto">
-                                            <div>9.</div>
-                                        </div>
-                                        <div class="col">
-                                        <span class="tos_span">Technical Parts:</span> If it becomes necessary to order parts to proceed with the repair, please be aware that we do not have control over the shipment lead time of parts from the manufacturer.
-                                        </div>
-                                    </div>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                       <!-- Checkbox 10 -->
-                       <div class="row">
-                        <div class="col">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="tos_data_recovery">
-                                <label class="form-check-label" for="tos_data_recovery">
-                                    <div class="row">
-                                        <div class="col-auto">
-                                            <div>10.</div>
-                                        </div>
-                                        <div class="col">
-                                        <span class="tos_span">Data Recovery:</span> As part of the data recovery process, it is essential to inform you that we are unable to selectively choose which chance to be recovered. In the event ofunsuccessful data recovery, a fee of P1,500.00 will be charged as an Advance Diagnostic Service Fee..
-                                        </div>
-                                    </div>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                       <!-- Checkbox 11 -->
-                       <div class="row">
-                        <div class="col">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="tos_advertising">
-                                <label class="form-check-label" for="tos_advertising">
-                                    <div class="row">
-                                        <div class="col-auto">
-                                            <div>11.</div>
-                                        </div>
-                                        <div class="col">
-                                        <span class="tos_span">Advertising:</span> We may use before and after pictures of your unit for promotion. We can add our company sticker for tracking and advertising. YES_ NO_
-                                        </div>
-                                    </div>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                       <!-- Checkbox 12 -->
-                       <div class="row">
-                        <div class="col">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="tos_third_party">
-                                <label class="form-check-label" for="tos_third_party">
-                                    <div class="row">
-                                        <div class="col-auto">
-                                            <div>12.</div>
-                                        </div>
-                                        <div class="col">
-                                        <span class="tos_span">Third-Party Pickups:</span> We're not responsible for items picked up via Lalamove/Grab & other Courier that may affect the unit. We guarantee test and make sure complete units before release. Down payment of 80% is required                                        </div>
-                                    </div>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                       <!-- Checkbox 13 -->
-                       <div class="row">
-                        <div class="col">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="tos-rto">
-                                <label class="form-check-label" for="tos-rto">
-                                    <div class="row">
-                                        <div class="col-auto">
-                                            <div>13.</div>
-                                        </div>
-                                        <div class="col">
-                                        <span class="tos_span">RTO Units Notice: Client(s)</span> are informed about RTO (Return to the owner) units. Units are released unless client specifies a reason for delay. Kindiy Relay to Pick-up Responsibility.
-                                        </div>
-                                    </div>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                       <!-- Checkbox 14 -->
-                       <div class="row">
-                        <div class="col">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="tos_brand_awareness">
-                                <label class="form-check-label" for="tos_brand_awareness">
-                                    <div class="row">
-                                        <div class="col-auto">
-                                            <div>14.</div>
-                                        </div>
-                                        <div class="col">
-                                        <span class="tos_span">BRAND AWARENESS:</span> Client must uphold the TECHYDAVID I.T SOLUTIONS brand and refrain from disseminating negative Jnformation or comments that undermine or are detrimental to TECHYDAVID I.T SOLUTIONS, the brand, and its products and employees, through any means (including but not limited to verbal, written, screenshots ,online, or media channels). Negotiation must be donc between TECHYDAVID I.T SOLUTIONS and Clicnt only.                                        </div>
-                                    </div>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                       <!-- Checkbox 15 -->
-                       <div class="row">
-                        <div class="col">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="tos_unforseen_issues">
-                                <label class="form-check-label" for="tos_unforseen_issues">
-                                    <div class="row">
-                                        <div class="col-auto">
-                                            <div>15.</div>
-                                        </div>
-                                        <div class="col">
-                                        <span class="tos_span">Unforeseen Issues During Repair:</span> During repair, unexpected problems may arise. We're not responsible for resulting to any damages.                                        </div>
-                                    </div>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                       <!-- Checkbox 16 -->
-                       <div class="row">
-                        <div class="col">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="tos_act_of_god">
-                                <label class="form-check-label" for="tos_act_of_god">
-                                    <div class="row">
-                                        <div class="col-auto">
-                                            <div>16.</div>
-                                        </div>
-                                        <div class="col">
-                                        <span class="tos_span">Act of God Circumstances:</span> TECHYDAVID IT SOLUTIONS shall not be liable for the damage on Items in case of fire ,earthquake,-flood and other similar natural calamities                                        </div>
-                                    </div>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                       <!-- Checkbox 17 -->
-                       <div class="row">
-                        <div class="col">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="tos_confidential_accounts">
-                                <label class="form-check-label" for="tos_confidential_accounts">
-                                    <div class="row">
-                                        <div class="col-auto">
-                                            <div>17.</div>
-                                        </div>
-                                        <div class="col">
-                                        <span class="tos_span">Confidential Accounts:</span> It is the client's responsibility to ensure the secure management of sensitive and confidential accounts by logging out of them appropriately.                                        </div>
-                                    </div>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                       <!-- Checkbox 18 -->
-                       <div class="row">
-                        <div class="col">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="tos_claiming_slip">
-                                <label class="form-check-label" for="tos_claiming_slip">
-                                    <div class="row">
-                                        <div class="col-auto">
-                                            <div>18.</div>
-                                        </div>
-                                        <div class="col">
-                                        <span class="tos_span">Claiming Slip Requirement:</span> claiming slip is mandatory, In the event of a missing claiming slip, please present a valid government ID for verification.                                        </div>
-                                    </div>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                       <!-- Checkbox 19 -->
-                       <div class="row">
-                        <div class="col">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="tos_clients_rights">
-                                <label class="form-check-label" for="tos_clients_rights">
-                                    <div class="row">
-                                        <div class="col-auto">
-                                            <div>19.</div>
-                                        </div>
-                                        <div class="col">
-                                        <span class="tos_span">Client Rights:</span> Clients can request a copy of these terms and unit diagnosis details upon request.                                        </div>
-                                    </div>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                       <!-- Checkbox 20 -->
-                       <div class="row">
-                        <div class="col">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="tos_warranty_claim">
-                                <label class="form-check-label" for="tos_warranty_claim">
-                                    <div class="row">
-                                        <div class="col-auto">
-                                            <div>20.</div>
-                                        </div>
-                                        <div class="col">
-                                        <span class="tos_span">When Initiating a warranty claim</span>, please be aware that we have implemented a mandatory inspection procedure. This step ensures that our technical experts can thoroughly assess the issue before proceeding with the claim. This approach enables us to address your concern promptly and accurately. NO OFFICIAL RECEIPT NO WARRANTY                                        </div>
-                                    </div>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                       <!-- Checkbox 21 -->
-                       <div class="row">
-                        <div class="col">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="tos_completion">
-                                <label class="form-check-label" for="tos_completion">
-                                    <div class="row">
-                                        <div class="col-auto">
-                                            <div>21.</div>
-                                        </div>
-                                        <div class="col">
-                                        <span class="tos_span">Official receipt turnover upon completion of service.</span></div>
-                                    </div>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Continue this pattern for the remaining checkboxes -->
                 </div>
+                <!-- Checkbox 4 -->
+                <div class="row">
+                    <div class="col">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="tos_ensure_your_data">
+                            <label class="form-check-label" for="tos_ensure_your_data">
+                                <div class="row">
+                                    <div class="col-auto">
+                                        <div>4.</div>
+                                    </div>
+                                    <div class="col">
+                                        <span class="tos_span">ensure your data is backed up before we access your
+                                            system.</span> We're not liable for data loss. If you haven't backed up,
+                                        contact us to arrange it. Be aware that hard drive failure or malware can cause
+                                        data loss during our check-up. We might need to reinstall your operating sysiem;
+                                        lel us know if you want dala backed up, bul Lhis incurs exira charges.
+                                    </div>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <!-- Checkbox 5 -->
+                <div class="row">
+                    <div class="col">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="tos_Physical_verification">
+                            <label class="form-check-label" for="tos_Physical_verification">
+                                <div class="row">
+                                    <div class="col-auto">
+                                        <div>5.</div>
+                                    </div>
+                                    <div class="col">
+                                        <span class="tos_span">Physical verification happens at TECHYDAVID I.T
+                                            SOLUTIONS' Physical Store.</span>
+                                    </div>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <!-- Checkbox 6 -->
+                <div class="row">
+                    <div class="col">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="tos_License_Windows">
+                            <label class="form-check-label" for="tos_License_Windows">
+                                <div class="row">
+                                    <div class="col-auto">
+                                        <div>6.</div>
+                                    </div>
+                                    <div class="col">
+                                        <span class="tos_span">Your system must have a License Windows or Apple OS X
+                                            Os;</span> we'll install a retail version if needed, with additional costs
+                                        and time.We can't work on unlicensed Operating System.
+                                    </div>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <!-- Checkbox 7 -->
+                <div class="row">
+                    <div class="col">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="tos_remote_repair">
+                            <label class="form-check-label" for="tos_remote_repair">
+                                <div class="row">
+                                    <div class="col-auto">
+                                        <div>7.</div>
+                                    </div>
+                                    <div class="col">
+                                        <span class="tos_span">REMOTE REPAIR:</span> We'll do our best to solve
+                                        requested issues remotely. If needed, we'll discuss options for repair.
+                                        Conditions:Services within Standard Business Hours: 9:00 AM - 8:00 PM, MON -
+                                        SAT, except Holidays
+                                    </div>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <!-- Checkbox 8 -->
+                <div class="row">
+                    <div class="col">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="tos_board_repair_units">
+                            <label class="form-check-label" for="tos_board_repair_units">
+                                <div class="row">
+                                    <div class="col-auto">
+                                        <div>8.</div>
+                                    </div>
+                                    <div class="col">
+                                        <span class="tos_span">Board Repair Units:</span> Lead time mostly 3-5 months
+                                        and above depending on the issue, client is informed first to proceed , if
+                                        client change of mind incurs charges a specific amount.
+                                    </div>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <!-- Checkbox 9 -->
+                <div class="row">
+                    <div class="col">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="tos_technical_parts">
+                            <label class="form-check-label" for="tos_technical_parts">
+                                <div class="row">
+                                    <div class="col-auto">
+                                        <div>9.</div>
+                                    </div>
+                                    <div class="col">
+                                        <span class="tos_span">Technical Parts:</span> If it becomes necessary to order
+                                        parts to proceed with the repair, please be aware that we do not have control
+                                        over the shipment lead time of parts from the manufacturer.
+                                    </div>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <!-- Checkbox 10 -->
+                <div class="row">
+                    <div class="col">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="tos_data_recovery">
+                            <label class="form-check-label" for="tos_data_recovery">
+                                <div class="row">
+                                    <div class="col-auto">
+                                        <div>10.</div>
+                                    </div>
+                                    <div class="col">
+                                        <span class="tos_span">Data Recovery:</span> As part of the data recovery
+                                        process, it is essential to inform you that we are unable to selectively choose
+                                        which chance to be recovered. In the event ofunsuccessful data recovery, a fee
+                                        of P1,500.00 will be charged as an Advance Diagnostic Service Fee..
+                                    </div>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <!-- Checkbox 11 -->
+                <div class="row">
+                    <div class="col">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="tos_advertising">
+                            <label class="form-check-label" for="tos_advertising">
+                                <div class="row">
+                                    <div class="col-auto">
+                                        <div>11.</div>
+                                    </div>
+                                    <div class="col">
+                                        <span class="tos_span">Advertising:</span> We may use before and after pictures
+                                        of your unit for promotion. We can add our company sticker for tracking and
+                                        advertising.
+                                        <!-- Yes and No radio buttons -->
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="advertisingOption"
+                                                id="yesRadioButton">
+                                            <label class="form-check-label" for="yesRadioButton">Yes</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="advertisingOption"
+                                                id="noRadioButton">
+                                            <label class="form-check-label" for="noRadioButton">No</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Checkbox 12 -->
+                <div class="row">
+                    <div class="col">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="tos_third_party">
+                            <label class="form-check-label" for="tos_third_party">
+                                <div class="row">
+                                    <div class="col-auto">
+                                        <div>12.</div>
+                                    </div>
+                                    <div class="col">
+                                        <span class="tos_span">Third-Party Pickups:</span> We're not responsible for
+                                        items picked up via Lalamove/Grab & other Courier that may affect the unit. We
+                                        guarantee test and make sure complete units before release. Down payment of 80%
+                                        is required </div>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <!-- Checkbox 13 -->
+                <div class="row">
+                    <div class="col">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="tos-rto">
+                            <label class="form-check-label" for="tos-rto">
+                                <div class="row">
+                                    <div class="col-auto">
+                                        <div>13.</div>
+                                    </div>
+                                    <div class="col">
+                                        <span class="tos_span">RTO Units Notice: Client(s)</span> are informed about RTO
+                                        (Return to the owner) units. Units are released unless client specifies a reason
+                                        for delay. Kindiy Relay to Pick-up Responsibility.
+                                    </div>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <!-- Checkbox 14 -->
+                <div class="row">
+                    <div class="col">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="tos_brand_awareness">
+                            <label class="form-check-label" for="tos_brand_awareness">
+                                <div class="row">
+                                    <div class="col-auto">
+                                        <div>14.</div>
+                                    </div>
+                                    <div class="col">
+                                        <span class="tos_span">BRAND AWARENESS:</span> Client must uphold the TECHYDAVID
+                                        I.T SOLUTIONS brand and refrain from disseminating negative Jnformation or
+                                        comments that undermine or are detrimental to TECHYDAVID I.T SOLUTIONS, the
+                                        brand, and its products and employees, through any means (including but not
+                                        limited to verbal, written, screenshots ,online, or media channels). Negotiation
+                                        must be donc between TECHYDAVID I.T SOLUTIONS and Clicnt only. </div>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <!-- Checkbox 15 -->
+                <div class="row">
+                    <div class="col">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="tos_unforseen_issues">
+                            <label class="form-check-label" for="tos_unforseen_issues">
+                                <div class="row">
+                                    <div class="col-auto">
+                                        <div>15.</div>
+                                    </div>
+                                    <div class="col">
+                                        <span class="tos_span">Unforeseen Issues During Repair:</span> During repair,
+                                        unexpected problems may arise. We're not responsible for resulting to any
+                                        damages. </div>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <!-- Checkbox 16 -->
+                <div class="row">
+                    <div class="col">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="tos_act_of_god">
+                            <label class="form-check-label" for="tos_act_of_god">
+                                <div class="row">
+                                    <div class="col-auto">
+                                        <div>16.</div>
+                                    </div>
+                                    <div class="col">
+                                        <span class="tos_span">Act of God Circumstances:</span> TECHYDAVID IT SOLUTIONS
+                                        shall not be liable for the damage on Items in case of fire ,earthquake,-flood
+                                        and other similar natural calamities </div>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <!-- Checkbox 17 -->
+                <div class="row">
+                    <div class="col">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="tos_confidential_accounts">
+                            <label class="form-check-label" for="tos_confidential_accounts">
+                                <div class="row">
+                                    <div class="col-auto">
+                                        <div>17.</div>
+                                    </div>
+                                    <div class="col">
+                                        <span class="tos_span">Confidential Accounts:</span> It is the client's
+                                        responsibility to ensure the secure management of sensitive and confidential
+                                        accounts by logging out of them appropriately. </div>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <!-- Checkbox 18 -->
+                <div class="row">
+                    <div class="col">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="tos_claiming_slip">
+                            <label class="form-check-label" for="tos_claiming_slip">
+                                <div class="row">
+                                    <div class="col-auto">
+                                        <div>18.</div>
+                                    </div>
+                                    <div class="col">
+                                        <span class="tos_span">Claiming Slip Requirement:</span> claiming slip is
+                                        mandatory, In the event of a missing claiming slip, please present a valid
+                                        government ID for verification. </div>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <!-- Checkbox 19 -->
+                <div class="row">
+                    <div class="col">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="tos_clients_rights">
+                            <label class="form-check-label" for="tos_clients_rights">
+                                <div class="row">
+                                    <div class="col-auto">
+                                        <div>19.</div>
+                                    </div>
+                                    <div class="col">
+                                        <span class="tos_span">Client Rights:</span> Clients can request a copy of these
+                                        terms and unit diagnosis details upon request. </div>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <!-- Checkbox 20 -->
+                <div class="row">
+                    <div class="col">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="tos_warranty_claim">
+                            <label class="form-check-label" for="tos_warranty_claim">
+                                <div class="row">
+                                    <div class="col-auto">
+                                        <div>20.</div>
+                                    </div>
+                                    <div class="col">
+                                        <span class="tos_span">When Initiating a warranty claim</span>, please be aware that we have implemented a mandatory inspection procedure. This step ensures that our technical experts can thoroughly assess the issue before proceeding with the claim. This approach enables us to address your concern promptly and accurately. NO OFFICIAL RECEIPT NO WARRANTY </div>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <!-- Checkbox 21 -->
+                <div class="row">
+                    <div class="col">
+                        <div class="form-check-tos-comletion">
+                            <input class="form-check-input" type="checkbox" value="" id="tos_completion">
+                            <label class="form-check-label" for="tos_completion">
+                                <div class="row">
+                                    <div class="col-auto">
+                                        <div>21.</div>
+                                    </div>
+                                    <div class="col">
+                                        <span class="tos_span">Official receipt turnover upon completion of
+                                            service.</span></div>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-4 disclaimer-row">
+                    <div class="col">
+                        Disclaimer: By signing this TECHYDAVID IT SOLUTIONS’
+                        TERMS OF SERVICE,
+                        the REPRESENTATIVE confirms discussing terms. As the client, you’ve read, understood, and
+                        agreed all terms.
+                    </div>
+                </div>
+
+                <div class="row row-of-information">
+                    <div class="col">
+                        <p> <span class="tos_span">TIME & DATE:</span> <input type="datetime-local" id="time_date" name="time_date"></p>
+                        <p> <span class="tos_span">CLIENT FULL NAME WITH SIGNATURE:</span> <input type="text" id="client_name" name="client_name"></p>
+                        <p> <span class="tos_span">CONTACT NUMBER:</span> <input type="text" id="contact_number" name="contact_number"></p>
+                        <div class="row">
+                            <div class="col">
+                                <p> <span class="tos_span">PLATINUM MEMBER:</span> <input type="text" id="platinum_member" name="platinum_member"></p>
+                            </div>
+                            <div class="col">
+                                <p> <span class="tos_span">PLATINUM#:</span> <input type="text" id="platinum_number" name="platinum_number"></p>
+                            </div>
+                        </div>
+                        <p> <span class="tos_span">TECHYDAVID IT SOLUTIONS’ REPRESENTATIVE:</span> <input type="text" id="representative"
+                                name="representative"></p>
+                        <p> <span class="tos_span">HOW DO YOU KNOW ABOUT US?:</span> <input type="text" id="how_know" name="how_know"></p>
+                    </div>
+                </div>
+
+
+
+
+                <!-- Continue this pattern for the remaining checkboxes -->
+            </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary btn_cancel" data-bs-dismiss="modal">CANCEL</button>
                 <button type="button" class="btn btn-primary btn_save">PROCEED</button>
