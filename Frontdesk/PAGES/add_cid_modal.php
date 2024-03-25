@@ -456,6 +456,7 @@
                         confirms discussing terms. As the client, you’ve read, understood, and agreed all terms.
                     </div>
                 </div>
+<<<<<<< HEAD
                 <div class="row-of-information">
                     <div class="col">
                         <div class="mb-4"> <span class="tos_span">TIME & DATE: <span id="currentDateTime"></span></div>
@@ -495,7 +496,6 @@
                         </div>
                     </div>
                 </div>
-
 
                 <!-- Continue this pattern for the remaining checkboxes -->
             </div>

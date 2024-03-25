@@ -4,9 +4,10 @@ body {
 }
 
 #login_page {
-    background-image: url('Assets/Images/login_bg.jpg');
+    /* background-image: url('Assets/Images/login_bg.jpg');
     background-size: cover;
-    background-repeat: no-repeat;
+    background-repeat: no-repeat; */
+    background-color: #333;
     display: flex;
     flex-direction: column;
     margin: 0;
@@ -16,9 +17,7 @@ body {
 
 .card {
     border-radius: 0.875em;
-    width: 80%;
     max-width: 400px;
-    height: 50%;
     max-height: 471px;
     margin: auto;
     box-shadow: 0 0 0.625em rgba(0, 0, 0, 0.1);
@@ -30,8 +29,12 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    padding: 30px 50px;
 }
-
+.alert {
+    margin: 0;
+    padding: 10px;
+}
 #username_container {
     margin-top: 5%;
 }
