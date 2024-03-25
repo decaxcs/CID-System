@@ -108,9 +108,14 @@
                             <div class="carousel-item">
                                 <div class="card_container">
                                     <div class="card services_card">
-                                        <div class="card-body">
-                                            <h4 class="card-title">Title</h4>
-                                            <p class="card-text">Text</p>
+                                        <div class="card-body services_card_body">
+                                            <div class="services_icon_container">
+                                                <iconify-icon icon="icon-park-outline:new-computer"></iconify-icon>
+                                            </div>
+                                            <div class="info_container">
+                                                <p class="services_name">Computer Service</p>
+                                                <p class="services_number">16</p>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -166,7 +171,15 @@
                     <p id="progress_title" class="title">Progress</p>
                     <div class="card technician_progress_card">
                         <div class="card-body">
+                            <div>
 
+                            </div>
+                            <div>
+
+                            </div>
+                            <div>
+
+                            </div>
                         </div>
                     </div>
                 </div>
