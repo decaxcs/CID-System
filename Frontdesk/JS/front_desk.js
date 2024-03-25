@@ -10,7 +10,7 @@ $(document).ready(function() {
     $('#recent_cid_table').DataTable( {
         "lengthMenu": [[4], [4]],
     });
-});
+}); 
 
 function updateTime() {
     var currentTime = new Date();

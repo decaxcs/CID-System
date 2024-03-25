@@ -241,3 +241,13 @@ p {
     margin-bottom: 14px;
     margin-top: 30px;
 }
+
+.technician_name {
+    margin-bottom: 7px;
+    font-weight: 500;
+    font-size: 1em;
+}
+
+.progress {
+    margin-bottom: 12px;
+}
