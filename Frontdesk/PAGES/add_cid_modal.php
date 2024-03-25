@@ -6,7 +6,7 @@
                 <h5 class="modal-title" id="add_CID_label">Terms of Service</h5>
             </div>
             <div class="modal-body">
-                <div class="row">
+                <div class="row mb-3">
                     <div class="col">
                         <div class="form-check">
                             <input class="form-check-input" type="checkbox" value="" id="tos_legal_age">
@@ -25,7 +25,7 @@
                     </div>
                 </div>
                 <!-- Checkbox 2 -->
-                <div class="row">
+                <div class="row mb-3">
                     <div class="col">
                         <div class="form-check">
                             <input class="form-check-input" type="checkbox" value="" id="tos_free_initial">
@@ -61,7 +61,7 @@
                 </div>
 
                 <!-- Checkbox 3 -->
-                <div class="row">
+                <div class="row mb-3">
                     <div class="col">
                         <div class="form-check">
                             <input class="form-check-input" type="checkbox" value="" id="tos_mandatory">
@@ -81,7 +81,7 @@
                     </div>
                 </div>
                 <!-- Checkbox 4 -->
-                <div class="row">
+                <div class="row mb-3">
                     <div class="col">
                         <div class="form-check">
                             <input class="form-check-input" type="checkbox" value="" id="tos_ensure_your_data">
@@ -103,7 +103,7 @@
                     </div>
                 </div>
                 <!-- Checkbox 5 -->
-                <div class="row">
+                <div class="row mb-3">
                     <div class="col">
                         <div class="form-check">
                             <input class="form-check-input" type="checkbox" value="" id="tos_Physical_verification">
@@ -122,7 +122,7 @@
                     </div>
                 </div>
                 <!-- Checkbox 6 -->
-                <div class="row">
+                <div class="row mb-3">
                     <div class="col">
                         <div class="form-check">
                             <input class="form-check-input" type="checkbox" value="" id="tos_License_Windows">
@@ -142,7 +142,7 @@
                     </div>
                 </div>
                 <!-- Checkbox 7 -->
-                <div class="row">
+                <div class="row mb-3">
                     <div class="col">
                         <div class="form-check">
                             <input class="form-check-input" type="checkbox" value="" id="tos_remote_repair">
@@ -163,7 +163,7 @@
                     </div>
                 </div>
                 <!-- Checkbox 8 -->
-                <div class="row">
+                <div class="row mb-3">
                     <div class="col">
                         <div class="form-check">
                             <input class="form-check-input" type="checkbox" value="" id="tos_board_repair_units">
@@ -183,7 +183,7 @@
                     </div>
                 </div>
                 <!-- Checkbox 9 -->
-                <div class="row">
+                <div class="row mb-3">
                     <div class="col">
                         <div class="form-check">
                             <input class="form-check-input" type="checkbox" value="" id="tos_technical_parts">
@@ -203,7 +203,7 @@
                     </div>
                 </div>
                 <!-- Checkbox 10 -->
-                <div class="row">
+                <div class="row mb-3">
                     <div class="col">
                         <div class="form-check">
                             <input class="form-check-input" type="checkbox" value="" id="tos_data_recovery">
@@ -224,7 +224,7 @@
                     </div>
                 </div>
                 <!-- Checkbox 11 -->
-                <div class="row">
+                <div class="row mb-3">
                     <div class="col">
                         <div class="form-check">
                             <input class="form-check-input" type="checkbox" value="" id="tos_advertising">
@@ -256,7 +256,7 @@
                 </div>
 
                 <!-- Checkbox 12 -->
-                <div class="row">
+                <div class="row mb-3">
                     <div class="col">
                         <div class="form-check">
                             <input class="form-check-input" type="checkbox" value="" id="tos_third_party">
@@ -276,7 +276,7 @@
                     </div>
                 </div>
                 <!-- Checkbox 13 -->
-                <div class="row">
+                <div class="row mb-3">
                     <div class="col">
                         <div class="form-check">
                             <input class="form-check-input" type="checkbox" value="" id="tos-rto">
@@ -296,7 +296,7 @@
                     </div>
                 </div>
                 <!-- Checkbox 14 -->
-                <div class="row">
+                <div class="row mb-3">
                     <div class="col">
                         <div class="form-check">
                             <input class="form-check-input" type="checkbox" value="" id="tos_brand_awareness">
@@ -318,7 +318,7 @@
                     </div>
                 </div>
                 <!-- Checkbox 15 -->
-                <div class="row">
+                <div class="row mb-3">
                     <div class="col">
                         <div class="form-check">
                             <input class="form-check-input" type="checkbox" value="" id="tos_unforseen_issues">
@@ -337,7 +337,7 @@
                     </div>
                 </div>
                 <!-- Checkbox 16 -->
-                <div class="row">
+                <div class="row mb-3">
                     <div class="col">
                         <div class="form-check">
                             <input class="form-check-input" type="checkbox" value="" id="tos_act_of_god">
@@ -356,7 +356,7 @@
                     </div>
                 </div>
                 <!-- Checkbox 17 -->
-                <div class="row">
+                <div class="row mb-3">
                     <div class="col">
                         <div class="form-check">
                             <input class="form-check-input" type="checkbox" value="" id="tos_confidential_accounts">
@@ -375,7 +375,7 @@
                     </div>
                 </div>
                 <!-- Checkbox 18 -->
-                <div class="row">
+                <div class="row mb-3">
                     <div class="col">
                         <div class="form-check">
                             <input class="form-check-input" type="checkbox" value="" id="tos_claiming_slip">
@@ -394,7 +394,7 @@
                     </div>
                 </div>
                 <!-- Checkbox 19 -->
-                <div class="row">
+                <div class="row mb-3">
                     <div class="col">
                         <div class="form-check">
                             <input class="form-check-input" type="checkbox" value="" id="tos_clients_rights">
@@ -412,7 +412,7 @@
                     </div>
                 </div>
                 <!-- Checkbox 20 -->
-                <div class="row">
+                <div class="row mb-3">
                     <div class="col">
                         <div class="form-check">
                             <input class="form-check-input" type="checkbox" value="" id="tos_warranty_claim">
@@ -433,7 +433,7 @@
                     </div>
                 </div>
                 <!-- Checkbox 21 -->
-                <div class="row">
+                <div class="row mb-3">
                     <div class="col">
                         <div class="form-check-tos-comletion">
                             <input class="form-check-input" type="checkbox" value="" id="tos_completion">
@@ -451,83 +451,184 @@
                     </div>
                 </div>
                 <div class="row mt-4 disclaimer-row">
-    <div class="col">
-        Disclaimer: By signing this TECHYDAVID IT SOLUTIONS’ TERMS OF SERVICE, the REPRESENTATIVE confirms discussing terms. As the client, you’ve read, understood, and agreed all terms.
-    </div>
-</div>
+                    <div class="col">
+                        Disclaimer: By signing this TECHYDAVID IT SOLUTIONS’ TERMS OF SERVICE, the REPRESENTATIVE
+                        confirms discussing terms. As the client, you’ve read, understood, and agreed all terms.
+                    </div>
+                </div>
 <div class="row row-of-information">
     <div class="col">
-
-        <p> <span class="tos_span">TIME & DATE: <span id="currentDateTime"></span></span></p>
-        
-        <p> <span class="tos_span">CLIENT FULL NAME WITH SIGNATURE:</span> <input type="text" id="client_name" name="client_name"></p>
-        
-        <p> <span class="tos_span">CONTACT NUMBER:</span> <input type="text" id="contact_number" name="contact_number"></p>
-        <div class="row">
+        <div class="mb-4"> <span class="tos_span">TIME & DATE: <span id="currentDateTime"></span></div>
+        <div class="mb-4"><span class="tos_span">CLIENT FULL NAME WITH SIGNATURE:</span> <input type="text"
+            id="client_name" name="client_name"></div>
+        <div class="mb-4"> <span class="tos_span">CONTACT NUMBER:</span> <input type="text" id="contact_number"
+                name="contact_number"></div>
+        <div class="row mb-4 align-items-center"> <!-- Dito ay idinagdag ang 'align-items-center' -->
             <div class="col">
-                <p> <span class="tos_span">PLATINUM MEMBER:</span>
-                    <select id="platinum_member" name="platinum_member" class="custom-select">
-                        <option value="Yes">Yes</option>
-                        <option value="No">No</option>
-                    </select>
-                </p>
+                <span class="tos_span">PLATINUM MEMBER:</span>
+                <select id="platinum_member" name="platinum_member" class="custom-select">
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                </select>
             </div>
             <div class="col">
-                <p> <span class="tos_span">PLATINUM#:</span> <input type="text" id="platinum_number" name="platinum_number"></p>
+                <span class="tos_span">PLATINUM#:</span> <input type="text" id="platinum_number"
+                    name="platinum_number">
             </div>
         </div>
-        <p> <span class="tos_span">TECHYDAVID IT SOLUTIONS’ REPRESENTATIVE:</span>
+        <div class="mb-4"> <span class="tos_span">TECHYDAVID IT SOLUTIONS’ REPRESENTATIVE:</span>
             <select id="representative" name="representative" class="custom-select">
                 <option value="Representative 1">Representative 1</option>
                 <option value="Representative 2">Representative 2</option>
                 <option value="Representative 3">Representative 3</option>
                 <!-- Add more options as needed -->
             </select>
-        </p>
-        <p> <span class="tos_span">HOW DO YOU KNOW ABOUT US?:</span>
+        </div>
+        <div class="mb-5"> <span class="tos_span">HOW DO YOU KNOW ABOUT US?:</span>
             <select id="how_know" name="how_know" class="custom-select">
                 <option value="Advertisement">Advertisement</option>
                 <option value="Word of Mouth">Word of Mouth</option>
                 <option value="Online Search">Online Search</option>
                 <!-- Add more options as needed -->
             </select>
-        </p>
+        </div>
     </div>
 </div>
 
 
-
                 <!-- Continue this pattern for the remaining checkboxes -->
             </div>
-            <div class="modal-footer">
+            <div class="modal-footer add_cid_footer">
                 <button type="button" class="btn btn-primary btn_cancel" data-bs-dismiss="modal">CANCEL</button>
-                <button type="button" class="btn btn-primary btn_save">PROCEED</button>
+                <button type="button" class="btn btn-primary btn_save" id="proceedButton">PROCEED</button>
             </div>
         </div>
     </div>
 </div>
 
+<!-- Bagong Modal -->
+<div class="modal fade" id="newModal" tabindex="-1" aria-labelledby="newModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title" id="newModalLabel"></div>
+            </div>
+            <!-- Bagong div sa loob ng modal body -->
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col">
+                        <div class="row mb-4">
+                            <div class="col">
+                                <p><span class="tos_span">CID: 20241-3</span></p>
+                            </div>
+                            <div class="col">
+                                <p><span class="tos_span">Claiming Slip:</span><input type="text" id="claiming_slip"
+                                        name="claiming_slip"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mb-5">
+                    <!-- Dagdag ng margin sa ibaba -->
+                    <div class="col my-auto">
+                        <div class="unit_details">
+                            <div class="form-group">
+                                <label for="brand_models"><span class="tos_span ">Unit Details/Brand Models:</span></label>
+                                <textarea class="form-control" id="unit_Details" rows="3"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mb-5">
+                    <!-- Dagdag ng margin sa ibaba -->
+                    <div class="col my-auto">
+                        <div class="remarks">
+                            <div class="form-group">
+                                <label for="exampleFormControlTextarea1"><span class="tos_span ">Remarks:(Scratches,Color,lcd etc)</span></label>
+                                <textarea class="form-control" id="remarks" rows="5"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mb-3" id="dropdown">
+                    <div class="">
+                        <p> <span class="tos_span ">Technician: </span>
+                            <select id="Technician " name="Technician" class="custom-select">
+                                <option value="Representative 1">Representative 1</option>
+                                <option value="Representative 2">Representative 2</option>
+                                <option value="Representative 3">Representative 3</option>
+                                <!-- Add more options as needed -->
+                            </select>
+                        </p>
+                    </div>
+                    <div class="ms-5 mb-3">
+                        <p> <span class="tos_span ">Computer Service:</span>
+                            <select id="Cumputer_Service" name="Computer_Service" class="custom-select">
+                                <option value="Representative 1">Representative 1</option>
+                                <option value="Representative 2">Representative 2</option>
+                                <option value="Representative 3">Representative 3</option>
+                                <!-- Add more options as needed -->
+                            </select>
+                        </p>
+                    </div>
+                </div>
+
+
+                <!-- Iba pang mga nilalaman ng modal body -->
+            </div>
+            <div class="modal-footer justify-content-end" id="">
+    <button type="button" class="btn btn-secondar btn_Cancel_Slip" data-bs-dismiss="modal">Cancel</button>
+    <button type="button" class="btn btn-primary btn_Create">Create</button>
+</div>
+
+        </div>
+    </div>
+</div>
+
+
 <script>
-    // Kunin ang reference sa span element kung saan ilalagay ang oras at petsa
-    var currentDateTimeSpan = document.getElementById('currentDateTime');
+    // Dito mo ilalagay ang event listener para sa "PROCEED" button
+    proceedButton.addEventListener('click', function () {
+        // Isara muna ang unang modal
+        $('#add_CID_modal').modal('hide');
 
-    // Gumawa ng isang bagong Date object para sa kasalukuyang oras
-    var currentDate = new Date();
-
-    // Tumutukoy sa mga buwan gamit ang kanilang pangalan
-    var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October",
-        "November", "December"
-    ];
-
-    // Format ang petsa at oras
-    var year = currentDate.getFullYear();
-    var monthIndex = currentDate.getMonth();
-    var monthName = months[monthIndex];
-    var day = ('0' + currentDate.getDate()).slice(-2);
-    var hours = ('0' + (currentDate.getHours() % 12 || 12)).slice(-2); // Convert to 12-hour format
-    var minutes = ('0' + currentDate.getMinutes()).slice(-2);
-    var ampm = currentDate.getHours() >= 12 ? 'PM' : 'AM';
-
-    // Set ang text content ng span element gamit ang format na ginawa
-    currentDateTimeSpan.textContent = monthName + ' ' + day + ', ' + year + ' - ' + hours + ':' + minutes + ' ' + ampm;
+        // Pagkatapos, ipakita ang bagong modal
+        $('#newModal').modal('show');
+    });
 </script>
+
+<script>
+        // Kunin ang reference sa span element kung saan ilalagay ang oras at petsa
+        var currentDateTimeSpan = document.getElementById('currentDateTime');
+
+        // Gumawa ng function na mag-uupdate ng oras
+        function updateDateTime() {
+            // Gumawa ng isang bagong Date object para sa kasalukuyang oras
+            var currentDate = new Date();
+
+            // Tumutukoy sa mga buwan gamit ang kanilang pangalan
+            var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October",
+                "November", "December"
+            ];
+
+            // Format ang petsa at oras
+            var year = currentDate.getFullYear();
+            var monthIndex = currentDate.getMonth();
+            var monthName = months[monthIndex];
+            var day = ('0' + currentDate.getDate()).slice(-2);
+            var hours = ('0' + (currentDate.getHours() % 12 || 12)).slice(-2); // Convert to 12-hour format
+            var minutes = ('0' + currentDate.getMinutes()).slice(-2);
+            var ampm = currentDate.getHours() >= 12 ? 'PM' : 'AM';
+
+            // Set ang text content ng span element gamit ang format na ginawa
+            currentDateTimeSpan.textContent = monthName + ' ' + day + ', ' + year + ' - ' + hours + ':' + minutes + ' ' + ampm;
+        }
+
+        // Tawagin ang function para sa unang pag-update
+        updateDateTime();
+
+        // Set ang interval para kusang mag-update ng oras kada segundo
+        setInterval(updateDateTime, 1000);
+    </script>

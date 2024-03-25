@@ -14,24 +14,14 @@
     outline: none;
     border-color: #4d94ff;
 }
+
 #client_name{
-    margin-top: 5%;
-}
-#contact_number{
-    margin-top: 5%;
-}
-#platinum_member{
-    margin-top: 10%;
-}
-#platinum_number{
-    margin-top: 10%;
-}
-#representative {
-    margin-top: 6%;
+    width: 300px !important; 
 }
 
-#how_know{
-    margin-top: 3%;
+
+#Technician{
+    justify-content: space-between;
 }
 
 .disclaimer-row {
@@ -109,6 +99,7 @@ input[type="radio"]:checked {
 }
 
 .modal-body {
+    padding: 7%;
     margin-bottom: 3%;
     text-align: justify;
 }
@@ -149,8 +140,29 @@ input[type="radio"]:checked {
     border-color: #22C997;
 }
 
+.btn_Cancel_Slip {
+    width: 150px;
+    background-color: #fff;
+    color: #22C997;
+    border-color: #22C997;
+}
+
+.btn_Cancel_Slip:hover {
+    background-color: #22C997;
+    color: #fff;
+    border-color: #22C997;
+}
+
+.btn_Create {
+    width: 150px;
+}
+
 .btn_save {
     width: 200px;
+}
+
+#claiming_slip {
+    width: 150px;
 }
 
 #add_CID_label {
@@ -175,4 +187,9 @@ input[type="radio"]:checked {
 
 ::-webkit-scrollbar-thumb:hover {
     background: #345AFD;
+}
+
+#dropdown{
+    display: flex;
+    flex-direction: row;
 }
