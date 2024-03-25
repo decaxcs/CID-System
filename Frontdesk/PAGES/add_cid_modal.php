@@ -457,43 +457,44 @@
                     </div>
                 </div>
                 <div class="row-of-information">
-    <div class="col">
-        <div class="mb-4"> <span class="tos_span">TIME & DATE: <span id="currentDateTime"></span></div>
-        <div class="mb-4"><span class="tos_span">CLIENT FULL NAME WITH SIGNATURE:</span> <input type="text"
-            id="client_name" name="client_name"></div>
-        <div class="mb-4"> <span class="tos_span">CONTACT NUMBER:</span> <input type="text" id="contact_number"
-                name="contact_number"></div>
-        <div class="row mb-4 align-items-center"> <!-- Dito ay idinagdag ang 'align-items-center' -->
-            <div class="col">
-                <span class="tos_span">PLATINUM MEMBER:</span>
-                <select id="platinum_member" name="platinum_member" class="custom-select">
-                    <option value="Yes">Yes</option>
-                    <option value="No">No</option>
-                </select>
-            </div>
-            <div class="col">
-                <span class="tos_span">PLATINUM#:</span> <input type="text" id="platinum_number"
-                    name="platinum_number">
-            </div>
-        </div>
-        <div class="mb-4"> <span class="tos_span">TECHYDAVID IT SOLUTIONS’ REPRESENTATIVE:</span>
-            <select id="representative" name="representative" class="custom-select">
-                <option value="Representative 1">Representative 1</option>
-                <option value="Representative 2">Representative 2</option>
-                <option value="Representative 3">Representative 3</option>
-                <!-- Add more options as needed -->
-            </select>
-        </div>
-        <div class="mb-5"> <span class="tos_span">HOW DO YOU KNOW ABOUT US?:</span>
-            <select id="how_know" name="how_know" class="custom-select">
-                <option value="Advertisement">Advertisement</option>
-                <option value="Word of Mouth">Word of Mouth</option>
-                <option value="Online Search">Online Search</option>
-                <!-- Add more options as needed -->
-            </select>
-        </div>
-    </div>
-</div>
+                    <div class="col">
+                        <div class="mb-4"> <span class="tos_span">TIME & DATE: <span id="currentDateTime"></span></div>
+                        <div class="mb-4"><span class="tos_span">CLIENT FULL NAME WITH SIGNATURE:</span> <input
+                                type="text" id="client_name" name="client_name"></div>
+                        <div class="mb-4"> <span class="tos_span">CONTACT NUMBER:</span> <input type="text"
+                                id="contact_number" name="contact_number"></div>
+                        <div class="row mb-4 align-items-center">
+                            <!-- Dito ay idinagdag ang 'align-items-center' -->
+                            <div class="col">
+                                <span class="tos_span">PLATINUM MEMBER:</span>
+                                <select id="platinum_member" name="platinum_member" class="custom-select">
+                                    <option value="Yes">Yes</option>
+                                    <option value="No">No</option>
+                                </select>
+                            </div>
+                            <div class="col">
+                                <span class="tos_span">PLATINUM#:</span> <input type="text" id="platinum_number"
+                                    name="platinum_number">
+                            </div>
+                        </div>
+                        <div class="mb-4"> <span class="tos_span">TECHYDAVID IT SOLUTIONS’ REPRESENTATIVE:</span>
+                            <select id="representative" name="representative" class="custom-select">
+                                <option value="Representative 1">Representative 1</option>
+                                <option value="Representative 2">Representative 2</option>
+                                <option value="Representative 3">Representative 3</option>
+                                <!-- Add more options as needed -->
+                            </select>
+                        </div>
+                        <div class="mb-5"> <span class="tos_span">HOW DO YOU KNOW ABOUT US?:</span>
+                            <select id="how_know" name="how_know" class="custom-select">
+                                <option value="Advertisement">Advertisement</option>
+                                <option value="Word of Mouth">Word of Mouth</option>
+                                <option value="Online Search">Online Search</option>
+                                <!-- Add more options as needed -->
+                            </select>
+                        </div>
+                    </div>
+                </div>
 
 
                 <!-- Continue this pattern for the remaining checkboxes -->
@@ -533,7 +534,8 @@
                     <div class="col my-auto">
                         <div class="unit_details">
                             <div class="form-group">
-                                <label for="brand_models"><span class="tos_span ">Unit Details/Brand Models:</span></label>
+                                <label for="brand_models"><span class="tos_span ">Unit Details/Brand
+                                        Models:</span></label>
                                 <textarea class="form-control" id="unit_Details" rows="3"></textarea>
                             </div>
                         </div>
@@ -545,7 +547,8 @@
                     <div class="col my-auto">
                         <div class="remarks">
                             <div class="form-group">
-                                <label for="exampleFormControlTextarea1"><span class="tos_span ">Remarks:(Scratches,Color,lcd etc)</span></label>
+                                <label for="exampleFormControlTextarea1"><span
+                                        class="tos_span ">Remarks:(Scratches,Color,lcd etc)</span></label>
                                 <textarea class="form-control" id="remarks" rows="5"></textarea>
                             </div>
                         </div>
@@ -574,14 +577,12 @@
                         </p>
                     </div>
                 </div>
-
-
                 <!-- Iba pang mga nilalaman ng modal body -->
             </div>
-            <div class="modal-footer justify-content-end" id="">
-    <button type="button" class="btn btn-secondar btn_Cancel_Slip" data-bs-dismiss="modal">Cancel</button>
-    <button type="button" class="btn btn-primary btn_Create">Create</button>
-</div>
+            <div class="modal-footer justify-content-end" id="ads_slip">
+                <button type="button" class="btn btn-secondar btn_Cancel_Slip" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary btn_Create">Create</button>
+            </div>
 
         </div>
     </div>
@@ -600,35 +601,63 @@
 </script>
 
 <script>
-        // Kunin ang reference sa span element kung saan ilalagay ang oras at petsa
-        var currentDateTimeSpan = document.getElementById('currentDateTime');
+    // Kunin ang reference sa span element kung saan ilalagay ang oras at petsa
+    var currentDateTimeSpan = document.getElementById('currentDateTime');
 
-        // Gumawa ng function na mag-uupdate ng oras
-        function updateDateTime() {
-            // Gumawa ng isang bagong Date object para sa kasalukuyang oras
-            var currentDate = new Date();
+    // Gumawa ng function na mag-uupdate ng oras
+    function updateDateTime() {
+        // Gumawa ng isang bagong Date object para sa kasalukuyang oras
+        var currentDate = new Date();
 
-            // Tumutukoy sa mga buwan gamit ang kanilang pangalan
-            var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October",
-                "November", "December"
-            ];
+        // Tumutukoy sa mga buwan gamit ang kanilang pangalan
+        var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October",
+            "November", "December"
+        ];
 
-            // Format ang petsa at oras
-            var year = currentDate.getFullYear();
-            var monthIndex = currentDate.getMonth();
-            var monthName = months[monthIndex];
-            var day = ('0' + currentDate.getDate()).slice(-2);
-            var hours = ('0' + (currentDate.getHours() % 12 || 12)).slice(-2); // Convert to 12-hour format
-            var minutes = ('0' + currentDate.getMinutes()).slice(-2);
-            var ampm = currentDate.getHours() >= 12 ? 'PM' : 'AM';
+        // Format ang petsa at oras
+        var year = currentDate.getFullYear();
+        var monthIndex = currentDate.getMonth();
+        var monthName = months[monthIndex];
+        var day = ('0' + currentDate.getDate()).slice(-2);
+        var hours = ('0' + (currentDate.getHours() % 12 || 12)).slice(-2); // Convert to 12-hour format
+        var minutes = ('0' + currentDate.getMinutes()).slice(-2);
+        var ampm = currentDate.getHours() >= 12 ? 'PM' : 'AM';
 
-            // Set ang text content ng span element gamit ang format na ginawa
-            currentDateTimeSpan.textContent = monthName + ' ' + day + ', ' + year + ' - ' + hours + ':' + minutes + ' ' + ampm;
-        }
+        // Set ang text content ng span element gamit ang format na ginawa
+        currentDateTimeSpan.textContent = monthName + ' ' + day + ', ' + year + ' - ' + hours + ':' + minutes + ' ' +
+            ampm;
+    }
 
-        // Tawagin ang function para sa unang pag-update
-        updateDateTime();
+    // Tawagin ang function para sa unang pag-update
+    updateDateTime();
 
-        // Set ang interval para kusang mag-update ng oras kada segundo
-        setInterval(updateDateTime, 1000);
-    </script>
+    // Set ang interval para kusang mag-update ng oras kada segundo
+    setInterval(updateDateTime, 1000);
+</script>
+
+<script>
+// Idagdag ang event listener para sa "click" event sa "CANCEL" button
+document.querySelector('.btn_cancel').addEventListener('click', function() {
+    // Kunin ang mga input fields at checkbox na nais mong tanggalin
+    var inputFields = document.querySelectorAll('.modal-body input');
+    var checkboxes = document.querySelectorAll('.modal-body input[type="checkbox"]');
+
+    // Alisin ang laman ng mga input fields
+    inputFields.forEach(function(input) {
+        input.value = '';
+    });
+
+    // Uncheck ang mga checkbox
+    checkboxes.forEach(function(checkbox) {
+        checkbox.checked = false;
+    });
+
+    // Ipakita ang modal
+    $('#add_CID_modal').modal('hide');
+});
+
+</script>
+
+
+
+
