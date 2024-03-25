@@ -6,16 +6,12 @@ function openNewTab(url) {
     window.open(url, '_blank');
 }
 
-//Data Table
 $(document).ready(function() {
     $('#recent_cid_table').DataTable( {
         "lengthMenu": [[4], [4]],
     });
 });
 
-//Calendar Script
-
-//Time Script
 function updateTime() {
     var currentTime = new Date();
     var hours = currentTime.getHours();

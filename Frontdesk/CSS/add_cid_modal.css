@@ -113,7 +113,7 @@ input[type="radio"]:checked {
     text-align: justify;
 }
 
-.modal-footer {
+.add_cid_footer {
     display: flex;
     align-items: center;
     justify-content: center;

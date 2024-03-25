@@ -16,7 +16,9 @@ p {
 }
 
 #side_blue_box {
-    position: relative;
+    position: fixed;
+    left: 0;
+    bottom: 0;
     width: 282px;
     height: 100%;
     background: rgb(34, 145, 253);
@@ -61,6 +63,7 @@ p {
     flex-direction: column; 
     width: 100%;
     height: 100%;
+    margin-left: 282px;
 }
 
 /* Header */

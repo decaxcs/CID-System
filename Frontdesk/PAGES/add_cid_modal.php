@@ -457,8 +457,11 @@
 </div>
 <div class="row row-of-information">
     <div class="col">
+
         <p> <span class="tos_span">TIME & DATE: <span id="currentDateTime"></span></span></p>
+        
         <p> <span class="tos_span">CLIENT FULL NAME WITH SIGNATURE:</span> <input type="text" id="client_name" name="client_name"></p>
+        
         <p> <span class="tos_span">CONTACT NUMBER:</span> <input type="text" id="contact_number" name="contact_number"></p>
         <div class="row">
             <div class="col">

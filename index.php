@@ -24,6 +24,9 @@
                         <p>
                             <p class="subtle_text">Fill in your login details to access</p>
                 </div>
+                
+                <div class="alert alert-danger" id="login_alert" style="display: none;" role="alert">
+                </div>
 
                 <div id="username_container">
                     <div>
