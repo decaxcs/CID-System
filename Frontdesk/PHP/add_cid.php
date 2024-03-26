@@ -35,6 +35,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                         VALUES ('$finalNumber', '$checkboxName', '$checkboxValue')";
                 $conn->query($insertCheckboxQuery);
             }
+            $insertOptionQuery = "INSERT INTO cs_cid_terms_of_service (cid_number, cid_tos_terms, cid_tos_agreement) 
+            VALUES ('$finalNumber', 'tos_advertising_answer', '$selectedOption')";
+            $conn->query($insertOptionQuery);
+
             $response['status'] = 'success';
             $response['cid_number'] = $finalNumber;
         } else {

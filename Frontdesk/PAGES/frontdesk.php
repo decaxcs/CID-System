@@ -185,11 +185,11 @@
                 </div>
             </div>
         </div>
+        <?php include "add_cid_modal.php"; ?>
     </div>
-
+    
+  
     <script src="../JS/front_desk.js"></script>
-
-    <?php include "add_cid_modal.php"; ?>
 </body>
 
 </html>

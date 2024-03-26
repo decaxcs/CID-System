@@ -38,14 +38,21 @@ document.querySelector('.btn_cancel').addEventListener('click', function () {
     $('#add_CID_modal').modal('hide');
 });
 
+<<<<<<< Updated upstream
 proceedButton.addEventListener('click', function () {
     //$('#add_CID_modal').modal('hide');
     //$('#newModal').modal('show');
     
 });
+=======
+>>>>>>> Stashed changes
 
 $(document).ready(function () {
+    var tosModal = new bootstrap.Modal(document.getElementById('add_CID_modal'));
+    var newModal = new bootstrap.Modal(document.getElementById('newModal'));
+
     function add_cid() {
+
         var checkboxValues = {};
 
         $('input[type="checkbox"]').each(function () {
@@ -86,17 +93,17 @@ $(document).ready(function () {
                 representative: representative,
                 advertisement: advertisement,
             },
-            success: function(response) {
-                console.log(response); 
+            success: function (response) {
+                console.log(response);
                 if (response.status === "success") {
-                    var cidNumber = response.cid_number;
-                    console.log("CID Number:", cidNumber);   
+                    tosModal.hide();
+                    newModal.show();
                 } else {
-                    
+
                 }
             },
             error: function (xhr, status, error) {
-                console.log("Error:", error); 
+                console.log("Error:", error);
                 console.log("Status:", status);
                 console.log("XHR:", xhr);
                 console.log("An error occurred while processing your request.");

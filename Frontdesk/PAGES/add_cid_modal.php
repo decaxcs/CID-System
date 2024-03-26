@@ -2,7 +2,7 @@
 <div class="modal fade" id="add_CID_modal" tabindex="-1" aria-labelledby="add_CID_label" aria-hidden="true"
     data-bs-backdrop="static">
     <div class="modal-dialog modal-dialog-scrollable modal-lg">
-        <div class="modal-content">
+        <div class="modal-content" id="tos_container">
             <div class="modal-header">
                 <h5 class="modal-title" id="add_CID_label">Terms of Service</h5>
             </div>
@@ -550,8 +550,8 @@
                     <div class="col my-auto">
                         <div class="remarks">
                             <div class="form-group">
-                                <label for="remarks"><span
-                                        class="tos_span ">Remarks:(Scratches,Color,lcd etc)</span></label>
+                                <label for="remarks"><span class="tos_span ">Remarks:(Scratches,Color,lcd
+                                        etc)</span></label>
                                 <textarea class="form-control" id="remarks" rows="5"></textarea>
                             </div>
                         </div>
