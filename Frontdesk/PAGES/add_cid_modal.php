@@ -463,9 +463,8 @@
                         <div class="mb-4"> <span class="tos_span">TIME & DATE: <span id="currentDateTime"></span></div>
                         <div class="mb-4"><span class="tos_span">CLIENT FULL NAME WITH SIGNATURE:</span> <input
                                 type="text" id="client_name" name="client_name"></div>
-                        <div class="mb-4"> <span class="tos_span">CONTACT NUMBER:</span> <input type="number"
-                                id="contact_number" name="contact_number"></div>
-                        <div class="row mb-4 align-items-center">
+                        <div class="mb-4"> <span class="tos_span">CONTACT NUMBER:</span> <input type="number" id="contact_number" name="contact_number" ></div>
+                        <div class="row mb-5 align-items-center">
                             <!-- Dito ay idinagdag ang 'align-items-center' -->
                             <div class="col">
                                 <span class="tos_span">PLATINUM MEMBER:</span>
@@ -475,11 +474,11 @@
                                 </select>
                             </div>
                             <div class="col">
-                                <span class="tos_span">PLATINUM#:</span> <input type="text" id="platinum_number"
+                                <span class="tos_span">PLATINUM#:</span> <input type="number" id="platinum_number"
                                     name="platinum_number">
                             </div>
                         </div>
-                        <div class="mb-4"> <span class="tos_span">TECHYDAVID IT SOLUTIONS’ REPRESENTATIVE:</span>
+                        <div class="mb-3"> <span class="tos_span">TECHYDAVID IT SOLUTIONS’ REPRESENTATIVE:</span>
                             <select id="representative" name="representative" class="custom-select">
                                 <option value="Representative 1">Representative 1</option>
                                 <option value="Representative 2">Representative 2</option>
@@ -487,7 +486,7 @@
                                 <!-- Add more options as needed -->
                             </select>
                         </div>
-                        <div class="mb-5"> <span class="tos_span">HOW DO YOU KNOW ABOUT US?:</span>
+                        <div class=""> <span class="tos_span">HOW DO YOU KNOW ABOUT US?:</span>
                             <select id="how_know" name="how_know" class="custom-select">
                                 <option value="Advertisement">Advertisement</option>
                                 <option value="Word of Mouth">Word of Mouth</option>
@@ -519,11 +518,11 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col">
-                        <div class="row mb-4">
+                        <div class="row mb-4 ">
                             <div class="col">
                                 <p><span class="tos_span">CID: 20241-3</span></p>
                             </div>
-                            <div class="col">
+                            <div class="col ms-5">
                                 <p><span class="tos_span">Claiming Slip:</span><input type="text" id="claiming_slip"
                                         name="claiming_slip"></p>
                             </div>

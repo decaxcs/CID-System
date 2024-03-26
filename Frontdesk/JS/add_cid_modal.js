@@ -103,3 +103,56 @@ $(document).ready(function () {
     }
     $("#proceedButton").click(add_cid);
 });
+
+
+    // Function to check if all required fields are filled
+    function checkFormValidity() {
+        var clientName = document.getElementById('client_name').value;
+        var contactNumber = document.getElementById('contact_number').value;
+        var platinumNumber = document.getElementById('platinum_number').value;
+
+        // Check if any required field is empty
+        if (clientName.trim() === '' || contactNumber.trim() === '' || platinumNumber.trim() === '') {
+            return false; // Form is not valid, some fields are empty
+        } else {
+            return true; // Form is valid, all required fields are filled
+        }
+    }
+
+    // Add event listener to the proceed button
+    document.getElementById('proceedButton').addEventListener('click', function() {
+        // Check form validity before proceeding
+        if (!checkFormValidity()) {
+            alert('Please fill in all required fields.'); // Display alert if form is not valid
+            return; // Prevent further action
+        }
+
+        // If form is valid, proceed with further actions here
+        // For example, submit the form or execute additional code
+        // ...
+    });
+
+
+    // Function to check if all checkboxes are checked
+    function checkCheckboxes() {
+        var checkboxes = document.querySelectorAll('input[type="checkbox"]');
+        for (var i = 0; i < checkboxes.length; i++) {
+            if (!checkboxes[i].checked) {
+                return false; // If any checkbox is not checked, return false
+            }
+        }
+        return true; // If all checkboxes are checked, return true
+    }
+
+    // Add event listener to the proceed button
+    document.getElementById('proceedButton').addEventListener('click', function() {
+        // Check if all checkboxes are checked
+        if (!checkCheckboxes()) {
+            alert('Please agree to all terms before proceeding.'); // Display alert if not all checkboxes are checked
+            return; // Prevent further action
+        }
+
+        // If all checkboxes are checked, proceed with further actions here
+        // For example, submit the form or execute additional code
+        // ...
+    });

@@ -19,6 +19,16 @@
     width: 300px !important; 
 }
 
+#contact_number{
+    border: none; 
+    border-bottom: 1px solid black;
+}
+
+#platinum_number{
+    border: none; 
+    border-bottom: 1px solid black;
+}
+
 
 #Technician{
     justify-content: space-between;
@@ -192,4 +202,5 @@ input[type="radio"]:checked {
 #dropdown{
     display: flex;
     flex-direction: row;
+    
 }
