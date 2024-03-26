@@ -1,6 +1,6 @@
-
 <!-- Add CID Modal -->
-<div class="modal fade" id="add_CID_modal" tabindex="-1" aria-labelledby="add_CID_label" aria-hidden="true">
+<div class="modal fade" id="add_CID_modal" tabindex="-1" aria-labelledby="add_CID_label" aria-hidden="true"
+    data-bs-backdrop="static">
     <div class="modal-dialog modal-dialog-scrollable modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -107,8 +107,8 @@
                 <div class="row mb-3">
                     <div class="col">
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="tos_Physical_verification">
-                            <label class="form-check-label" for="tos_Physical_verification">
+                            <input class="form-check-input" type="checkbox" value="" id="tos_physical_verification">
+                            <label class="form-check-label" for="tos_physical_verification">
                                 <div class="row">
                                     <div class="col-auto">
                                         <div>5.</div>
@@ -126,8 +126,8 @@
                 <div class="row mb-3">
                     <div class="col">
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="tos_License_Windows">
-                            <label class="form-check-label" for="tos_License_Windows">
+                            <input class="form-check-input" type="checkbox" value="" id="tos_license_windows">
+                            <label class="form-check-label" for="tos_license_windows">
                                 <div class="row">
                                     <div class="col-auto">
                                         <div>6.</div>
@@ -241,12 +241,12 @@
                                         <!-- Yes and No radio buttons -->
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input" type="radio" name="advertisingOption"
-                                                id="yesRadioButton">
+                                                id="yesRadioButton" value="Yes">
                                             <label class="form-check-label" for="yesRadioButton">Yes</label>
                                         </div>
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input" type="radio" name="advertisingOption"
-                                                id="noRadioButton">
+                                                id="noRadioButton" value="No">
                                             <label class="form-check-label" for="noRadioButton">No</label>
                                         </div>
                                     </div>
@@ -463,7 +463,7 @@
                         <div class="mb-4"> <span class="tos_span">TIME & DATE: <span id="currentDateTime"></span></div>
                         <div class="mb-4"><span class="tos_span">CLIENT FULL NAME WITH SIGNATURE:</span> <input
                                 type="text" id="client_name" name="client_name"></div>
-                        <div class="mb-4"> <span class="tos_span">CONTACT NUMBER:</span> <input type="text"
+                        <div class="mb-4"> <span class="tos_span">CONTACT NUMBER:</span> <input type="number"
                                 id="contact_number" name="contact_number"></div>
                         <div class="row mb-4 align-items-center">
                             <!-- Dito ay idinagdag ang 'align-items-center' -->
@@ -535,7 +535,7 @@
                     <div class="col my-auto">
                         <div class="unit_details">
                             <div class="form-group">
-                                <label for="brand_models"><span class="tos_span ">Unit Details/Brand
+                                <label for="unit_Details"><span class="tos_span ">Unit Details/Brand
                                         Models:</span></label>
                                 <textarea class="form-control" id="unit_Details" rows="3"></textarea>
                             </div>
@@ -548,7 +548,7 @@
                     <div class="col my-auto">
                         <div class="remarks">
                             <div class="form-group">
-                                <label for="exampleFormControlTextarea1"><span
+                                <label for="remarks"><span
                                         class="tos_span ">Remarks:(Scratches,Color,lcd etc)</span></label>
                                 <textarea class="form-control" id="remarks" rows="5"></textarea>
                             </div>
@@ -589,77 +589,4 @@
     </div>
 </div>
 
-
-<script>
-    // Dito mo ilalagay ang event listener para sa "PROCEED" button
-    proceedButton.addEventListener('click', function () {
-        // Isara muna ang unang modal
-        $('#add_CID_modal').modal('hide');
-
-        // Pagkatapos, ipakita ang bagong modal
-        $('#newModal').modal('show');
-    });
-</script>
-
-<script>
-    // Kunin ang reference sa span element kung saan ilalagay ang oras at petsa
-    var currentDateTimeSpan = document.getElementById('currentDateTime');
-
-    // Gumawa ng function na mag-uupdate ng oras
-    function updateDateTime() {
-        // Gumawa ng isang bagong Date object para sa kasalukuyang oras
-        var currentDate = new Date();
-
-        // Tumutukoy sa mga buwan gamit ang kanilang pangalan
-        var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October",
-            "November", "December"
-        ];
-
-        // Format ang petsa at oras
-        var year = currentDate.getFullYear();
-        var monthIndex = currentDate.getMonth();
-        var monthName = months[monthIndex];
-        var day = ('0' + currentDate.getDate()).slice(-2);
-        var hours = ('0' + (currentDate.getHours() % 12 || 12)).slice(-2); // Convert to 12-hour format
-        var minutes = ('0' + currentDate.getMinutes()).slice(-2);
-        var ampm = currentDate.getHours() >= 12 ? 'PM' : 'AM';
-
-        // Set ang text content ng span element gamit ang format na ginawa
-        currentDateTimeSpan.textContent = monthName + ' ' + day + ', ' + year + ' - ' + hours + ':' + minutes + ' ' +
-            ampm;
-    }
-
-    // Tawagin ang function para sa unang pag-update
-    updateDateTime();
-
-    // Set ang interval para kusang mag-update ng oras kada segundo
-    setInterval(updateDateTime, 1000);
-</script>
-
-<script>
-// Idagdag ang event listener para sa "click" event sa "CANCEL" button
-document.querySelector('.btn_cancel').addEventListener('click', function() {
-    // Kunin ang mga input fields at checkbox na nais mong tanggalin
-    var inputFields = document.querySelectorAll('.modal-body input');
-    var checkboxes = document.querySelectorAll('.modal-body input[type="checkbox"]');
-
-    // Alisin ang laman ng mga input fields
-    inputFields.forEach(function(input) {
-        input.value = '';
-    });
-
-    // Uncheck ang mga checkbox
-    checkboxes.forEach(function(checkbox) {
-        checkbox.checked = false;
-    });
-
-    // Ipakita ang modal
-    $('#add_CID_modal').modal('hide');
-});
-
-</script>
-
-
-
-
-
+<script src="../JS/add_cid_modal.js"></script>
