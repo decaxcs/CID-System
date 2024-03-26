@@ -451,6 +451,7 @@
                         </div>
                     </div>
                 </div>
+
                 <div class="row mt-4 disclaimer-row">
                     <div class="col">
                         Disclaimer: By signing this TECHYDAVID IT SOLUTIONS’ TERMS OF SERVICE, the REPRESENTATIVE
@@ -496,6 +497,8 @@
                         </div>
                     </div>
                 </div>
+
+                <div id="alertContainer"></div>
 
                 <!-- Continue this pattern for the remaining checkboxes -->
             </div>
