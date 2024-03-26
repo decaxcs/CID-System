@@ -38,15 +38,6 @@ document.querySelector('.btn_cancel').addEventListener('click', function () {
     $('#add_CID_modal').modal('hide');
 });
 
-<<<<<<< Updated upstream
-proceedButton.addEventListener('click', function () {
-    //$('#add_CID_modal').modal('hide');
-    //$('#newModal').modal('show');
-    
-});
-=======
->>>>>>> Stashed changes
-
 $(document).ready(function () {
     var tosModal = new bootstrap.Modal(document.getElementById('add_CID_modal'));
     var newModal = new bootstrap.Modal(document.getElementById('newModal'));
