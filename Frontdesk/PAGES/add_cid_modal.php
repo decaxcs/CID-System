@@ -523,7 +523,7 @@
                     <div class="col">
                         <div class="row mb-4 ">
                             <div class="col">
-                                <p><span class="tos_span">CID: 20241-3</span></p>
+                                <p><span class="tos_span" id="cid_number">CID: 20241-3</span></p>
                             </div>
                             <div class="col ms-5">
                                 <p><span class="tos_span">Claiming Slip:</span><input type="text" id="claiming_slip"

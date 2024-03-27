@@ -36,7 +36,7 @@
             <img id="group_pic" src="../../Assets/Images/Group.svg" alt="group_pic">
             <p id="greetings_text">Hello, Armein</p>
             <button type="button" class="btn btn-primary btn_create" data-bs-toggle="modal"
-                data-bs-target="#add_CID_modal">
+                data-bs-target="#newModal">
                 CREATE
             </button>
         </div>
