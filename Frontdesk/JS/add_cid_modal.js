@@ -39,6 +39,7 @@ document.querySelector('.btn_cancel').addEventListener('click', function () {
 });
 
 $(document).ready(function () {
+    
     var tosModal = new bootstrap.Modal(document.getElementById('add_CID_modal'));
     var newModal = new bootstrap.Modal(document.getElementById('newModal'));
 
@@ -61,16 +62,6 @@ $(document).ready(function () {
         var representative = $("#representative").val();
         var advertisement = $("#how_know").val();
 
-        console.log("Checkbox Values:", checkboxValues);
-        console.log("Selected Option:", selectedOption);
-        console.log("Client Full Name:", client_full_name);
-        console.log("Client Contact:", client_contact);
-        console.log("Platinum:", platinum);
-        console.log("Platinum Number:", platinum_number);
-        console.log("Representative:", representative);
-        console.log("Advertisement:", advertisement);
-
-        
         $.ajax({
             url: "../PHP/add_cid.php",
             type: "POST",
@@ -101,47 +92,97 @@ $(document).ready(function () {
             }
         });
     }
-    $("#proceedButton").click(add_cid);
+
+    $("#proceed_button").click(add_cid);
+
+    // Create CID
+
+    $('#newModal').on('show.bs.modal', function (event) {
+        get_cid_number();
+    })
+
+    function get_cid_number() {
+        $.ajax({
+            url: "../PHP/get_cid_number.php",
+            type: "GET",
+            success: function (response) {
+                console.log(response.cid_number);
+                $('#cid_number').text(response.cid_number);
+            },
+            error: function (xhr, status, error) {
+                console.log("Error:", error);
+                console.log("Status:", status);
+                console.log("XHR:", xhr);
+                console.log("An error occurred while fetching data from the server.");
+            }
+        });
+    }
+
+    function create_cid() {
+
+        var claiming_slip = $('claiming_slip').val;
+        var unit_details = $('unit_details').val;
+        var remarks = $('remarks').val;
+        var technician = $('technician').val;
+        var computer_service = $('computer_service').val;
+
+        $.ajax({
+            url: "../PHP/create_cid.php",
+            type: "POST",
+            data: {
+                claiming_slip: claiming_slip,
+                unit_details: unit_details,
+                remarks: remarks,
+                technician: technician,
+                computer_service: computer_service
+            },
+            success: function (response) {
+                console.log(response);
+                if (response.status === "success") {
+                    // tosModal.hide();
+                    // newModal.show();
+                } else {
+
+                }
+            },
+            error: function (xhr, status, error) {
+                console.log("Error:", error);
+                console.log("Status:", status);
+                console.log("XHR:", xhr);
+                console.log("An error occurred while processing your request.");
+            }
+        });
+    }
 });
 
 
 
+// Data Validation
+// function checkCheckboxes() {
+//     var checkboxes = document.querySelectorAll('input[type="checkbox"]:not(.form-check-nested input)');
+//     for (var i = 0; i < checkboxes.length; i++) {
+//         if (!checkboxes[i].checked) {
+//             return false;
+//         }
+//     }
+//     return true
+// }
 
-// Function to check if all checkboxes are checked
-function checkCheckboxes() {
-    var checkboxes = document.querySelectorAll('input[type="checkbox"]:not(.form-check-nested input)');
-    for (var i = 0; i < checkboxes.length; i++) {
-        if (!checkboxes[i].checked) {
-            return false; // If any checkbox is not checked, return false
-        }
-    }
-    return true; // If all checkboxes are checked, return true
-}
+// function showAlert(message) {
+//     var alertContainer = document.getElementById('alertContainer');
+//     var alertHtml = `
+//         <div class="alert alert-primary alert-dismissible fade show" role="alert">
+//             ${message}
+//             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+//         </div>`;
+//     alertContainer.innerHTML = alertHtml;
+// }
 
-// Function to create and display an alert with a close button
-function showAlert(message) {
-    var alertContainer = document.getElementById('alertContainer');
-    var alertHtml = `
-        <div class="alert alert-primary alert-dismissible fade show" role="alert">
-            ${message}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>`;
-    alertContainer.innerHTML = alertHtml;
-}
-
-// Add event listener to the proceed button
-document.getElementById('proceedButton').addEventListener('click', function() {
-    // Check if all checkboxes are checked
-    if (!checkCheckboxes()) {
-        // Display alert if not all checkboxes are checked
-        showAlert('Please fill in all required fields.');
-        return; // Prevent further action
-    }
-
-    // If all checkboxes are checked, remove any existing alerts and proceed with further actions here
-    var alertContainer = document.getElementById('alertContainer');
-    alertContainer.innerHTML = ''; // Clear any existing alerts
-    // Proceed with further actions here
-    // ...
-});
-
+// document.getElementById('proceedButton').addEventListener('click', function () {
+//     if (!checkCheckboxes()) {
+//         showAlert('Please fill in all required fields.');
+//         return;
+//     }
+//     var alertContainer = document.getElementById('alertContainer');
+//     alertContainer.innerHTML = '';
+// });

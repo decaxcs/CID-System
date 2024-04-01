@@ -36,7 +36,7 @@
             <img id="group_pic" src="../../Assets/Images/Group.svg" alt="group_pic">
             <p id="greetings_text">Hello, Armein</p>
             <button type="button" class="btn btn-primary btn_create" data-bs-toggle="modal"
-                data-bs-target="#newModal">
+                data-bs-target="#add_CID_modal">
                 CREATE
             </button>
         </div>
@@ -187,8 +187,8 @@
         </div>
         <?php include "add_cid_modal.php"; ?>
     </div>
-    
-  
+
+
     <script src="../JS/front_desk.js"></script>
 </body>
 
