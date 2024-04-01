@@ -108,9 +108,6 @@ $(document).ready(function () {
         });
     }
 
-    $('#newModal').on('show.bs.modal', function (event) {
-        get_cid_number();
-    })
 
     function create_cid() {
         var cid_number = $('#cid_number').text();
@@ -160,9 +157,13 @@ $(document).ready(function () {
         $.ajax({
             url: "../PHP/get_technician.php",
             type: "GET",
-            success: function (data) {
-                console.log(data);
-                
+            success: function (response) {
+                console.log(response);
+                if (response.status === "success") {
+                    select_technician(response.data);
+                } else {
+                    console.log("Error: No data found.");
+                }
             },  
             error: function (xhr, status, error) {
                 console.log("Error:", error);
@@ -172,7 +173,30 @@ $(document).ready(function () {
             }
         });
     }
-    get_technician();
+    
+    function select_technician(data) {
+        var select_technician_containers = $('.select_technician');
+        select_technician_containers.empty();
+
+        data.forEach(function (item) {
+            console.log(item.csu_id);
+            console.log(item.csu_name);
+            var select_technician_HTML =
+                `
+                <option value="${item.csu_id}">${item.csu_name}</option>
+                `;
+            select_technician_containers.append(select_technician_HTML);
+        });
+    }
+    
+    $('#newModal').on('show.bs.modal', function (event) {
+        get_cid_number();
+        get_technician();
+    })
+    $('#add_CID_modal').on('show.bs.modal', function (event) {
+        get_technician();
+    })
+
     $("#proceed_button").click(add_cid);
     $("#create_button").click(create_cid);
 });

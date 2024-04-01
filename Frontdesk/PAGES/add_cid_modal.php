@@ -481,11 +481,8 @@
                             </div>
                         </div>
                         <div class="mb-3"> <span class="tos_span">TECHYDAVID IT SOLUTIONS’ REPRESENTATIVE:</span>
-                            <select id="representative" name="representative" class="custom-select">
-                                <option value="Representative 1">Representative 1</option>
-                                <option value="Representative 2">Representative 2</option>
-                                <option value="Representative 3">Representative 3</option>
-                                <!-- Add more options as needed -->
+                            <select id="representative" name="representative" class="custom-select select_technician">
+
                             </select>
                         </div>
                         <div class=""> <span class="tos_span">HOW DO YOU KNOW ABOUT US?:</span>
@@ -562,10 +559,8 @@
                 <div class="mb-3" id="dropdown">
                     <div class="">
                         <p> <span class="tos_span ">Technician: </span>
-                            <select id="technician" name="technician" class="custom-select">
-                                <option value="Representative 1">Representative 1</option>
-                                <option value="Representative 2">Representative 2</option>
-                                <option value="Representative 3">Representative 3</option>
+                            <select id="technician" name="technician" class="custom-select select_technician">
+
                             </select>
                         </p>
                     </div>

@@ -1,8 +1,9 @@
-<?php
+<?php   
+session_start();
 include_once "connect_database.php";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $username = $_POST["username"];
+    $username = htmlspecialchars($_POST["username"]);
     $password = $_POST["password"];
 
     $query = "SELECT * FROM cs_users WHERE csu_username = ?";
@@ -13,11 +14,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if ($result->num_rows > 0) {
         $row = $result->fetch_assoc();
-
         if (password_verify($password, $row['csu_password'])) {
-            session_start();
             $_SESSION["username"] = $username;
-
+            $_SESSION["csu_id"] = $row['csu_id'];
             echo json_encode(array("status" => "success", "permission" => $row['csu_permission']));
         } else {
             echo json_encode(array("status" => "failed"));
