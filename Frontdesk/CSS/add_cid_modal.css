@@ -1,3 +1,8 @@
+.create_cid_page {
+    overflow-y: hidden;
+    padding: 5%;
+}
+
 .custom-select {
     appearance: none;
     -webkit-appearance: none;
@@ -117,16 +122,20 @@ input[type="radio"]:checked {
 .add_cid_footer {
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-around;
+    margin: 0 auto;
     border-top: none;
-    position: absolute;
     bottom: 0;
     left: 0;
-    width: 100%;
+    width: 50%;
     padding: 50px 15px 15px 15px;
     background-image: linear-gradient(to bottom, transparent, white);
     z-index: 1041;
 
+}
+
+.add_cid_footer button {
+    margin: 0 5px; /* Puwang sa kaliwa at kanan ng bawat button */
 }
 
 .form-check {
@@ -203,4 +212,12 @@ input[type="radio"]:checked {
     display: flex;
     flex-direction: row;
     
+}
+
+.tos_terms_of_service{
+    display: block;
+    margin-bottom: 50px;
+    font-size:52px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700px;
 }

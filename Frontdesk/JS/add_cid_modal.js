@@ -178,33 +178,61 @@ $(document).ready(function () {
 });
 
 
+function checkCheckboxes() {
+    var checkboxes = document.querySelectorAll('input[type="checkbox"]:not(.form-check-nested input)');
+    for (var i = 0; i < checkboxes.length; i++) {
+        if (!checkboxes[i].checked) {
+            return false;
+        }
+    }
+    return true;
+}
 
-// Data Validation
-// function checkCheckboxes() {
-//     var checkboxes = document.querySelectorAll('input[type="checkbox"]:not(.form-check-nested input)');
-//     for (var i = 0; i < checkboxes.length; i++) {
-//         if (!checkboxes[i].checked) {
-//             return false;
-//         }
-//     }
-//     return true
-// }
+function checkFields() {
+    var clientName = document.getElementById('client_name').value.trim();
+    var contactNumber = document.getElementById('contact_number').value.trim();
+    var platinumNumber = document.getElementById('platinum_number').value.trim();
+    
+    if (clientName === '' || contactNumber === '' || platinumNumber === '') {
+        return false;
+    }
+    return true;
+}
 
-// function showAlert(message) {
-//     var alertContainer = document.getElementById('alertContainer');
-//     var alertHtml = `
-//         <div class="alert alert-primary alert-dismissible fade show" role="alert">
-//             ${message}
-//             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-//         </div>`;
-//     alertContainer.innerHTML = alertHtml;
-// }
+function checkAdvertisingOption() {
+    var advertisingOption = document.querySelectorAll('input[name="advertisingOption"]:checked').length;
+    return advertisingOption > 0;
+}
 
-// document.getElementById('proceedButton').addEventListener('click', function () {
-//     if (!checkCheckboxes()) {
-//         showAlert('Please fill in all required fields.');
-//         return;
-//     }
-//     var alertContainer = document.getElementById('alertContainer');
-//     alertContainer.innerHTML = '';
-// });
+function showAlert(message) {
+    var alertContainer = document.getElementById('alertContainer');
+    var alertHtml = `
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            ${message}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>`;
+    alertContainer.innerHTML = alertHtml;
+}
+
+document.getElementById('proceed_button').addEventListener('click', function () {
+    if (!checkCheckboxes() || !checkFields() || !checkAdvertisingOption()) {
+        showAlert('Please fill in all required fields and checkboxes.');
+        return;
+    }
+    // If all required fields are filled, checkboxes are checked, and advertising option is selected,
+    // then show the modal
+    $('#newModal').modal('show');
+});
+
+// Function to show modal from outside
+function showNewModal() {
+    if (!checkCheckboxes() || !checkFields() || !checkAdvertisingOption()) {
+        showAlert('Please fill in all required fields and checkboxes.');
+        return;
+    }
+    // If all required fields are filled, checkboxes are checked, and advertising option is selected,
+    // then show the modal
+    $('#newModal').modal('show');
+}
+
+
