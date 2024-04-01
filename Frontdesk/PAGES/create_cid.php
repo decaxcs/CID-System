@@ -10,7 +10,7 @@
 
     <!-- CSS -->
     <link rel="stylesheet" href="../../style.css">
-    <link rel="stylesheet" href="../CSS/add_cid_modal.css">
+        <link rel="stylesheet" href="../CSS/add_cid_modal.css">
     <link rel="stylesheet" href="../CSS/frontdesk.css">
 
     <title>Frontdesk Page</title>
