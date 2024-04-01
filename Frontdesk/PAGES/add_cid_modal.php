@@ -464,7 +464,8 @@
                         <div class="mb-4"> <span class="tos_span">TIME & DATE: <span id="currentDateTime"></span></div>
                         <div class="mb-4"><span class="tos_span">CLIENT FULL NAME WITH SIGNATURE:</span> <input
                                 type="text" id="client_name" name="client_name"></div>
-                        <div class="mb-4"> <span class="tos_span">CONTACT NUMBER:</span> <input type="number" id="contact_number" name="contact_number" ></div>
+                        <div class="mb-4"> <span class="tos_span">CONTACT NUMBER:</span> <input type="number"
+                                id="contact_number" name="contact_number"></div>
                         <div class="row mb-5 align-items-center">
                             <!-- Dito ay idinagdag ang 'align-items-center' -->
                             <div class="col">
@@ -512,85 +513,81 @@
 
 <!-- Bagong Modal -->
 <div class="modal fade" id="newModal" tabindex="-1" aria-labelledby="newModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-scrollable modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <div class="modal-title" id="newModalLabel"></div>
-                </div>
-                <!-- Bagong div sa loob ng modal body -->
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col">
-                            <div class="row mb-4 ">
-                                <div class="col">
-                                    <p class="tos_span">CID: <span class="tos_span" id="cid_number"> 20241-3</span></p>
-                                </div>
-                                <div class="col ms-5">
-                                    <p><span class="tos_span">Claiming Slip:</span><input type="text" id="claiming_slip"
-                                            name="claiming_slip"></p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row mb-5">
-                        <!-- Dagdag ng margin sa ibaba -->
-                        <div class="col my-auto">
-                            <div class="unit_details">
-                                <div class="form-group">
-                                    <label for="unit_details"><span class="tos_span ">Unit Details/Brand
-                                            Models:</span></label>
-                                    <textarea class="form-control" id="unit_details" rows="3"></textarea>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row mb-5">
-                        <!-- Dagdag ng margin sa ibaba -->
-                        <div class="col my-auto">
-                            <div class="remarks">
-                                <div class="form-group">
-                                    <label for="remarks"><span class="tos_span ">Remarks:(Scratches,Color,lcd
-                                            etc)</span></label>
-                                    <textarea class="form-control" id="remarks" rows="5"></textarea>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="mb-3" id="dropdown">
-                        <div class="">
-                            <p> <span class="tos_span ">Technician: </span>
-                                <select id="technician " name="technician" class="custom-select">
-                                    <option value="Representative 1">Representative 1</option>
-                                    <option value="Representative 2">Representative 2</option>
-                                    <option value="Representative 3">Representative 3</option>
-                                    <!-- Add more options as needed -->
-                                </select>
-                            </p>
-                        </div>
-                        <div class="ms-5 mb-3">
-                            <p> <span class="tos_span ">Computer Service:</span>
-                                <select id="computer_service" name="computer_service" class="custom-select">
-                                    <option value="Representative 1">Representative 1</option>
-                                    <option value="Representative 2">Representative 2</option>
-                                    <option value="Representative 3">Representative 3</option>
-                                    <!-- Add more options as needed -->
-                                </select>
-                            </p>
-                        </div>
-                    </div>
-                    <!-- Iba pang mga nilalaman ng modal body -->
-                </div>
-                <div class="modal-footer justify-content-end" id="ads_slip">
-                    <button type="button" class="btn btn-secondar btn_Cancel_Slip"
-                        data-bs-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-primary btn_Create" id="create_button">Create</button>
-                </div>
-
+    <div class="modal-dialog modal-dialog-scrollable modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title" id="newModalLabel"></div>
             </div>
+            <!-- Bagong div sa loob ng modal body -->
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col">
+                        <div class="row mb-4 ">
+                            <div class="col">
+                                <p class="tos_span">CID: <span class="tos_span" id="cid_number"> 20241-3</span></p>
+                            </div>
+                            <div class="col ms-5">
+                                <p><span class="tos_span">Claiming Slip:</span><input type="text" id="claiming_slip"
+                                        name="claiming_slip"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mb-5">
+                    <!-- Dagdag ng margin sa ibaba -->
+                    <div class="col my-auto">
+                        <div class="unit_details">
+                            <div class="form-group">
+                                <label for="unit_details"><span class="tos_span ">Unit Details/Brand
+                                        Models:</span></label>
+                                <textarea class="form-control" id="unit_details" rows="3"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mb-5">
+                    <!-- Dagdag ng margin sa ibaba -->
+                    <div class="col my-auto">
+                        <div class="remarks">
+                            <div class="form-group">
+                                <label for="remarks"><span class="tos_span ">Remarks:(Scratches,Color,lcd
+                                        etc)</span></label>
+                                <textarea class="form-control" id="remarks" rows="5"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mb-3" id="dropdown">
+                    <div class="">
+                        <p> <span class="tos_span ">Technician: </span>
+                            <select id="technician" name="technician" class="custom-select">
+                                <option value="Representative 1">Representative 1</option>
+                                <option value="Representative 2">Representative 2</option>
+                                <option value="Representative 3">Representative 3</option>
+                            </select>
+                        </p>
+                    </div>
+                    <div class="ms-5 mb-3">
+                        <p> <span class="tos_span ">Computer Service:</span>
+                            <select id="computer_service" name="computer_service" class="custom-select">
+                                <option value="Representative 1">Representative 1</option>
+                                <option value="Representative 2">Representative 2</option>
+                                <option value="Representative 3">Representative 3</option>
+                            </select>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer justify-content-end" id="ads_slip">
+                <button type="button" class="btn btn-secondar btn_Cancel_Slip" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary btn_Create" id="create_button">Create</button>
+            </div>
+
         </div>
-    </div>  
+    </div>
+</div>
 
 
 <script src="../JS/add_cid_modal.js"></script>

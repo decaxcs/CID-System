@@ -39,7 +39,6 @@ document.querySelector('.btn_cancel').addEventListener('click', function () {
 });
 
 $(document).ready(function () {
-    
     var tosModal = new bootstrap.Modal(document.getElementById('add_CID_modal'));
     var newModal = new bootstrap.Modal(document.getElementById('newModal'));
 
@@ -93,20 +92,11 @@ $(document).ready(function () {
         });
     }
 
-    $("#proceed_button").click(add_cid);
-
-    // Create CID
-
-    $('#newModal').on('show.bs.modal', function (event) {
-        get_cid_number();
-    })
-
     function get_cid_number() {
         $.ajax({
             url: "../PHP/get_cid_number.php",
             type: "GET",
             success: function (response) {
-                console.log(response.cid_number);
                 $('#cid_number').text(response.cid_number);
             },
             error: function (xhr, status, error) {
@@ -118,18 +108,31 @@ $(document).ready(function () {
         });
     }
 
-    function create_cid() {
+    $('#newModal').on('show.bs.modal', function (event) {
+        get_cid_number();
+    })
 
-        var claiming_slip = $('claiming_slip').val;
-        var unit_details = $('unit_details').val;
-        var remarks = $('remarks').val;
-        var technician = $('technician').val;
-        var computer_service = $('computer_service').val;
+    function create_cid() {
+        var cid_number = $('#cid_number').text();
+        var claiming_slip = $('#claiming_slip').val();
+        var unit_details = $('#unit_details').val();
+        var remarks = $('#remarks').val();
+        var technician = $('#technician').val();
+        var computer_service = $('#computer_service').val();
+
+        console.log("CID Number:", cid_number);
+        console.log("Claiming Slip:", claiming_slip);
+        console.log("Unit Details:", unit_details);
+        console.log("Remarks:", remarks);
+        console.log("Technician:", technician);
+        console.log("Computer Service:", computer_service);
+
 
         $.ajax({
             url: "../PHP/create_cid.php",
             type: "POST",
             data: {
+                cid_number: cid_number,
                 claiming_slip: claiming_slip,
                 unit_details: unit_details,
                 remarks: remarks,
@@ -139,8 +142,7 @@ $(document).ready(function () {
             success: function (response) {
                 console.log(response);
                 if (response.status === "success") {
-                    // tosModal.hide();
-                    // newModal.show();
+
                 } else {
 
                 }
@@ -153,6 +155,26 @@ $(document).ready(function () {
             }
         });
     }
+
+    function get_technician() {
+        $.ajax({
+            url: "../PHP/get_technician.php",
+            type: "GET",
+            success: function (data) {
+                console.log(data);
+                
+            },  
+            error: function (xhr, status, error) {
+                console.log("Error:", error);
+                console.log("Status:", status);
+                console.log("XHR:", xhr);
+                console.log("An error occurred while fetching data from the server.");
+            }
+        });
+    }
+    get_technician();
+    $("#proceed_button").click(add_cid);
+    $("#create_button").click(create_cid);
 });
 
 
