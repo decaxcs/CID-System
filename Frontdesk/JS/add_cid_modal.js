@@ -166,7 +166,7 @@ $(document).ready(function () {
     }
 
     function select_services(data) {
-        var select_services_containers = $('.technician_ongoing_container');
+        var select_services_containers = $('.select_services');
         select_services_containers.empty();
 
         data.forEach(function (item) {
