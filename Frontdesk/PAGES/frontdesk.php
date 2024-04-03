@@ -28,19 +28,14 @@
                     </div>
                 </div>
                 <!-- <img id="profile_pic" src="../../Assets/Images/logo.png" alt="logo"> -->
-                <p id="tech_name"></p>
+                <p id="tech_name">Armein</p>
                 <iconify-icon id="drop_down_icon" icon="iconamoon:arrow-down-2"></iconify-icon>
             </div>
         </div>
         <div id="greetings_header">
             <img id="group_pic" src="../../Assets/Images/Group.svg" alt="group_pic">
-<<<<<<< HEAD
             <p id="greetings_text">Hello, Armein</p>
             <button type="button" class="btn btn-primary btn_create" data-bs-toggle="modal" data-bs-target="#newModal">
-=======
-            <p id="greetings_text"></p>
-            <button type="button" class="btn btn-primary btn_create" id="btn_create">
->>>>>>> 50652ce571fba247ada3169e2f8b737157d91895
                 CREATE
             </button>
         </div>
@@ -272,11 +267,7 @@
             </div>
 
 
-<<<<<<< HEAD
             <script src="../JS/front_desk.js"></script>
-=======
-    <script src="../JS/frontdesk.js"></script>
->>>>>>> 50652ce571fba247ada3169e2f8b737157d91895
 </body>
 
 </html>
