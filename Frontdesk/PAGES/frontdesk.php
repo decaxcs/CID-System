@@ -263,6 +263,7 @@
                 </div>
             </div>
         </div>
+        
     </div>
 </div>
                 <?php include "add_cid_modal.php"; ?>
@@ -281,44 +282,44 @@
         <tbody>
             <tr>
                 <td>22055-55</td>
-                <td>System Architect</td>
-                <td>Edinburgh</td>
-                <td>61</td>
+                <td>Sebastian Taylor</td>
+                <td>Bogart</td>
+                <td>Redmi M2004J190</td>
                 <td>2011-04-25</td>
             </tr>
             <tr>
-                <td>Garrett Winters</td>
-                <td>Accountant</td>
-                <td>Tokyo</td>
-                <td>63</td>
+                <td>22055-55</td>
+                <td>Sebastian Taylor</td>
+                <td>Bogart</td>
+                <td>Redmi M2004J190</td>
                 <td>2011-07-25</td>
             </tr>
             <tr>
                 <td>Ashton Cox</td>
-                <td>Junior Technical Author</td>
-                <td>San Francisco</td>
-                <td>66</td>
+                <td>Sebastian Taylor</td>
+                <td>Bogart</td>
+                <td>Redmi M2004J190</td>
                 <td>2009-01-12</td>
             </tr>
             <tr>
                 <td>Cedric Kelly</td>
-                <td>Senior Javascript Developer</td>
-                <td>Edinburgh</td>
-                <td>22</td>
+                <td>Sebastian Taylor</td>
+                <td>Bogart</td>
+                <td>Redmi M2004J190</td>
                 <td>2012-03-29</td>
             </tr>
             <tr>
                 <td>Airi Satou</td>
-                <td>Accountant</td>
-                <td>Tokyo</td>
-                <td>33</td>
+                <td>Sebastian Taylor</td>
+                <td>Bogart</td>
+                <td>Redmi M2004J190</td>
                 <td>2008-11-28</td>
             </tr>
             <tr>
                 <td>Brielle Williamson</td>
                 <td>Integration Specialist</td>
                 <td>New York</td>
-                <td>61</td>
+                <td>Redmi M2004J190</td>
                 <td>2012-12-02</td>
             </tr>
             <tr>
@@ -680,7 +681,7 @@
             </tr>
         </tbody>
     </table>
-     </div>
+    
 
             <script src="../JS/frontdesk.js"></script>
 </body>
