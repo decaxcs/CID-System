@@ -296,17 +296,12 @@ p {
     /* I-center ang text sa loob ng text_container */
     align-items: center;
     height: 5em;
-    width: 23em;
+    width: 21em;
 }
 
 #progress_card {
     overflow: auto;
     height: 330px;
-    
-}
-/* Itakda ang kaugalian ng scrollbar */
-#progress_card::-webkit-scrollbar {
-    width: 0; /* I-hide ang scrollbar sa Chrome, Safari, at Opera */
 }
 
 .number_text {
@@ -333,34 +328,4 @@ p {
 
 #click_warranty{
     cursor: pointer;
-}
-
-#table_container {
-    overflow: hidden;
-    margin-top: 50px;
-}
-#my_table {
-    overflow: auto;
-    height: 330px;
-    border-collapse: collapse;
-    width: 100%;
-    background-color: #fafafa;
-}
-#my_table th,
-#my_table td {
-    padding: 12px 15px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
-}
-#my_table th {
-    background-color: #f2f2f2;
-    font-weight: bold;
-    color: #333;
-    text-transform: uppercase;
-}
-#my_table tbody tr:hover {
-    background-color: #f5f5f5;
-}
-#my_table tbody tr:nth-child(even) {
-    background-color: #fafafa;
 }
