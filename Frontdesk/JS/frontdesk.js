@@ -151,29 +151,30 @@ $(document).ready(function () {
     get_services();
     get_status_count();
 
-    document.addEventListener("DOMContentLoaded", function() {
-        // Kunin ang mga elementong may id na click_release, click_ongoing, at click_warranty
-        var release = document.getElementById("click_release");
-        var ongoing = document.getElementById("click_ongoing");
-        var warranty = document.getElementById("click_warranty");
-    
-        // Idagdag ang event listener para sa click event sa bawat elemento
-        release.addEventListener("click", function() {
-            // Dalhin sa target na pahina kapag i-click ang release
-            window.location.href = "release.php";
-        });
-    
-        ongoing.addEventListener("click", function() {
-            // Dalhin sa target na pahina kapag i-click ang ongoing
-            window.location.href = "https://example.com/ongoing-page";
-        });
-    
-        warranty.addEventListener("click", function() {
-            // Dalhin sa target na pahina kapag i-click ang warranty
-            window.location.href = "https://example.com/warranty-page";
-        });
-    });
-    
-    new DataTable('#my_table');
+ 
 });
 
+new DataTable('#my_table');
+
+document.addEventListener("DOMContentLoaded", function() {
+    // Kunin ang mga elementong may id na click_release, click_ongoing, at click_warranty
+    var release = document.getElementById("click_release");
+    var ongoing = document.getElementById("click_ongoing");
+    var warranty = document.getElementById("click_warranty");
+
+    // Idagdag ang event listener para sa click event sa bawat elemento
+    release.addEventListener("click", function() {
+        // Dalhin sa target na pahina kapag i-click ang release
+        window.location.href = "release.php";
+    });
+
+    ongoing.addEventListener("click", function() {
+        // Dalhin sa target na pahina kapag i-click ang ongoing
+        window.location.href = "https://example.com/ongoing-page";
+    });
+
+    warranty.addEventListener("click", function() {
+        // Dalhin sa target na pahina kapag i-click ang warranty
+        window.location.href = "https://example.com/warranty-page";
+    });
+});

@@ -338,6 +338,7 @@ p {
 #table_container {
     overflow: hidden;
     margin-top: 50px;
+    
 }
 #my_table {
     overflow: auto;

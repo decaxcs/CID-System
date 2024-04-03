@@ -50,6 +50,7 @@
                         <div class="carousel-inner">
                             <div class="carousel-item active">
                                 <div class="card_container">
+                           
                                 </div>
                             </div>
                         </div>
@@ -611,6 +612,7 @@
             </tr>
         </tbody>
     </table>
+</div>
     
 
             <script src="../JS/frontdesk.js"></script>
