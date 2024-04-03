@@ -1,5 +1,9 @@
 
 $(document).ready(function () {
+    document.getElementById('btn_create').addEventListener('click', function() {
+        window.location.href = 'create_cid.php';
+    });
+
     function get_user_account() {
         $.ajax({
             url: "../PHP/get_user_account.php",

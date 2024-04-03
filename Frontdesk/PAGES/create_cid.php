@@ -494,11 +494,8 @@
                     </div>
                 </div>
                 <div class="mb-3"> <span class="tos_span">TECHYDAVID IT SOLUTIONS’ REPRESENTATIVE:</span>
-                    <select id="representative" name="representative" class="custom-select">
-                        <option value="Representative 1">Representative 1</option>
-                        <option value="Representative 2">Representative 2</option>
-                        <option value="Representative 3">Representative 3</option>
-                        <!-- Add more options as needed -->
+                    <select id="representative" name="representative" class="custom-select select_technician">
+
                     </select>
                 </div>
                 <div class="mb-5"> <span class="tos_span">HOW DO YOU KNOW ABOUT US?:</span>
@@ -535,10 +532,10 @@
                             <div class="col">
                                 <p class="tos_span">CID: <span class="tos_span" id="cid_number"> 20241-3</span></p>
                             </div>
-                            <div class="col ms-5">
+                            <!-- <div class="col ms-5">
                                 <p><span class="tos_span">Claiming Slip:</span><input type="text" id="claiming_slip"
                                         name="claiming_slip"></p>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                 </div>
@@ -571,10 +568,8 @@
                 <div class="mb-3" id="dropdown">
                     <div class="">
                         <p> <span class="tos_span ">Technician: </span>
-                            <select id="technician" name="technician" class="custom-select">
-                                <option value="Representative 1">Representative 1</option>
-                                <option value="Representative 2">Representative 2</option>
-                                <option value="Representative 3">Representative 3</option>
+                            <select id="technician" name="technician" class="custom-select select_technician">
+
                             </select>
                         </p>
                     </div>
