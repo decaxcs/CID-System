@@ -44,79 +44,10 @@
                 <p id="services_title" class="title">Services</p>
                 <div id="services_container">
                     <div id="carouselExample" class="carousel slide">
-                        <div class="carousel-inner">
+                        <div class="carousel-inner service_container">
                             <div class="carousel-item active">
                                 <div class="card_container">
-                                    <div class="card services_card">
-                                        <div class="card-body services_card_body">
-                                            <div class="services_icon_container">
-                                                <iconify-icon icon="icon-park-outline:new-computer"></iconify-icon>
-                                            </div>
-                                            <div class="info_container">
-                                                <p class="services_name">Computer Service</p>
-                                                <p class="services_number">16</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="card services_card">
-                                        <div class="card-body services_card_body">
-                                            <div class="services_icon_container">
-                                                <iconify-icon icon="icon-park-outline:new-computer"></iconify-icon>
-                                            </div>
-                                            <div class="info_container">
-                                                <p class="services_name">Computer Service</p>
-                                                <p class="services_number">16</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="card services_card">
-                                        <div class="card-body services_card_body">
-                                            <div class="services_icon_container">
-                                                <iconify-icon icon="icon-park-outline:new-computer"></iconify-icon>
-                                            </div>
-                                            <div class="info_container">
-                                                <p class="services_name">Computer Service</p>
-                                                <p class="services_number">16</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="card services_card">
-                                        <div class="card-body services_card_body">
-                                            <div class="services_icon_container">
-                                                <iconify-icon icon="icon-park-outline:new-computer"></iconify-icon>
-                                            </div>
-                                            <div class="info_container">
-                                                <p class="services_name">Computer Service</p>
-                                                <p class="services_number">16</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="card services_card">
-                                        <div class="card-body services_card_body">
-                                            <div class="services_icon_container">
-                                                <iconify-icon icon="icon-park-outline:new-computer"></iconify-icon>
-                                            </div>
-                                            <div class="info_container">
-                                                <p class="services_name">Computer Service</p>
-                                                <p class="services_number">16</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="carousel-item">
-                                <div class="card_container">
-                                    <div class="card services_card">
-                                        <div class="card-body services_card_body">
-                                            <div class="services_icon_container">
-                                                <iconify-icon icon="icon-park-outline:new-computer"></iconify-icon>
-                                            </div>
-                                            <div class="info_container">
-                                                <p class="services_name">Computer Service</p>
-                                                <p class="services_number">16</p>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    
                                 </div>
                             </div>
                         </div>
