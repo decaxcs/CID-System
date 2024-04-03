@@ -12,19 +12,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $platinum_number = mysqli_real_escape_string($conn, $_POST["platinum_number"]);
     $representative = mysqli_real_escape_string($conn, $_POST["representative"]);
     $advertisement = mysqli_real_escape_string($conn, $_POST["advertisement"]);
-
+ 
     $platinum = $_POST["platinum"] == 1 ? 1 : 0;
 
-    $currentMonth = date('m');
-    $currentYear = date('Y');
-    $baseNumber = $currentMonth . $currentYear . '-';
-    $query = "SELECT MAX(CAST(SUBSTRING_INDEX(cid_number, '-', -1) AS UNSIGNED)) AS max_number FROM cs_cid_information WHERE cid_number LIKE '$currentMonth$currentYear-%'";
-   
     $result = $conn->query($query);
     if ($result && $row = $result->fetch_assoc()) {
-        $maxNumber = $row['max_number'];
-        $incrementedNumber = ($maxNumber !== null) ? $maxNumber + 1 : 1;
-        $finalNumber = $baseNumber . $incrementedNumber; 
         $insertQuery = "INSERT INTO cs_cid_information (cid_number, cid_client_full_name, cid_platinum, cid_client_contact, cid_platinum_number, cid_representative, cid_advertisement) 
                         VALUES ('$finalNumber', '$client_full_name', '$platinum', '$client_contact', '$platinum_number', '$representative', '$advertisement')";
         

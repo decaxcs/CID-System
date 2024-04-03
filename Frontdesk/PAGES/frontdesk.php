@@ -28,15 +28,15 @@
                     </div>
                 </div>
                 <!-- <img id="profile_pic" src="../../Assets/Images/logo.png" alt="logo"> -->
-                <p id="tech_name">Armein</p>
+                <p id="tech_name"></p>
                 <iconify-icon id="drop_down_icon" icon="iconamoon:arrow-down-2"></iconify-icon>
             </div>
         </div>
         <div id="greetings_header">
             <img id="group_pic" src="../../Assets/Images/Group.svg" alt="group_pic">
-            <p id="greetings_text">Hello, Armein</p>
+            <p id="greetings_text"></p>
             <button type="button" class="btn btn-primary btn_create" data-bs-toggle="modal"
-                data-bs-target="#newModal">
+                data-bs-target="#add_CID_modal">
                 CREATE
             </button>
         </div>
@@ -189,7 +189,7 @@
     </div>
 
 
-    <script src="../JS/front_desk.js"></script>
+    <script src="../JS/frontdesk.js"></script>
 </body>
 
 </html>

@@ -521,7 +521,7 @@
                     <div class="col">
                         <div class="row mb-4 ">
                             <div class="col">
-                                <p class="tos_span">CID: <span class="tos_span" id="cid_number"> 20241-3</span></p>
+                                <p class="tos_span">CID: <span class="tos_span" id="cid_number"></span></p>
                             </div>
                             <div class="col ms-5">
                                 <p><span class="tos_span">Claiming Slip:</span><input type="text" id="claiming_slip"
