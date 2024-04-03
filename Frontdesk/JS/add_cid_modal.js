@@ -39,65 +39,46 @@ document.querySelector('.btn_cancel').addEventListener('click', function () {
 });
 
 $(document).ready(function () {
-    var tosModal = new bootstrap.Modal(document.getElementById('add_CID_modal'));
-    var newModal = new bootstrap.Modal(document.getElementById('newModal'));
+    var checkboxValues = {};
+
+    var selectedOption;
+
+    var cid_number;
+    var client_full_name;
+    var client_contact;
+    var platinum;
+    var platinum_number;
+    var representative;
+    var advertisement;
 
     function add_cid() {
-
-        var checkboxValues = {};
-
         $('input[type="checkbox"]').each(function () {
             var checkboxId = $(this).attr('id');
             var checkboxValue = $(this).prop('checked');
             checkboxValues[checkboxId] = checkboxValue;
         });
 
-        var selectedOption = $('input[name="advertisingOption"]:checked').val() === "Yes" ? 1 : 0;
+        selectedOption = $('input[name="advertisingOption"]:checked').val() === "Yes" ? 1 : 0;
 
-        var client_full_name = $("#client_name").val();
-        var client_contact = $("#contact_number").val();
-        var platinum = $("#platinum_member").val() === "Yes" ? 1 : 0;
-        var platinum_number = $("#platinum_number").val();
-        var representative = $("#representative").val();
-        var advertisement = $("#how_know").val();
+        client_full_name = $("#client_name").val();
+        client_contact = $("#contact_number").val();
+        platinum = $("#platinum_member").val() === "Yes" ? 1 : 0;
+        platinum_number = $("#platinum_number").val();
+        representative = $("#representative").val();
+        advertisement = $("#how_know").val();
 
-        $.ajax({
-            url: "../PHP/add_cid.php",
-            type: "POST",
-            data: {
-                checkboxValues: checkboxValues,
-                selectedOption: selectedOption,
-                client_full_name: client_full_name,
-                client_contact: client_contact,
-                platinum: platinum,
-                platinum_number: platinum_number,
-                representative: representative,
-                advertisement: advertisement,
-            },
-            success: function (response) {
-                console.log(response);
-                if (response.status === "success") {
-                    tosModal.hide();
-                    newModal.show();
-                } else {
+        console.log(checkboxValues);
 
-                }
-            },
-            error: function (xhr, status, error) {
-                console.log("Error:", error);
-                console.log("Status:", status);
-                console.log("XHR:", xhr);
-                console.log("An error occurred while processing your request.");
-            }
-        });
+        // $('#newModal').modal('show');
     }
 
-    function get_cid_number() {
+    function create_cid_number() {
         $.ajax({
-            url: "../PHP/get_cid_number.php",
+            url: "../PHP/create_cid_number.php",
             type: "GET",
             success: function (response) {
-                $('#cid_number').text(response.cid_number);
+                cid_number = response.cid_number;
+                $('#cid_number').text(cid_number);
             },
             error: function (xhr, status, error) {
                 console.log("Error:", error);
@@ -108,36 +89,35 @@ $(document).ready(function () {
         });
     }
 
-
     function create_cid() {
         var cid_number = $('#cid_number').text();
-        var claiming_slip = $('#claiming_slip').val();
         var unit_details = $('#unit_details').val();
         var remarks = $('#remarks').val();
         var technician = $('#technician').val();
         var computer_service = $('#computer_service').val();
-
-        console.log("CID Number:", cid_number);
-        console.log("Claiming Slip:", claiming_slip);
-        console.log("Unit Details:", unit_details);
-        console.log("Remarks:", remarks);
-        console.log("Technician:", technician);
-        console.log("Computer Service:", computer_service);
-
 
         $.ajax({
             url: "../PHP/create_cid.php",
             type: "POST",
             data: {
                 cid_number: cid_number,
-                claiming_slip: claiming_slip,
+
+                checkboxValues: checkboxValues, 
+                selectedOption: selectedOption,
+                client_full_name: client_full_name,
+                client_contact: client_contact,
+                platinum: platinum,
+                platinum_number: platinum_number,
+                representative: representative,
+                advertisement: advertisement,
+
+                cid_number: cid_number,
                 unit_details: unit_details,
                 remarks: remarks,
                 technician: technician,
                 computer_service: computer_service
             },
             success: function (response) {
-                console.log(response);
                 if (response.status === "success") {
 
                 } else {
@@ -158,13 +138,12 @@ $(document).ready(function () {
             url: "../PHP/get_technician.php",
             type: "GET",
             success: function (response) {
-                console.log(response);
                 if (response.status === "success") {
                     select_technician(response.data);
                 } else {
                     console.log("Error: No data found.");
                 }
-            },  
+            },
             error: function (xhr, status, error) {
                 console.log("Error:", error);
                 console.log("Status:", status);
@@ -173,14 +152,12 @@ $(document).ready(function () {
             }
         });
     }
-    
+
     function select_technician(data) {
         var select_technician_containers = $('.select_technician');
         select_technician_containers.empty();
 
         data.forEach(function (item) {
-            console.log(item.csu_id);
-            console.log(item.csu_name);
             var select_technician_HTML =
                 `
                 <option value="${item.csu_id}">${item.csu_name}</option>
@@ -188,15 +165,13 @@ $(document).ready(function () {
             select_technician_containers.append(select_technician_HTML);
         });
     }
-    
+
     $('#newModal').on('show.bs.modal', function (event) {
-        get_cid_number();
-        get_technician();
-    })
-    $('#add_CID_modal').on('show.bs.modal', function (event) {
+        create_cid_number();
         get_technician();
     })
 
+    get_technician();
     $("#proceed_button").click(add_cid);
     $("#create_button").click(create_cid);
 });
@@ -243,19 +218,14 @@ document.getElementById('proceed_button').addEventListener('click', function () 
         showAlert('Please fill in all required fields and checkboxes.');
         return;
     }
-    // If all required fields are filled, checkboxes are checked, and advertising option is selected,
-    // then show the modal
     $('#newModal').modal('show');
 });
 
-// Function to show modal from outside
 function showNewModal() {
     if (!checkCheckboxes() || !checkFields() || !checkAdvertisingOption()) {
         showAlert('Please fill in all required fields and checkboxes.');
         return;
     }
-    // If all required fields are filled, checkboxes are checked, and advertising option is selected,
-    // then show the modal
     $('#newModal').modal('show');
 }
 
