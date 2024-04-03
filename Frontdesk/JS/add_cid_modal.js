@@ -67,8 +67,6 @@ $(document).ready(function () {
         representative = $("#representative").val();
         advertisement = $("#how_know").val();
 
-        console.log(checkboxValues);
-
         // $('#newModal').modal('show');
     }
 
@@ -115,11 +113,11 @@ $(document).ready(function () {
                 unit_details: unit_details,
                 remarks: remarks,
                 technician: technician,
-                computer_service: computer_service
+                computer_service: computer_service 
             },
             success: function (response) {
                 if (response.status === "success") {
-
+                    window.location.href = '../../index.php';
                 } else {
 
                 }
@@ -133,13 +131,14 @@ $(document).ready(function () {
         });
     }
 
-    function get_technician() {
+    function get_technician_services() {
         $.ajax({
-            url: "../PHP/get_technician.php",
+            url: "../PHP/get_technician_services.php",
             type: "GET",
             success: function (response) {
                 if (response.status === "success") {
-                    select_technician(response.data);
+                    select_technician(response.users_data);
+                    select_services(response.services_data);
                 } else {
                     console.log("Error: No data found.");
                 }
@@ -166,12 +165,25 @@ $(document).ready(function () {
         });
     }
 
+    function select_services(data) {
+        var select_services_containers = $('.technician_ongoing_container');
+        select_services_containers.empty();
+
+        data.forEach(function (item) {
+            var select_services_HTML =
+                `
+                <option value="${item.cs_service_id}">${item.cs_service_name}</option>
+                `;
+                select_services_containers.append(select_services_HTML);
+        });
+    }
+
     $('#newModal').on('show.bs.modal', function (event) {
         create_cid_number();
-        get_technician();
+        get_technician_services();
     })
 
-    get_technician();
+    get_technician_services();
     $("#proceed_button").click(add_cid);
     $("#create_button").click(create_cid);
 });

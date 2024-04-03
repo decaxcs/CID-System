@@ -575,10 +575,8 @@
                     </div>
                     <div class="ms-5 mb-3">
                         <p> <span class="tos_span ">Computer Service:</span>
-                            <select id="computer_service" name="computer_service" class="custom-select">
-                                <option value="Representative 1">Representative 1</option>
-                                <option value="Representative 2">Representative 2</option>
-                                <option value="Representative 3">Representative 3</option>
+                            <select id="computer_service" name="computer_service" class="custom-select select_services">
+                          
                             </select>
                         </p>
                     </div>
