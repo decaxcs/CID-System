@@ -34,13 +34,8 @@
         </div>
         <div id="greetings_header">
             <img id="group_pic" src="../../Assets/Images/Group.svg" alt="group_pic">
-<<<<<<< HEAD
-            <p id="greetings_text">Hello, Armein</p>
-            <button type="button" class="btn btn-primary btn_create" data-bs-toggle="modal" data-bs-target="#newModal">
-=======
             <p id="greetings_text"></p>
             <button type="button" class="btn btn-primary btn_create" id="btn_create">
->>>>>>> 50652ce571fba247ada3169e2f8b737157d91895
                 CREATE
             </button>
         </div>
@@ -143,116 +138,116 @@
                     <p id="technician_title" class="title">Technician</p>
                     <div class="card technician_progress_card">
                         <div class="card-body technician_ongoing_container">
-    
+
                         </div>
                     </div>
                 </div>
-    <div id="progress_container">
-    <p id="progress_title" class="title">Progress</p> <!-- Ilalabas sa labas ng card-body -->
-    <div class="card-body card" id="progress_card">
-        <!-- Row 1 -->
-        <div class="row" id="click_release">
-            <!-- Mga larawan -->
-            <div class="col-2 icon_col">
-                <!-- Pangalanan ang col bilang icon_col at gamitin ang col-4 -->
-                <div class="icon_container">
-                    <iconify-icon icon="radix-icons:rocket" height="3em" style="color: #345AFD;"></iconify-icon>
-                </div>
-            </div>
-            <div class="col-1 number_col">
-                <!-- Pangalanan ang col bilang number_col at gamitin ang col-4 -->
-                <div class="number_container">
-                    <p class="number_text">8</p> <!-- Dagdagan ng class name -->
-                </div>
-            </div>
-            <!-- Mga text -->
-            <div class="col-1 text_col">
-                <!-- Pangalanan ang col bilang text_col at gamitin ang col-4 -->
-                <div class="text_container">
-                    <p class="text_content">Release</p> <!-- Dagdagan ng class name -->
-                </div>
-            </div>
-            <div class="col-1 text_col">
-                <!-- Pangalanan ang col bilang text_col at gamitin ang col-4 -->
-                <div class="arrow_container">
-                <iconify-icon icon="raphael:arrowright" width="1.2em" height="1.2em"  style="color: A7A7A7"></iconify-icon> <!-- Dagdagan ng class name -->
+                <div id="progress_container">
+                    <p id="progress_title" class="title">Progress</p> <!-- Ilalabas sa labas ng card-body -->
+                    <div class="card-body card" id="progress_card">
+                        <!-- Row 1 -->
+                        <div class="row" id="click_release">
+                            <!-- Mga larawan -->
+                            <div class="col-2 icon_col">
+                                <!-- Pangalanan ang col bilang icon_col at gamitin ang col-4 -->
+                                <div class="icon_container">
+                                    <iconify-icon icon="radix-icons:rocket" height="3em" style="color: #345AFD;">
+                                    </iconify-icon>
+                                </div>
+                            </div>
+                            <div class="col-1 number_col">
+                                <!-- Pangalanan ang col bilang number_col at gamitin ang col-4 -->
+                                <div class="number_container">
+                                    <p class="number_text">8</p> <!-- Dagdagan ng class name -->
+                                </div>
+                            </div>
+                            <!-- Mga text -->
+                            <div class="col-1 text_col">
+                                <!-- Pangalanan ang col bilang text_col at gamitin ang col-4 -->
+                                <div class="text_container">
+                                    <p class="text_content">Release</p> <!-- Dagdagan ng class name -->
+                                </div>
+                            </div>
+                            <div class="col-1 text_col">
+                                <!-- Pangalanan ang col bilang text_col at gamitin ang col-4 -->
+                                <div class="arrow_container">
+                                    <iconify-icon icon="raphael:arrowright" width="1.2em" height="1.2em"
+                                        style="color: A7A7A7"></iconify-icon> <!-- Dagdagan ng class name -->
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Line -->
+                        <hr>
+                        <!-- Row 2 -->
+                        <div class="row" id="click_ongoing">
+                            <!-- Mga larawan -->
+                            <div class="col-2 icon_col">
+                                <!-- Pangalanan ang col bilang icon_col at gamitin ang col-4 -->
+                                <div class="icon_container">
+                                    <iconify-icon icon="uiw:reload" height="3em" style="color: #345AFD;"></iconify-icon>
+                                </div>
+                            </div>
+                            <div class="col-1 number_col">
+                                <!-- Pangalanan ang col bilang number_col at gamitin ang col-4 -->
+                                <div class="number_container">
+                                    <p class="number_text">8</p> <!-- Dagdagan ng class name -->
+                                </div>
+                            </div>
+                            <!-- Mga text -->
+                            <div class="col-1 text_col">
+                                <!-- Pangalanan ang col bilang text_col at gamitin ang col-4 -->
+                                <div class="text_container">
+                                    <p class="text_content">Release</p> <!-- Dagdagan ng class name -->
+                                </div>
+                            </div>
+                            <div class="col-1 text_col">
+                                <!-- Pangalanan ang col bilang text_col at gamitin ang col-4 -->
+                                <div class="arrow_container">
+                                    <iconify-icon icon="raphael:arrowright" width="1.2em" height="1.2em"
+                                        style="color: A7A7A7"></iconify-icon> <!-- Dagdagan ng class name -->
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Line -->
+                        <hr>
+                        <!-- Row 3 -->
+                        <div class="row" id="click_warranty">
+                            <!-- Mga larawan -->
+                            <div class="col-2 icon_col">
+                                <!-- Pangalanan ang col bilang icon_col at gamitin ang col-4 -->
+                                <div class="icon_container">
+                                    <iconify-icon icon="iconamoon:shield-yes-duotone" height="3em"
+                                        style="color: #345AFD;"></iconify-icon>
+                                </div>
+                            </div>
+                            <div class="col-1 number_col">
+                                <!-- Pangalanan ang col bilang number_col at gamitin ang col-4 -->
+                                <div class="number_container">
+                                    <p class="number_text">8</p> <!-- Dagdagan ng class name -->
+                                </div>
+                            </div>
+                            <!-- Mga text -->
+                            <div class="col-1 text_col">
+                                <!-- Pangalanan ang col bilang text_col at gamitin ang col-4 -->
+                                <div class="text_container">
+                                    <p class="text_content">Release</p> <!-- Dagdagan ng class name -->
+                                </div>
+                            </div>
+                            <div class="col-1 text_col">
+                                <!-- Pangalanan ang col bilang text_col at gamitin ang col-4 -->
+                                <div class="arrow_container">
+                                    <iconify-icon icon="raphael:arrowright" width="1.2em" height="1.2em"
+                                        style="color: A7A7A7"></iconify-icon> <!-- Dagdagan ng class name -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-        <!-- Line -->
-        <hr>
-        <!-- Row 2 -->
-        <div class="row" id="click_ongoing">
-            <!-- Mga larawan -->
-            <div class="col-2 icon_col">
-                <!-- Pangalanan ang col bilang icon_col at gamitin ang col-4 -->
-                <div class="icon_container">
-                    <iconify-icon icon="uiw:reload" height="3em" style="color: #345AFD;"></iconify-icon>
-                </div>
-            </div>
-            <div class="col-1 number_col">
-                <!-- Pangalanan ang col bilang number_col at gamitin ang col-4 -->
-                <div class="number_container">
-                    <p class="number_text">8</p> <!-- Dagdagan ng class name -->
-                </div>
-            </div>
-            <!-- Mga text -->
-            <div class="col-1 text_col">
-                <!-- Pangalanan ang col bilang text_col at gamitin ang col-4 -->
-                <div class="text_container">
-                    <p class="text_content">Release</p> <!-- Dagdagan ng class name -->
-                </div>
-            </div>
-            <div class="col-1 text_col">
-                <!-- Pangalanan ang col bilang text_col at gamitin ang col-4 -->
-                <div class="arrow_container">
-                <iconify-icon icon="raphael:arrowright" width="1.2em" height="1.2em"  style="color: A7A7A7"></iconify-icon> <!-- Dagdagan ng class name -->
-                </div>
-            </div>
-        </div>
-        <!-- Line -->
-        <hr>
-        <!-- Row 3 -->
-        <div class="row" id="click_warranty">
-            <!-- Mga larawan -->
-            <div class="col-2 icon_col">
-                <!-- Pangalanan ang col bilang icon_col at gamitin ang col-4 -->
-                <div class="icon_container">
-                    <iconify-icon icon="iconamoon:shield-yes-duotone" height="3em" style="color: #345AFD;"></iconify-icon>
-                </div>
-            </div>
-            <div class="col-1 number_col">
-                <!-- Pangalanan ang col bilang number_col at gamitin ang col-4 -->
-                <div class="number_container">
-                    <p class="number_text">8</p> <!-- Dagdagan ng class name -->
-                </div>
-            </div>
-            <!-- Mga text -->
-            <div class="col-1 text_col">
-                <!-- Pangalanan ang col bilang text_col at gamitin ang col-4 -->
-                <div class="text_container">
-                    <p class="text_content">Release</p> <!-- Dagdagan ng class name -->
-                </div>
-            </div>
-            <div class="col-1 text_col">
-                <!-- Pangalanan ang col bilang text_col at gamitin ang col-4 -->
-                <div class="arrow_container">
-                <iconify-icon icon="raphael:arrowright" width="1.2em" height="1.2em"  style="color: A7A7A7"></iconify-icon> <!-- Dagdagan ng class name -->
-                </div>
-            </div>
-        </div>
+        <?php include "add_cid_modal.php"; ?>
     </div>
-</div>
-
-                <?php include "add_cid_modal.php"; ?>
-            </div>
-
-
-<<<<<<< HEAD
-            <script src="../JS/front_desk.js"></script>
-=======
     <script src="../JS/frontdesk.js"></script>
->>>>>>> 50652ce571fba247ada3169e2f8b737157d91895
 </body>
 
 </html>
