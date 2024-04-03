@@ -137,32 +137,8 @@
                 <div id="technician_container">
                     <p id="technician_title" class="title">Technician</p>
                     <div class="card technician_progress_card">
-                        <div class="card-body">
-                            <p class="technician_name">Armein</p>
-                            <div class="progress">
-                                <div class="progress-bar w-75" role="progressbar" aria-valuenow="75" aria-valuemin="0"
-                                    aria-valuemax="100"></div>
-                            </div>
-                            <p class="technician_name">Gerard</p>
-                            <div class="progress">
-                                <div class="progress-bar w-75" role="progressbar" aria-valuenow="75" aria-valuemin="0"
-                                    aria-valuemax="100"></div>
-                            </div>
-                            <p class="technician_name">Benjie</p>
-                            <div class="progress">
-                                <div class="progress-bar w-75" role="progressbar" aria-valuenow="75" aria-valuemin="0"
-                                    aria-valuemax="100"></div>
-                            </div>
-                            <p class="technician_name">Bogart</p>
-                            <div class="progress">
-                                <div class="progress-bar w-75" role="progressbar" aria-valuenow="75" aria-valuemin="0"
-                                    aria-valuemax="100"></div>
-                            </div>
-                            <p class="technician_name">Kristelle</p>
-                            <div class="progress">
-                                <div class="progress-bar w-75" role="progressbar" aria-valuenow="75" aria-valuemin="0"
-                                    aria-valuemax="100"></div>
-                            </div>
+                        <div class="card-body technician_ongoing_container">
+    
                         </div>
                     </div>
                 </div>

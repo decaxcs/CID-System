@@ -23,8 +23,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
  
     $platinum = $_POST["platinum"] == 1 ? 1 : 0;
 
-    $insertQuery = "INSERT INTO cs_cid_information (cid_client_full_name, cid_platinum, cid_client_contact, cid_platinum_number, cid_representative, cid_advertisement, cid_number, cid_unit_details, cid_remarks, cid_technician_id, cid_service_id) 
-                    VALUES ('$client_full_name', '$platinum', '$client_contact', '$platinum_number', '$representative', '$advertisement', '$cid_number', '$unit_details', '$remarks', '$technician', '$computer_service')";
+    $insertQuery = "INSERT INTO cs_cid_information (cid_client_full_name, cid_platinum, cid_client_contact, cid_platinum_number, cid_representative, cid_advertisement, cid_number, cid_unit_details, cid_remarks, cid_technician_id, cid_service_id, cid_status) 
+                    VALUES ('$client_full_name', '$platinum', '$client_contact', '$platinum_number', '$representative', '$advertisement', '$cid_number', '$unit_details', '$remarks', '$technician', '$computer_service', 'On-going')";
 
     if ($conn->query($insertQuery) === TRUE) {
 
