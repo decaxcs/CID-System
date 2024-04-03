@@ -47,7 +47,7 @@
                         <div class="carousel-inner service_container">
                             <div class="carousel-item active">
                                 <div class="card_container">
-                                    
+
                                 </div>
                             </div>
                         </div>

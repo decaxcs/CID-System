@@ -118,7 +118,35 @@ $(document).ready(function () {
         });
     }
 
+    function get_status_count(){
+        $.ajax({
+            url: "../PHP/get_status_count.php",
+            type: "GET",
+            success: function (response) {
+                if (response.status === "success") {
+                    console.log(response.data);
+                    populate_status_count(response.data);
+                } else {
+                    console.log("Error: No data found.");
+                }
+            },
+            error: function (xhr, status, error) {
+                console.log("Error:", error);
+                console.log("Status:", status);
+                console.log("XHR:", xhr);
+                console.log("An error occurred while fetching data from the server.");
+            }
+        });
+    }
+
+    function populate_status_count(data) {
+        $('#release_count').text(data.Release);
+        $('#ongoing_count').text(data["On-going"]);
+        $('#warranty_count').text(data.Warranty);
+    }
+
     get_user_account();
     get_technician_ongoing();
     get_services();
+    get_status_count();
 });
