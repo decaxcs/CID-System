@@ -15,6 +15,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($result->num_rows > 0) {
         $row = $result->fetch_assoc();
         if (password_verify($password, $row['csu_password'])) {
+            $_SESSION["login"] = true;
             $_SESSION["username"] = $username;
             $_SESSION["csu_id"] = $row['csu_id'];
             echo json_encode(array("status" => "success", "permission" => $row['csu_permission']));

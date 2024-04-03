@@ -69,7 +69,7 @@ $(document).ready(function () {
 
         console.log(checkboxValues);
 
-        $('#newModal').modal('show');
+        // $('#newModal').modal('show');
     }
 
     function create_cid_number() {
@@ -102,7 +102,7 @@ $(document).ready(function () {
             data: {
                 cid_number: cid_number,
 
-                checkboxValues: checkboxValues,
+                checkboxValues: checkboxValues, 
                 selectedOption: selectedOption,
                 client_full_name: client_full_name,
                 client_contact: client_contact,
@@ -112,7 +112,6 @@ $(document).ready(function () {
                 advertisement: advertisement,
 
                 cid_number: cid_number,
-                claiming_slip: claiming_slip,
                 unit_details: unit_details,
                 remarks: remarks,
                 technician: technician,
@@ -178,56 +177,56 @@ $(document).ready(function () {
 });
 
 
-// function checkCheckboxes() {
-//     var checkboxes = document.querySelectorAll('input[type="checkbox"]:not(.form-check-nested input)');
-//     for (var i = 0; i < checkboxes.length; i++) {
-//         if (!checkboxes[i].checked) {
-//             return false;
-//         }
-//     }
-//     return true;
-// }
+function checkCheckboxes() {
+    var checkboxes = document.querySelectorAll('input[type="checkbox"]:not(.form-check-nested input)');
+    for (var i = 0; i < checkboxes.length; i++) {
+        if (!checkboxes[i].checked) {
+            return false;
+        }
+    }
+    return true;
+}
 
-// function checkFields() {
-//     var clientName = document.getElementById('client_name').value.trim();
-//     var contactNumber = document.getElementById('contact_number').value.trim();
-//     var platinumNumber = document.getElementById('platinum_number').value.trim();
+function checkFields() {
+    var clientName = document.getElementById('client_name').value.trim();
+    var contactNumber = document.getElementById('contact_number').value.trim();
+    var platinumNumber = document.getElementById('platinum_number').value.trim();
     
-//     if (clientName === '' || contactNumber === '' || platinumNumber === '') {
-//         return false;
-//     }
-//     return true;
-// }
+    if (clientName === '' || contactNumber === '' || platinumNumber === '') {
+        return false;
+    }
+    return true;
+}
 
-// function checkAdvertisingOption() {
-//     var advertisingOption = document.querySelectorAll('input[name="advertisingOption"]:checked').length;
-//     return advertisingOption > 0;
-// }
+function checkAdvertisingOption() {
+    var advertisingOption = document.querySelectorAll('input[name="advertisingOption"]:checked').length;
+    return advertisingOption > 0;
+}
 
-// function showAlert(message) {
-//     var alertContainer = document.getElementById('alertContainer');
-//     var alertHtml = `
-//         <div class="alert alert-danger alert-dismissible fade show" role="alert">
-//             ${message}
-//             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-//         </div>`;
-//     alertContainer.innerHTML = alertHtml;
-// }
+function showAlert(message) {
+    var alertContainer = document.getElementById('alertContainer');
+    var alertHtml = `
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            ${message}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>`;
+    alertContainer.innerHTML = alertHtml;
+}
 
-// document.getElementById('proceed_button').addEventListener('click', function () {
-//     if (!checkCheckboxes() || !checkFields() || !checkAdvertisingOption()) {
-//         showAlert('Please fill in all required fields and checkboxes.');
-//         return;
-//     }
-//     $('#newModal').modal('show');
-// });
+document.getElementById('proceed_button').addEventListener('click', function () {
+    if (!checkCheckboxes() || !checkFields() || !checkAdvertisingOption()) {
+        showAlert('Please fill in all required fields and checkboxes.');
+        return;
+    }
+    $('#newModal').modal('show');
+});
 
-// function showNewModal() {
-//     if (!checkCheckboxes() || !checkFields() || !checkAdvertisingOption()) {
-//         showAlert('Please fill in all required fields and checkboxes.');
-//         return;
-//     }
-//     $('#newModal').modal('show');
-// }
+function showNewModal() {
+    if (!checkCheckboxes() || !checkFields() || !checkAdvertisingOption()) {
+        showAlert('Please fill in all required fields and checkboxes.');
+        return;
+    }
+    $('#newModal').modal('show');
+}
 
 
