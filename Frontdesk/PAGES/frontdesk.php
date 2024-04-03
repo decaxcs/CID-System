@@ -89,7 +89,7 @@
                             <div class="col-1 number_col">
                                 <!-- Pangalanan ang col bilang number_col at gamitin ang col-4 -->
                                 <div class="number_container">
-                                    <p class="number_text">8</p> <!-- Dagdagan ng class name -->
+                                    <p class="number_text" id="release_count"></p> <!-- Dagdagan ng class name -->
                                 </div>
                             </div>
                             <!-- Mga text -->
@@ -121,14 +121,14 @@
                             <div class="col-1 number_col">
                                 <!-- Pangalanan ang col bilang number_col at gamitin ang col-4 -->
                                 <div class="number_container">
-                                    <p class="number_text">8</p> <!-- Dagdagan ng class name -->
+                                    <p class="number_text" id="ongoing_count"></p> <!-- Dagdagan ng class name -->
                                 </div>
                             </div>
                             <!-- Mga text -->
                             <div class="col-1 text_col">
                                 <!-- Pangalanan ang col bilang text_col at gamitin ang col-4 -->
                                 <div class="text_container">
-                                    <p class="text_content">Release</p> <!-- Dagdagan ng class name -->
+                                    <p class="text_content">On-going</p> <!-- Dagdagan ng class name -->
                                 </div>
                             </div>
                             <div class="col-1 text_col">
@@ -154,14 +154,14 @@
                             <div class="col-1 number_col">
                                 <!-- Pangalanan ang col bilang number_col at gamitin ang col-4 -->
                                 <div class="number_container">
-                                    <p class="number_text">8</p> <!-- Dagdagan ng class name -->
+                                    <p class="number_text" id="warranty_count"></p> <!-- Dagdagan ng class name -->
                                 </div>
                             </div>
                             <!-- Mga text -->
                             <div class="col-1 text_col">
                                 <!-- Pangalanan ang col bilang text_col at gamitin ang col-4 -->
                                 <div class="text_container">
-                                    <p class="text_content">Release</p> <!-- Dagdagan ng class name -->
+                                    <p class="text_content">Warranty</p> <!-- Dagdagan ng class name -->
                                 </div>
                             </div>
                             <div class="col-1 text_col">
