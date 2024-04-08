@@ -364,3 +364,28 @@ p {
     display: flex;
     flex-direction: row;
 }
+
+.title_release{
+    font-size: 2.2em;
+    font-weight: 700;
+    opacity: 0.4;
+    margin-left: 40px;
+}
+
+.title_on-going{
+    font-size: 2.2em;
+    font-weight: 700;
+    opacity: 0.4;
+    margin-left: 40px;
+}
+
+.title_warranty{
+    font-size: 2.2em;
+    font-weight: 700;
+    opacity: 0.4;
+    margin-left: 40px;
+}
+
+.table{
+    padding: 20px;
+}

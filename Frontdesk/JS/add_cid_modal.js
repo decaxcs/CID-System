@@ -39,6 +39,8 @@ document.querySelector('.btn_cancel').addEventListener('click', function () {
 });
 
 $(document).ready(function () {
+    var signature_dataURL;
+    
     var checkboxes = {};
     var additional_checkboxes = {};
 
@@ -60,6 +62,13 @@ $(document).ready(function () {
         console.log("XHR:", xhr);
         console.log("An error occurred while fetching data from the server.");
     }
+
+    const signatureDisplayImage = document.getElementById('signature_display');
+
+    const signatureInputCanvas = document.getElementById('signature_input');
+    const signaturePad = new SignaturePad(signatureInputCanvas);
+
+  
 
     function add_cid() {
         $('input[type="checkbox"]').each(function () {
@@ -90,6 +99,30 @@ $(document).ready(function () {
         $("#newModal").modal("show");
     }
 
+    signatureDisplayImage.addEventListener("click", function () {
+        $("#signature_modal").modal("show");
+    });
+
+    // Clear button 
+    const clearButton = document.getElementById("clear");
+    clearButton.addEventListener("click", () => {
+        signaturePad.clear();
+    });
+
+    // Save button (replace with your server-side save logic)
+    const saveButton = document.getElementById("save");
+    saveButton.addEventListener("click", () => {
+        if (signaturePad.isEmpty()) {
+            alert("Please provide a signature first.");
+        } else {
+            const dataURL = signaturePad.toDataURL();
+            signature_dataURL = dataURL;
+
+            // Update the signature display element
+            signatureDisplayImage.src = signature_dataURL;
+        }
+    });
+
     function create_cid_number() {
         $.ajax({
             url: "../PHP/create_cid_number.php",
@@ -115,6 +148,8 @@ $(document).ready(function () {
             url: "../PHP/create_cid.php",
             type: "POST",
             data: {
+                signature_dataURL: signature_dataURL,
+
                 cid_number: cid_number,
 
                 checkboxes: checkboxes,

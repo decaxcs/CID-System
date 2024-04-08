@@ -10,7 +10,7 @@
 
     <!-- CSS -->
     <link rel="stylesheet" href="../../style.css">
-    <link rel="stylesheet" href="../CSS/add_cid_modal.css">
+    <link rel="stylesheet" href="../CSS/create_cid.css">
     <link rel="stylesheet" href="../CSS/frontdesk.css">
 
     <title>Frontdesk Page</title>
@@ -38,6 +38,14 @@
                         <div class="mb-4"> <span class="tos_span">TIME & DATE: <span id="currentDateTime"></span></div>
                         <div class="mb-4"><span class="tos_span">CLIENT FULL NAME WITH SIGNATURE:</span> <input
                                 type="text" id="client_name" name="client_name"></div>
+
+                        <div class="signature_container">
+                            <p><span class="tos_span">Enter Signature:</span></p>
+                            <div id="signature-pad" class="signature-pad">
+                                <img id="signature_display" src="../../Assets/Images/white_bg.png" alt="">
+                            </div>
+                        </div>
+
                         <div class="mb-4"> <span class="tos_span">CONTACT NUMBER:</span> <input type="number"
                                 id="contact_number" name="contact_number"></div>
                         <div class="row mb-5 align-items-center">
@@ -76,7 +84,6 @@
                 </div>
             </div>
         </div>
-        <!-- Continue this pattern for the remaining checkboxes -->
     </div>
 
     <!-- Bagong Modal -->
@@ -156,7 +163,39 @@
         </div>
     </div>
 
+    <div class="modal fade" id="signature_modal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false"
+        role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-xl" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalTitleId">
+                        Enter Signature:
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body signature_body">
+                    <div id="signature-pad" class="signature-pad">
+                        <div class="signature-pad--body">
+                            <canvas id="signature_input" width="1100" height="500"></canvas>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" id="clear">
+                        Clear
+                    </button>
+                    <button type="button" class="btn btn-primary" id="save">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.1.7/dist/signature_pad.umd.min.js"></script>
     <script src="../JS/add_cid_modal.js"></script>
+
+    <script>
+        
+    </script>
 
 </body>
 

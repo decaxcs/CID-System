@@ -10,7 +10,7 @@
 
     <!-- CSS -->
     <link rel="stylesheet" href="../../style.css">
-    <link rel="stylesheet" href="../CSS/add_cid_modal.css">
+    <link rel="stylesheet" href="../CSS/create_cid.css">
     <link rel="stylesheet" href="../CSS/frontdesk.css">
 
     <title>Frontdesk Page</title>
@@ -191,11 +191,7 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <canvas id="signatureCanvas" width="300" height="150" style="border:1px solid #000;"></canvas>
-<button onclick="saveSignature()">Save Signature</button>
-
-
+        </div>  
 
         <?php 
         // include "add_cid_modal.php"; 

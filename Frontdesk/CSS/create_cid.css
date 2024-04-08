@@ -1,0 +1,260 @@
+.create_cid_page {
+    overflow-y: hidden;
+    padding: 5%;
+    background-color: #EFF5F9;
+}
+
+.custom-select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-color: #f8f9fa;
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+    padding: 8px 12px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.custom-select:focus {
+    outline: none;
+    border-color: #4d94ff;
+}
+
+#client_name{
+    width: 300px !important; 
+}
+
+#contact_number{
+    border: none; 
+    border-bottom: 1px solid black;
+}
+
+#platinum_number{
+    border: none; 
+    border-bottom: 1px solid black;
+}
+
+
+#Technician{
+    justify-content: space-between;
+}
+
+.disclaimer-row {
+    font-family: 'Poppins', sans-serif;
+    margin-bottom: 9%;
+    font-size: 16px;
+    font-weight: 600;
+    font-style: italic;
+    text-decoration: underline;
+    color: #000000;
+    line-height: 24px;
+}
+
+.row-of-information {
+    margin-bottom: 9%;
+}
+
+input[type="text"] {
+    border: none;
+    border-bottom: 1px solid black;
+    outline: none;
+}
+
+input[type="checkbox"]:checked {
+    background-color: #22C997;
+
+}
+
+
+.form-check-label::before {
+    border-color: #22C997;
+}
+
+
+.form-check-input[type="checkbox"]:hover {
+    background-color: #1EAD87;
+}
+
+
+.form-check-label:hover::before {
+    border-color: #1EAD87;
+}
+
+input[type="radio"]:checked {
+    background-color: #22C997;
+}
+
+.form-check-tos-comletion {
+    margin-bottom: 4%;
+}
+
+.form-check-nested {
+    margin-left: 90px;
+}
+
+.form-check {
+    margin-bottom: 10px;
+}
+
+.form-check-content {
+    display: flex;
+    align-items: center;
+}
+
+
+.number {
+    margin-right: 10px;
+    flex-shrink: 0;
+    width: 30px;
+}
+
+.modal-header {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.modal-body {
+    padding: 7%;
+    margin-bottom: 3%;
+    text-align: justify;
+}
+
+.add_cid_footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    margin: 0 auto;
+    border-top: none;
+    bottom: 0;
+    left: 0;
+    width: 50%;
+    padding: 50px 15px 15px 15px;
+    background-image: linear-gradient(to bottom, transparent, white);
+    z-index: 1041;
+
+}
+
+.add_cid_footer button {
+    margin: 0 5px; /* Puwang sa kaliwa at kanan ng bawat button */
+}
+
+.form-check {
+    margin-bottom: 14px;
+}
+
+.tos_span {
+    font-weight: 700;
+}
+
+.btn_cancel {
+    width: 200px;
+    background-color: #fff;
+    color: #22C997;
+    border-color: #22C997;
+}
+
+.btn_cancel:hover {
+    background-color: #22C997;
+    color: #fff;
+    border-color: #22C997;
+}
+
+.btn_Cancel_Slip {
+    width: 150px;
+    background-color: #fff;
+    color: #22C997;
+    border-color: #22C997;
+}
+
+.btn_Cancel_Slip:hover {
+    background-color: #22C997;
+    color: #fff;
+    border-color: #22C997;
+}
+
+.btn_Create {
+    width: 150px;
+}
+
+.btn_save {
+    width: 200px;
+}
+
+#claiming_slip {
+    width: 150px;
+}
+
+#add_CID_label {
+    margin-left: 6%;
+    font-weight: 700;
+    font-size: 3em;
+}
+
+::-webkit-scrollbar {
+    width: 7px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #345AFD;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #345AFD;
+}
+
+#dropdown{
+    display: flex;
+    flex-direction: row;
+    
+}
+
+.tos_terms_of_service{
+    display: block;
+    margin-bottom: 50px;
+    font-size:52px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700px;
+}
+
+#create_cid_container {
+    margin: 0% 15%;
+}
+
+.creade_cid_body {
+    padding: 5% 10%;
+}
+
+#signature_input #signature-pad {
+    border: 1px solid #000;
+}
+#signature_display:hover {
+    cursor: pointer;
+}
+
+#signature_display{
+    height: 200px;
+    width: 500px;
+}
+
+.signature-pad--body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.signature_body {
+    padding: 1%;
+    margin: 0%;
+}
+
+#signature_display {
+    background-color: white;
+}
+

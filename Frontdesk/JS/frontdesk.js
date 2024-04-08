@@ -316,3 +316,7 @@ $(document).ready(function () {
 
     new DataTable('#recent_cids_table');
 });
+
+new DataTable('#on-going_table');
+new DataTable('#release_table');
+new DataTable('#warranty_table');
