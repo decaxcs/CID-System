@@ -6,8 +6,12 @@ header('Content-Type: application/json');
 $response = array();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $checkboxValues = $_POST["checkboxValues"];
-    $selectedOption = $_POST["selectedOption"] == 1 ? 1 : 0;
+    $checkboxes = $_POST["checkboxes"];
+    $additional_checkboxes = $_POST["additional_checkboxes"];
+
+    $additional_radiobuttons = $_POST["additional_radiobuttons"];
+
+    // $selectedOption = $_POST["selectedOption"] == 1 ? 1 : 0;
 
     $client_full_name = mysqli_real_escape_string($conn, $_POST["client_full_name"]);
     $client_contact = mysqli_real_escape_string($conn, $_POST["client_contact"]);
@@ -28,16 +32,35 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if ($conn->query($insertQuery) === TRUE) {
 
-        foreach ($checkboxValues as $checkboxName => $checkboxValue) {
-            $checkboxValue = isset($checkboxValue) && $checkboxValue == "true" ? 1 : 0;
+        foreach ($checkboxes as $checkboxName => $checkboxValue) {
+            $checkboxValue = $checkboxValue == "true" ? 1 : 0;
+        
             $insertCheckboxQuery = "INSERT INTO cs_cid_terms_of_service (cid_number, cid_tos_terms, cid_tos_agreement) 
                                     VALUES ('$cid_number', '$checkboxName', '$checkboxValue')";
+        
             $conn->query($insertCheckboxQuery);
         }
         
-        $insertOptionQuery = "INSERT INTO cs_cid_terms_of_service (cid_number, cid_tos_terms, cid_tos_agreement) 
-                              VALUES ('$cid_number', 'tos_advertising_answer', '$selectedOption')";
-        $conn->query($insertOptionQuery);
+        foreach ($additional_checkboxes as $checkboxName => $checkboxValue) {
+            $checkboxValue = $checkboxValue == "true" ? 1 : 0;
+            $insertCheckboxQuery = "INSERT INTO cs_cid_terms_of_service_a (cid_number, tos_id, cid_tos_agreement) 
+                                    VALUES ('$cid_number', '$checkboxName', '$checkboxValue')";
+        
+            $conn->query($insertCheckboxQuery);
+        }
+
+        foreach ($additional_radiobuttons as $radioButtonName => $radioButtonValue) {
+            $radioButtonValue = $radioButtonValue == "Yes" ? 1 : 0;
+
+            $insertRadioButtonQuery = "INSERT INTO cs_cid_terms_of_service_a (cid_number, tos_id, cid_tos_agreement) 
+                                        VALUES ('$cid_number', '$radioButtonName', '$radioButtonValue')";
+        
+            $conn->query($insertRadioButtonQuery);
+        }
+        
+        // $insertOptionQuery = "INSERT INTO cs_cid_terms_of_service (cid_number, cid_tos_terms, cid_tos_agreement) 
+        //                       VALUES ('$cid_number', 'tos_advertising_answer', '$selectedOption')";
+        // $conn->query($insertOptionQuery);
 
         $response['status'] = 'success';
         $response['cid_number'] = $cid_number;

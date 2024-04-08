@@ -1,6 +1,7 @@
 .create_cid_page {
     overflow-y: hidden;
     padding: 5%;
+    background-color: #EFF5F9;
 }
 
 .custom-select {
@@ -220,4 +221,12 @@ input[type="radio"]:checked {
     font-size:52px;
     font-family: 'Poppins', sans-serif;
     font-weight: 700px;
+}
+
+#create_cid_container {
+    margin: 0% 15%;
+}
+
+.creade_cid_body {
+    padding: 5% 10%;
 }

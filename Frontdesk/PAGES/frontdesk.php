@@ -29,7 +29,8 @@
                 </div>
                 <!-- <img id="profile_pic" src="../../Assets/Images/logo.png" alt="logo"> -->
                 <p id="tech_name"></p>
-                <iconify-icon id="drop_down_icon" icon="iconamoon:arrow-down-2"></iconify-icon>
+
+                <iconify-icon id="drop_down_icon" icon="basil:logout-solid  " id="logout"></iconify-icon>
             </div>
         </div>
         <div id="greetings_header">
@@ -74,36 +75,29 @@
                     </div>
                 </div>
                 <div id="progress_container">
-                    <p id="progress_title" class="title">Progress</p> <!-- Ilalabas sa labas ng card-body -->
+                    <p id="progress_title" class="title">Progress</p>
                     <div class="card-body card" id="progress_card">
-                        <!-- Row 1 -->
                         <div class="row" id="click_release">
-                            <!-- Mga larawan -->
                             <div class="col-2 icon_col">
-                                <!-- Pangalanan ang col bilang icon_col at gamitin ang col-4 -->
                                 <div class="icon_container">
                                     <iconify-icon icon="radix-icons:rocket" height="3em" style="color: #345AFD;">
                                     </iconify-icon>
                                 </div>
                             </div>
                             <div class="col-1 number_col">
-                                <!-- Pangalanan ang col bilang number_col at gamitin ang col-4 -->
                                 <div class="number_container">
-                                    <p class="number_text" id="release_count"></p> <!-- Dagdagan ng class name -->
+                                    <p class="number_text" id="release_count"></p>
                                 </div>
                             </div>
-                            <!-- Mga text -->
                             <div class="col-1 text_col">
-                                <!-- Pangalanan ang col bilang text_col at gamitin ang col-4 -->
                                 <div class="text_container">
-                                    <p class="text_content">Release</p> <!-- Dagdagan ng class name -->
+                                    <p class="text_content">Release</p>
                                 </div>
                             </div>
                             <div class="col-1 text_col">
-                                <!-- Pangalanan ang col bilang text_col at gamitin ang col-4 -->
                                 <div class="arrow_container">
                                     <iconify-icon icon="raphael:arrowright" width="1.2em" height="1.2em"
-                                        style="color: A7A7A7"></iconify-icon> <!-- Dagdagan ng class name -->
+                                        style="color: A7A7A7"></iconify-icon>
                                 </div>
                             </div>
                         </div>
@@ -175,8 +169,52 @@
                     </div>
                 </div>
             </div>
+
+
+            <div id="table_container">
+                <div class="card">
+                    <div class="card-body">
+                        <table id="recent_cids_table" class="table table-striped table-hover" width="100%">
+                            <thead>
+                                <tr>
+                                    <th>CID</th>
+                                    <th>Client</th>
+                                    <th>Technician</th>
+                                    <th>Unit Details</th>
+                                    <th>Date</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
         </div>
-        <?php include "add_cid_modal.php"; ?>
+
+
+        <?php 
+        // include "add_cid_modal.php"; 
+        ?>
+
+        <div class="modal fade" id="view_cid" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false"
+            role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg " role="document">
+                <div class="modal-content" id="cid_contents_container">
+
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="claiming_slip_cid" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false"
+            role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg " role="document">
+                <div class="modal-content" id="claiming_slip_container">
+                    
+                </div>
+            </div>
+        </div>
     </div>
     <script src="../JS/frontdesk.js"></script>
 </body>

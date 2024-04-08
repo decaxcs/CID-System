@@ -322,10 +322,45 @@ p {
     cursor: pointer;
 }
 
-#click_ongoing{
+#click_ongoing {
     cursor: pointer;
 }
 
-#click_warranty{
+#click_warranty {
     cursor: pointer;
+}
+
+#table_container {
+    background-color: #EFF5F9;
+    padding: 20px
+}
+
+#recent_cids_table tbody {
+    text-align: center;
+}
+
+#recent_cids_table thead th {
+    text-align: center;
+    vertical-align: middle;
+}
+
+
+#recent_cids_table tbody tr td {
+    text-align: center;
+    vertical-align: middle;
+}
+
+#recent_cids_table tbody tr td:hover {
+    cursor: pointer !important;
+}
+
+.view_details,
+.claiming_slip {
+    display: flex;
+    margin: auto;
+}
+
+.recent_cid_buttons_container {
+    display: flex;
+    flex-direction: row;
 }

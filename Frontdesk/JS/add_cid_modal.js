@@ -39,7 +39,10 @@ document.querySelector('.btn_cancel').addEventListener('click', function () {
 });
 
 $(document).ready(function () {
-    var checkboxValues = {};
+    var checkboxes = {};
+    var additional_checkboxes = {};
+
+    var additional_radiobuttons = {};
 
     var selectedOption;
 
@@ -51,14 +54,31 @@ $(document).ready(function () {
     var representative;
     var advertisement;
 
+    function ajax_error_handling(xhr, status, error) {
+        console.log("Error:", error);
+        console.log("Status:", status);
+        console.log("XHR:", xhr);
+        console.log("An error occurred while fetching data from the server.");
+    }
+
     function add_cid() {
         $('input[type="checkbox"]').each(function () {
-            var checkboxId = $(this).attr('id');
+            var checkboxName = $(this).attr('name');
             var checkboxValue = $(this).prop('checked');
-            checkboxValues[checkboxId] = checkboxValue;
+
+            if (checkboxName === 'additional') {
+                additional_checkboxes[$(this).attr('id')] = checkboxValue;
+            } else {
+                checkboxes[$(this).attr('id')] = checkboxValue;
+            }
         });
 
-        selectedOption = $('input[name="advertisingOption"]:checked').val() === "Yes" ? 1 : 0;
+        $('input[type="radio"]').each(function () {
+            var radioButtonName = $(this).attr('name');
+            if ($(this).prop('checked')) {
+                additional_radiobuttons[radioButtonName] = $(this).val();
+            }
+        });
 
         client_full_name = $("#client_name").val();
         client_contact = $("#contact_number").val();
@@ -67,7 +87,7 @@ $(document).ready(function () {
         representative = $("#representative").val();
         advertisement = $("#how_know").val();
 
-        // $('#newModal').modal('show');
+        $("#newModal").modal("show");
     }
 
     function create_cid_number() {
@@ -79,10 +99,7 @@ $(document).ready(function () {
                 $('#cid_number').text(cid_number);
             },
             error: function (xhr, status, error) {
-                console.log("Error:", error);
-                console.log("Status:", status);
-                console.log("XHR:", xhr);
-                console.log("An error occurred while fetching data from the server.");
+                ajax_error_handling(xhr, status, error);
             }
         });
     }
@@ -100,7 +117,11 @@ $(document).ready(function () {
             data: {
                 cid_number: cid_number,
 
-                checkboxValues: checkboxValues, 
+                checkboxes: checkboxes,
+                additional_checkboxes: additional_checkboxes,
+
+                additional_radiobuttons: additional_radiobuttons,
+
                 selectedOption: selectedOption,
                 client_full_name: client_full_name,
                 client_contact: client_contact,
@@ -113,20 +134,17 @@ $(document).ready(function () {
                 unit_details: unit_details,
                 remarks: remarks,
                 technician: technician,
-                computer_service: computer_service 
+                computer_service: computer_service
             },
             success: function (response) {
                 if (response.status === "success") {
-                    window.location.href = '../../index.php';
+                    window.location.href = 'frontdesk.php';
                 } else {
 
                 }
             },
             error: function (xhr, status, error) {
-                console.log("Error:", error);
-                console.log("Status:", status);
-                console.log("XHR:", xhr);
-                console.log("An error occurred while processing your request.");
+                ajax_error_handling(xhr, status, error);
             }
         });
     }
@@ -144,10 +162,7 @@ $(document).ready(function () {
                 }
             },
             error: function (xhr, status, error) {
-                console.log("Error:", error);
-                console.log("Status:", status);
-                console.log("XHR:", xhr);
-                console.log("An error occurred while fetching data from the server.");
+                ajax_error_handling(xhr, status, error);
             }
         });
     }
@@ -174,7 +189,98 @@ $(document).ready(function () {
                 `
                 <option value="${item.cs_service_id}">${item.cs_service_name}</option>
                 `;
-                select_services_containers.append(select_services_HTML);
+            select_services_containers.append(select_services_HTML);
+        });
+    }
+
+    function get_tos() {
+        $.ajax({
+            url: "../PHP/get_tos.php",
+            type: "GET",
+            success: function (response) {
+                if (response.status === "success") {
+                    populate_tos(response);
+                    console.log(response);
+
+                } else {
+                    console.log("Error: No data found.");
+                }
+            },
+            error: function (xhr, status, error) {
+                ajax_error_handling(xhr, status, error);
+            }
+        });
+    }
+
+    function populate_tos(data) {
+        var tos_data = data.tos_data;
+        var additional_data = data.additional_data;
+
+        var tos_container = $('#tos_container');
+        tos_container.empty();
+
+        var required_tos_ids = [];
+
+        tos_data.forEach(function (tos_item) {
+            if (tos_item.tos_required === 'Yes') {
+                required_tos_ids.push(tos_item.tos_id);
+            }
+
+            var checkboxContentHTML = '';
+            var radiobuttonContentHTML = '';
+
+            additional_data.forEach(function (additional_item) {
+                if (additional_item.tos_id === tos_item.tos_id) {
+                    if (additional_item.additional_type === 'checkbox') {
+                        checkboxContentHTML += `
+                            <div class="form-check-nested">
+                                <input class="form-check-input" type="checkbox" value="" name="additional" id="${additional_item.tos_a_id}">
+                                <label class="form-check-label" for="${additional_item.tos_a_id}">
+                                    ${additional_item.additional_content}
+                                </label>
+                            </div>
+                        `;
+                    } else if (additional_item.additional_type === 'radiobutton') {
+                        radiobuttonContentHTML += `
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="${additional_item.tos_a_id}"
+                                        id="yes_${tos_item.tos_a_id}" value="Yes">
+                                    <label class="form-check-label" for="yesRadioButton">Yes</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="${additional_item.tos_a_id}"
+                                        id="no_${tos_item.tos_id}" value="No">
+                                    <label class="form-check-label" for="no_${tos_item.tos_a_id}">No</label>
+                                </div>
+                            </div>
+                        `;
+                    }
+                }
+            });
+
+            var tos_HTML =
+                `
+                <div class="row mb-3">
+                    <div class="col">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="${tos_item.tos_id}">
+                            <label class="form-check-label" for="${tos_item.tos_id}">
+                                <div class="row">
+                                    <div class="col-auto">
+                                        <div>${tos_item.tos_sequence}.</div>
+                                    </div>
+                                    <div class="col">
+                                        ${tos_item.tos_content}
+                                    </div>
+                                </div>
+                            </label>
+                            ${checkboxContentHTML} <!-- Append checkbox content HTML -->
+                            ${radiobuttonContentHTML} <!-- Append radiobutton content HTML -->
+                        </div>
+                    </div>
+                </div>
+                `;
+            tos_container.append(tos_HTML);
         });
     }
 
@@ -182,7 +288,7 @@ $(document).ready(function () {
         create_cid_number();
         get_technician_services();
     })
-
+    get_tos();
     get_technician_services();
     $("#proceed_button").click(add_cid);
     $("#create_button").click(create_cid);
@@ -203,7 +309,7 @@ function checkFields() {
     var clientName = document.getElementById('client_name').value.trim();
     var contactNumber = document.getElementById('contact_number').value.trim();
     var platinumNumber = document.getElementById('platinum_number').value.trim();
-    
+
     if (clientName === '' || contactNumber === '' || platinumNumber === '') {
         return false;
     }
@@ -240,5 +346,3 @@ function showNewModal() {
     }
     $('#newModal').modal('show');
 }
-
-
