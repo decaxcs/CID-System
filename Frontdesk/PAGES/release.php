@@ -10,7 +10,6 @@
 
     <!-- CSS -->
     <link rel="stylesheet" href="../../style.css">
-    <link rel="stylesheet" href="../CSS/add_cid_modal.css">
     <link rel="stylesheet" href="../CSS/frontdesk.css">
 
     <title>Released CIDS</title>
@@ -37,7 +36,7 @@
             <div id="greetings_header">
                 <p class="title_release">RELEASE</p>
             </div>
-            <dib class="table_container">
+            <div class="table_container">
                 <div id="table_container">
                     <div class="card">
                         <div class="card-body">
@@ -49,18 +48,20 @@
                                         <th>Technician</th>
                                         <th>Unit Details</th>
                                         <th>Date</th>
-                                        <th>Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                   
+
                                 </tbody>
                             </table>
                         </div>
                     </div>
                 </div>
+            </div>
         </div>
+    </div>
+    <script src="../JS/display_tables.js"></script>
 </body>
-<script src="../JS/frontdesk.js"></script>
+
 
 </html>

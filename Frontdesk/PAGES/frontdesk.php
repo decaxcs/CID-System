@@ -128,7 +128,7 @@
                             </div>
                         </div>
 
-                        <div class="d-flex flex-row status" id="click_w arranty">
+                        <div class="d-flex flex-row status" id="click_warranty">
                             <div class="col-2 icon_col">
                                 <div class="icon_container">
                                     <iconify-icon icon="iconamoon:shield-yes-duotone" height="3em"

@@ -40,7 +40,7 @@
                                 class="required" type="text" id="client_name" name="client_name"></div>
 
                         <div class="signature_container">
-                            <p><span class="tos_span">Enter Signature:</span></p>
+                            <p><span class="tos_span">ENTER SIGNATURE:</span></p>
                             <div id="signature-pad" class="signature-pad">
                                 <img id="signature_display" src="../../Assets/Images/white_bg.png" alt="">
                             </div>
@@ -189,11 +189,6 @@
 
     <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.1.7/dist/signature_pad.umd.min.js"></script>
     <script src="../JS/add_cid_modal.js"></script>
-
-    <script>
-        
-    </script>
-
 </body>
 
 </html>

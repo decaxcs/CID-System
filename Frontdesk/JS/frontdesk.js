@@ -169,10 +169,10 @@ $(document).ready(function () {
         $('#warranty_count').text(data.Warranty);
     }
 
-    function get_recent_cids() {
+    function get_cids() {
         $('#recent_cids_table').DataTable({
             "ajax": {
-                "url": "../PHP/get_recent_cids.php",
+                "url": "../PHP/get_cids.php",
                 "dataSrc": "cids_data"
             },
             "columns": [{
@@ -220,7 +220,7 @@ $(document).ready(function () {
 
             function get_cid_info(cid_number) {
                 $.ajax({
-                    url: "../PHP/get_recent_cids.php",
+                    url: "../PHP/get_cids.php",
                     type: "GET",
                     data: {
                         cid_number: cid_number
@@ -228,6 +228,9 @@ $(document).ready(function () {
                     success: function (response) {
                         if (response.status === "success") {
                             populate_cid_contents(response.cids_data);
+                            populate_cid_release(response.cids_data);
+                            populate_cid_ongoing(response.cids_data);
+                            populate_cid_warranty(response.cids_data);
                         } else {
                             console.log("Error: No data found.");
                         }
@@ -282,7 +285,7 @@ $(document).ready(function () {
 
         function get_cid_info(cid_number) {
             $.ajax({
-                url: "../PHP/get_recent_cids.php",
+                url: "../PHP/get_cids.php",
                 type: "GET",
                 data: {
                     cid_number: cid_number
@@ -329,11 +332,8 @@ $(document).ready(function () {
     get_technician_ongoing();
     get_services();
     get_status_count();
-    get_recent_cids();
+    get_cids();
 
     new DataTable('#recent_cids_table');
 });
 
-new DataTable('#on-going_table');
-new DataTable('#release_table');
-new DataTable('#warranty_table');
