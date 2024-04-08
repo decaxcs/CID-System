@@ -192,6 +192,9 @@
                 </div>
             </div>
         </div>
+        <canvas id="signatureCanvas" width="300" height="150" style="border:1px solid #000;"></canvas>
+<button onclick="saveSignature()">Save Signature</button>
+
 
 
         <?php 
@@ -211,12 +214,17 @@
             role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
             <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg " role="document">
                 <div class="modal-content" id="claiming_slip_container">
-                    
+
                 </div>
             </div>
         </div>
     </div>
+    
     <script src="../JS/frontdesk.js"></script>
+    <script>
+        
+    </script>
+    
 </body>
 
 </html>
