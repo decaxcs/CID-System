@@ -337,3 +337,31 @@ $(document).ready(function () {
     new DataTable('#recent_cids_table');
 });
 
+// JavaScript code for handling dropdown functionality
+document.addEventListener('DOMContentLoaded', function() {
+    var notifIcon = document.getElementById('notif_icon');
+    var notifDropdown = document.getElementById('notif_dropdown');
+
+    // Show/hide dropdown when notification icon is clicked
+    notifIcon.addEventListener('click', function() {
+        if (notifDropdown.style.display === 'none') {
+            notifDropdown.style.display = 'block';
+        } else {
+            notifDropdown.style.display = 'none';
+        }
+    });
+
+    // Hide dropdown when user clicks outside of it
+    document.addEventListener('click', function(event) {
+        if (!notifIcon.contains(event.target) && !notifDropdown.contains(event.target)) {
+            notifDropdown.style.display = 'none';
+        }
+    });
+});
+
+    document.getElementById('select-all-checkbox').addEventListener('change', function() {
+        var checkboxes = document.querySelectorAll('.message_checkbox');
+        checkboxes.forEach(function(checkbox) {
+            checkbox.checked = document.getElementById('select-all-checkbox').checked;
+        });
+    });

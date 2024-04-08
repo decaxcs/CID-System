@@ -1,0 +1,28 @@
+
+/* I-update ang laki ng tr body na ito sa iyong nais */
+tbody tr {
+    height: 120px;
+}
+
+/* Palitan ang background color ng .inbox_page */
+.inbox_page {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin: 0px 0px 0px;
+    padding: 5%;
+    overflow-y: hidden;
+    background-color: #EFF5F9;
+}
+
+#message{
+    padding: 5%;
+}
+
+/* Dagdag na estilo */
+.profile-pic {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
