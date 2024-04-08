@@ -2,6 +2,7 @@
     overflow-y: hidden;
     padding: 5%;
     background-color: #EFF5F9;
+    text-align: justify;
 }
 
 .custom-select {

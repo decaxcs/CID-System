@@ -30,7 +30,7 @@
                 <!-- <img id="profile_pic" src="../../Assets/Images/logo.png" alt="logo"> -->
                 <p id="tech_name"></p>
 
-                <iconify-icon id="drop_down_icon" icon="basil:logout-solid  " id="logout"></iconify-icon>
+                <iconify-icon id="logout" icon="basil:logout-solid"></iconify-icon>
             </div>
         </div>
         <div id="greetings_header">
@@ -77,19 +77,20 @@
                 <div id="progress_container">
                     <p id="progress_title" class="title">Progress</p>
                     <div class="card-body card" id="progress_card">
-                        <div class="row" id="click_release">
+
+                        <div class="d-flex flex-row status" id="click_release">
                             <div class="col-2 icon_col">
                                 <div class="icon_container">
                                     <iconify-icon icon="radix-icons:rocket" height="3em" style="color: #345AFD;">
                                     </iconify-icon>
                                 </div>
                             </div>
-                            <div class="col-1 number_col">
+                            <div class="col-2 number_col">
                                 <div class="number_container">
                                     <p class="number_text" id="release_count"></p>
                                 </div>
                             </div>
-                            <div class="col-1 text_col">
+                            <div class="col-6 text_col">
                                 <div class="text_container">
                                     <p class="text_content">Release</p>
                                 </div>
@@ -101,73 +102,59 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- Line -->
-                        <hr>
-                        <!-- Row 2 -->
-                        <div class="row" id="click_ongoing">
-                            <!-- Mga larawan -->
+
+                        <div class="d-flex flex-row status" id="click_ongoing">
                             <div class="col-2 icon_col">
-                                <!-- Pangalanan ang col bilang icon_col at gamitin ang col-4 -->
                                 <div class="icon_container">
                                     <iconify-icon icon="uiw:reload" height="3em" style="color: #345AFD;"></iconify-icon>
                                 </div>
                             </div>
-                            <div class="col-1 number_col">
-                                <!-- Pangalanan ang col bilang number_col at gamitin ang col-4 -->
+                            <div class="col-2 number_col">
                                 <div class="number_container">
-                                    <p class="number_text" id="ongoing_count"></p> <!-- Dagdagan ng class name -->
+                                    <p class="number_text" id="ongoing_count"></p>
                                 </div>
                             </div>
-                            <!-- Mga text -->
-                            <div class="col-1 text_col">
-                                <!-- Pangalanan ang col bilang text_col at gamitin ang col-4 -->
+
+                            <div class="col-6 text_col">
                                 <div class="text_container">
-                                    <p class="text_content">On-going</p> <!-- Dagdagan ng class name -->
+                                    <p class="text_content">On&ndash;going</p>
                                 </div>
                             </div>
                             <div class="col-1 text_col">
-                                <!-- Pangalanan ang col bilang text_col at gamitin ang col-4 -->
                                 <div class="arrow_container">
                                     <iconify-icon icon="raphael:arrowright" width="1.2em" height="1.2em"
-                                        style="color: A7A7A7"></iconify-icon> <!-- Dagdagan ng class name -->
+                                        style="color: A7A7A7"></iconify-icon>
                                 </div>
                             </div>
                         </div>
-                        <!-- Line -->
-                        <hr>
-                        <!-- Row 3 -->
-                        <div class="row" id="click_warranty">
-                            <!-- Mga larawan -->
+
+                        <div class="d-flex flex-row status" id="click_w arranty">
                             <div class="col-2 icon_col">
-                                <!-- Pangalanan ang col bilang icon_col at gamitin ang col-4 -->
                                 <div class="icon_container">
                                     <iconify-icon icon="iconamoon:shield-yes-duotone" height="3em"
                                         style="color: #345AFD;"></iconify-icon>
                                 </div>
                             </div>
-                            <div class="col-1 number_col">
-                                <!-- Pangalanan ang col bilang number_col at gamitin ang col-4 -->
+                            <div class="col-2 number_col">
                                 <div class="number_container">
-                                    <p class="number_text" id="warranty_count"></p> <!-- Dagdagan ng class name -->
+                                    <p class="number_text" id="warranty_count"></p>
                                 </div>
                             </div>
-                            <!-- Mga text -->
-                            <div class="col-1 text_col">
-                                <!-- Pangalanan ang col bilang text_col at gamitin ang col-4 -->
+                            <div class="col-6 text_col">
                                 <div class="text_container">
-                                    <p class="text_content">Warranty</p> <!-- Dagdagan ng class name -->
+                                    <p class="text_content">Warranty</p>
                                 </div>
                             </div>
                             <div class="col-1 text_col">
-                                <!-- Pangalanan ang col bilang text_col at gamitin ang col-4 -->
                                 <div class="arrow_container">
                                     <iconify-icon icon="raphael:arrowright" width="1.2em" height="1.2em"
-                                        style="color: A7A7A7"></iconify-icon> <!-- Dagdagan ng class name -->
+                                        style="color: A7A7A7"></iconify-icon>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+
             </div>
 
 
@@ -191,7 +178,7 @@
                     </div>
                 </div>
             </div>
-        </div>  
+        </div>
 
         <?php 
         // include "add_cid_modal.php"; 
@@ -214,13 +201,30 @@
                 </div>
             </div>
         </div>
+
+        <div class="modal fade" id="logout_modal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false"
+            role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-sm" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalTitleId">
+                            Logout?
+                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">Are you sure you want to logout your account?</div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                            Close
+                        </button>
+                        <button type="button" class="btn btn-primary" id="logout_button">Logout</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    
+
     <script src="../JS/frontdesk.js"></script>
-    <script>
-        
-    </script>
-    
 </body>
 
 </html>

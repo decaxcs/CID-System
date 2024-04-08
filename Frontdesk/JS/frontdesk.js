@@ -3,6 +3,23 @@ $(document).ready(function () {
         window.location.href = 'create_cid.php';
     });
 
+    document.getElementById('logout').addEventListener('click', function () {
+        $("#logout_modal").modal('show');
+    });
+
+    document.getElementById('logout_button').addEventListener('click', function () {
+        $.ajax({
+            url: '../../logout.php',
+            type: 'POST', 
+            success: function() {
+                window.location.href = '../../index.php'; 
+            }, 
+            error: function(xhr, status, error) {
+                ajax_error_handling(xhr, status, error) 
+            }
+        });
+    });
+
     $('#click_release').click(function () {
         window.location.href = '../PAGES/release.php';
     });

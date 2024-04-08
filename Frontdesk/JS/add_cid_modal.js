@@ -40,7 +40,7 @@ document.querySelector('.btn_cancel').addEventListener('click', function () {
 
 $(document).ready(function () {
     var signature_dataURL;
-    
+
     var checkboxes = {};
     var additional_checkboxes = {};
 
@@ -68,7 +68,57 @@ $(document).ready(function () {
     const signatureInputCanvas = document.getElementById('signature_input');
     const signaturePad = new SignaturePad(signatureInputCanvas);
 
-  
+    function validate_inputs() {
+        const allRequiredChecked = validateRequiredFields();
+        const allRadioGroupsValid = validateRadioGroups();
+        const platinumValidation = validatePlatinumNumber();
+
+        return allRequiredChecked && allRadioGroupsValid && platinumValidation;
+    }
+
+    function validateRequiredFields() {
+        let allRequiredChecked = true;
+        $('input[type="text"], input[type="number"], select').each(function () {
+            if ($(this).hasClass('required') && !$(this).val()) {
+                allRequiredChecked = false;
+                return false; // Stop iterating if a required input is empty
+            }
+        });
+
+        return allRequiredChecked;
+    }
+
+    $('#platinum_member').change(function () {
+        const isPlatinumMember = $(this).val() === 'Yes';
+        $('#platinum_number').prop('disabled', !isPlatinumMember);
+    });
+
+    function validateRadioGroups() {
+        let allRadioGroupsValid = true;
+
+        $('input[type=radio]').each(function () {
+            const groupName = $(this).attr('name');
+            const isChecked = $(`input[name="${groupName}"]:checked`).length > 0;
+
+            if (!isChecked) {
+                allRadioGroupsValid = false;
+                return false; // Stop iterating if a radio group is not checked
+            }
+        });
+
+        return allRadioGroupsValid;
+    }
+
+    function validatePlatinumNumber() {
+        const platinumMember = $('#platinum_member').val();
+        const platinumNumber = $('#platinum_number');
+
+        if (platinumMember === 'Yes' && !platinumNumber.val()) {
+            return false; // Platinum number required
+        }
+
+        return true; // Platinum number is not required or is filled in
+    }
 
     function add_cid() {
         $('input[type="checkbox"]').each(function () {
@@ -103,13 +153,11 @@ $(document).ready(function () {
         $("#signature_modal").modal("show");
     });
 
-    // Clear button 
     const clearButton = document.getElementById("clear");
     clearButton.addEventListener("click", () => {
         signaturePad.clear();
     });
 
-    // Save button (replace with your server-side save logic)
     const saveButton = document.getElementById("save");
     saveButton.addEventListener("click", () => {
         if (signaturePad.isEmpty()) {
@@ -118,11 +166,57 @@ $(document).ready(function () {
             const dataURL = signaturePad.toDataURL();
             signature_dataURL = dataURL;
 
-            // Update the signature display element
             signatureDisplayImage.src = signature_dataURL;
+            $("#signature_modal").modal("hide");
         }
     });
+    
+    $('#newModal').on('show.bs.modal', function (event) {
+        create_cid_number();
+        get_technician_services();
+    })
 
+    $('#proceed_button').click(function () {
+        if (validate_inputs()) {
+            add_cid();
+        } else {
+            $('#alertContainer').append(
+                `<div id="alert" class="alert alert-danger" role="alert">
+            Please check all required checkboxes.
+        </div>`
+        );
+
+        setTimeout(function () {
+            $('#alert').fadeOut(500, function () {
+                $(this).remove();
+            });
+        }, 3000);
+        }
+    });
+    
+
+    $('#create_button').click(function () {
+        const textareas = document.querySelectorAll('.modal-body textarea.required');
+        let allTextareasFilled = true;
+    
+        textareas.forEach(textarea => {
+            if (textarea.value.trim() === '') {
+                allTextareasFilled = false;
+                textarea.classList.add('is-invalid');
+
+                setTimeout(() => {
+                    textarea.classList.remove('is-invalid');
+                }, 3000);
+            } else {
+                textarea.classList.remove('is-invalid');
+            }
+        });
+    
+        if (allTextareasFilled) {
+            create_cid();
+        }
+    });
+    
     function create_cid_number() {
         $.ajax({
             url: "../PHP/create_cid_number.php",
@@ -254,12 +348,7 @@ $(document).ready(function () {
         var tos_container = $('#tos_container');
         tos_container.empty();
 
-        var required_tos_ids = [];
-
         tos_data.forEach(function (tos_item) {
-            if (tos_item.tos_required === 'Yes') {
-                required_tos_ids.push(tos_item.tos_id);
-            }
 
             var checkboxContentHTML = '';
             var radiobuttonContentHTML = '';
@@ -298,7 +387,7 @@ $(document).ready(function () {
                 <div class="row mb-3">
                     <div class="col">
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="${tos_item.tos_id}">
+                            <input class="form-check-input required_${tos_item.tos_required}" type="checkbox" class=""  id="${tos_item.tos_id}">
                             <label class="form-check-label" for="${tos_item.tos_id}">
                                 <div class="row">
                                     <div class="col-auto">
@@ -319,65 +408,6 @@ $(document).ready(function () {
         });
     }
 
-    $('#newModal').on('show.bs.modal', function (event) {
-        create_cid_number();
-        get_technician_services();
-    })
     get_tos();
     get_technician_services();
-    $("#proceed_button").click(add_cid);
-    $("#create_button").click(create_cid);
 });
-
-
-function checkCheckboxes() {
-    var checkboxes = document.querySelectorAll('input[type="checkbox"]:not(.form-check-nested input)');
-    for (var i = 0; i < checkboxes.length; i++) {
-        if (!checkboxes[i].checked) {
-            return false;
-        }
-    }
-    return true;
-}
-
-function checkFields() {
-    var clientName = document.getElementById('client_name').value.trim();
-    var contactNumber = document.getElementById('contact_number').value.trim();
-    var platinumNumber = document.getElementById('platinum_number').value.trim();
-
-    if (clientName === '' || contactNumber === '' || platinumNumber === '') {
-        return false;
-    }
-    return true;
-}
-
-function checkAdvertisingOption() {
-    var advertisingOption = document.querySelectorAll('input[name="advertisingOption"]:checked').length;
-    return advertisingOption > 0;
-}
-
-function showAlert(message) {
-    var alertContainer = document.getElementById('alertContainer');
-    var alertHtml = `
-        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-            ${message}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>`;
-    alertContainer.innerHTML = alertHtml;
-}
-
-document.getElementById('proceed_button').addEventListener('click', function () {
-    if (!checkCheckboxes() || !checkFields() || !checkAdvertisingOption()) {
-        showAlert('Please fill in all required fields and checkboxes.');
-        return;
-    }
-    $('#newModal').modal('show');
-});
-
-function showNewModal() {
-    if (!checkCheckboxes() || !checkFields() || !checkAdvertisingOption()) {
-        showAlert('Please fill in all required fields and checkboxes.');
-        return;
-    }
-    $('#newModal').modal('show');
-}

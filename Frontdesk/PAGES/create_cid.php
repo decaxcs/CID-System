@@ -37,7 +37,7 @@
                     <div class="col">
                         <div class="mb-4"> <span class="tos_span">TIME & DATE: <span id="currentDateTime"></span></div>
                         <div class="mb-4"><span class="tos_span">CLIENT FULL NAME WITH SIGNATURE:</span> <input
-                                type="text" id="client_name" name="client_name"></div>
+                                class="required" type="text" id="client_name" name="client_name"></div>
 
                         <div class="signature_container">
                             <p><span class="tos_span">Enter Signature:</span></p>
@@ -46,29 +46,29 @@
                             </div>
                         </div>
 
-                        <div class="mb-4"> <span class="tos_span">CONTACT NUMBER:</span> <input type="number"
+                        <div class="mb-4"> <span class="tos_span">CONTACT NUMBER:</span> <input type="number" class="required"
                                 id="contact_number" name="contact_number"></div>
                         <div class="row mb-5 align-items-center">
                             <!-- Dito ay idinagdag ang 'align-items-center' -->
                             <div class="col">
                                 <span class="tos_span">PLATINUM MEMBER:</span>
-                                <select id="platinum_member" name="platinum_member" class="custom-select">
-                                    <option value="Yes">Yes</option>
+                                <select id="platinum_member" name="platinum_member" class="custom-select required">
                                     <option value="No">No</option>
+                                    <option value="Yes">Yes</option>
                                 </select>
                             </div>
                             <div class="col">
                                 <span class="tos_span">PLATINUM#:</span> <input type="number" id="platinum_number"
-                                    name="platinum_number">
+                                    name="platinum_number" disabled>
                             </div>
                         </div>
                         <div class="mb-3"> <span class="tos_span">TECHYDAVID IT SOLUTIONS’ REPRESENTATIVE:</span>
-                            <select id="representative" name="representative" class="custom-select select_technician">
+                            <select id="representative" name="representative" class="custom-select select_technician required">
 
                             </select>
                         </div>
                         <div class="mb-5"> <span class="tos_span">HOW DO YOU KNOW ABOUT US?:</span>
-                            <select id="how_know" name="how_know" class="custom-select">
+                            <select id="how_know" name="how_know" class="custom-select required">
                                 <option value="Advertisement">Advertisement</option>
                                 <option value="Word of Mouth">Word of Mouth</option>
                                 <option value="Online Search">Online Search</option>
@@ -103,8 +103,6 @@
                                     <p class="tos_span">CID: <span class="tos_span" id="cid_number"> 20241-3</span></p>
                                 </div>
                                 <!-- <div class="col ms-5">
-                                <p><span class="tos_span">Claiming Slip:</span><input type="text" id="claiming_slip"
-                                        name="claiming_slip"></p>
                             </div> -->
                             </div>
                         </div>
@@ -116,7 +114,7 @@
                                 <div class="form-group">
                                     <label for="unit_details"><span class="tos_span ">Unit Details/Brand
                                             Models:</span></label>
-                                    <textarea class="form-control" id="unit_details" rows="3"></textarea>
+                                    <textarea class="form-control required" id="unit_details" rows="3"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -129,7 +127,7 @@
                                 <div class="form-group">
                                     <label for="remarks"><span class="tos_span ">Remarks:(Scratches,Color,lcd
                                             etc)</span></label>
-                                    <textarea class="form-control" id="remarks" rows="5"></textarea>
+                                    <textarea class="form-control required" id="remarks" rows="5"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -147,7 +145,6 @@
                             <p> <span class="tos_span ">Computer Service:</span>
                                 <select id="computer_service" name="computer_service"
                                     class="custom-select select_services">
-
                                 </select>
                             </p>
                         </div>
