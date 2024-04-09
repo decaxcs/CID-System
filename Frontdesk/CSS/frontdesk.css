@@ -407,7 +407,7 @@ p {
     /* Adjust as needed */
     right: 30px;
     /* Adjust as needed */
-    width: 680px;
+    width: 480px;
     /* Adjust as needed */
     background-color: #fff;
     border: 1px solid #ccc;
@@ -509,4 +509,20 @@ p {
 #claiming_slip_details {
     line-height: 2;
     text-align: justify;
+}
+
+#cs_title {
+    font-weight: 700;
+}
+
+/* Logout */
+#logout_titled{
+    background-color: #345AFD;
+    color: #fff;
+    text-align: center;
+    justify-content: center;
+}
+
+#logout_footer{
+    justify-content: center;
 }

@@ -35,7 +35,7 @@
                             industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when
                             an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
                         <div class="checkbox-container">
-                            <input class="form-check-input" type="checkbox" value="" id="message_checkbox">
+                            <input class="form-check-input" type="checkbox" value="" id="message_checkbox1">
                         </div>
                     </div>
                     <div class="notification">
@@ -44,7 +44,7 @@
                             industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when
                             an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
                         <div class="checkbox-container">
-                            <input class="form-check-input" type="checkbox" value="" id="message_checkbox">
+                            <input class="form-check-input" type="checkbox" value="" id="message_checkbox2">
                         </div>
                     </div>
                     <div class="notification">
@@ -53,7 +53,7 @@
                             industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when
                             an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
                         <div class="checkbox-container">
-                            <input class="form-check-input" type="checkbox" value="" id="message_checkbox">
+                            <input class="form-check-input" type="checkbox" value="" id="message_checkbox3">
                         </div>
                     </div>
                     <div class="footer_see_all"><a href="Inbox.php">See All</a></div>
@@ -227,41 +227,16 @@
         <div class="modal fade" id="claiming_slip_cid" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false"
             role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
             <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg " role="document">
-                <div class="modal-content" id="claiming_slip_container">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="modalTitleId">
-                            Claiming Slip
-                        </h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <div class="modal-content">
+                    <div id="claiming_slip_container">
+
                     </div>
-                    <div class="modal-body">
-                        <div id="claiming_slip_details">
-                            <p>Claiming Slip #: 042024-2</p>
-                            <p>Name: Fhranz Joseph A. Benosa</p>
-                            <p>Contact Number: 09089856740</p>
-                            <p>CID #: 0420204-1</p>
-                            <p>Date: April 9, 2024</p>
-                            <p>Tech in Charge: Armein</p>
-                            <hr>
-                            <p>ITEM/SERVICES: WARRANTY CLAIM</p>
-                            <p>Unit Details:</p>
-                            <p>Unit Type: Computer</p>
-                            <p>Brand: Acer Nitro-5</p>
-                                <div>
-                                    <label for="claiming_slip_color">Color:</label>
-                                    <input type="text" name="claiming_slip_color" id="claiming_slip_color">
-                                </div>
-                                <div>
-                                    <label for="claiming_slip_accesories">Accesories:</label>
-                                    <input type="text" name="claiming_slip_accesories" id="claiming_slip_accesories">
-                                </div>
-                            <p>Notes / Remarks: May Gasgas</p>
-                        </div>
-                    </div>
+
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
                             Close
                         </button>
+                        <button type="button" class="btn btn-info" id="print_claiming_slip">Print</button>
                         <button type="button" class="btn btn-primary">Save</button>
                     </div>
                 </div>
@@ -270,26 +245,20 @@
 
         <div class="modal fade" id="logout_modal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false"
             role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-sm" role="document">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-sm" role="document">
                 <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="modalTitleId">
-                            Logout?
-                        </h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <div class="modal-header" id="logout_titled">
+                        <h5 class="modal-title" id="logoutTitleId">Logout Confirmation</h5>
                     </div>
-                    <div class="modal-body">Are you sure you want to logout your account?</div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                            Close
-                        </button>
+                    <div class="modal-body">Are you sure you want to log out from your account?</div>
+                    <div class="modal-footer" id="logout_footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                         <button type="button" class="btn btn-primary" id="logout_button">Logout</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
     <script src="../JS/frontdesk.js"></script>
 </body>
 
