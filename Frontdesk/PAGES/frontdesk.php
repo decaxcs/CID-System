@@ -228,7 +228,42 @@
             role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
             <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg " role="document">
                 <div class="modal-content" id="claiming_slip_container">
-
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalTitleId">
+                            Claiming Slip
+                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div id="claiming_slip_details">
+                            <p>Claiming Slip #: 042024-2</p>
+                            <p>Name: Fhranz Joseph A. Benosa</p>
+                            <p>Contact Number: 09089856740</p>
+                            <p>CID #: 0420204-1</p>
+                            <p>Date: April 9, 2024</p>
+                            <p>Tech in Charge: Armein</p>
+                            <hr>
+                            <p>ITEM/SERVICES: WARRANTY CLAIM</p>
+                            <p>Unit Details:</p>
+                            <p>Unit Type: Computer</p>
+                            <p>Brand: Acer Nitro-5</p>
+                                <div>
+                                    <label for="claiming_slip_color">Color:</label>
+                                    <input type="text" name="claiming_slip_color" id="claiming_slip_color">
+                                </div>
+                                <div>
+                                    <label for="claiming_slip_accesories">Accesories:</label>
+                                    <input type="text" name="claiming_slip_accesories" id="claiming_slip_accesories">
+                                </div>
+                            <p>Notes / Remarks: May Gasgas</p>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                            Close
+                        </button>
+                        <button type="button" class="btn btn-primary">Save</button>
+                    </div>
                 </div>
             </div>
         </div>

@@ -170,7 +170,7 @@ $(document).ready(function () {
             $("#signature_modal").modal("hide");
         }
     });
-    
+
     $('#newModal').on('show.bs.modal', function (event) {
         create_cid_number();
         get_technician_services();
@@ -182,23 +182,23 @@ $(document).ready(function () {
         } else {
             $('#alertContainer').append(
                 `<div id="alert" class="alert alert-danger" role="alert">
-            Please check all required checkboxes.
-        </div>`
-        );
+                Please check all required checkboxes.
+            </div>`
+            );
 
-        setTimeout(function () {
-            $('#alert').fadeOut(500, function () {
-                $(this).remove();
-            });
-        }, 3000);
+            setTimeout(function () {
+                $('#alert').fadeOut(500, function () {
+                    $(this).remove();
+                });
+            }, 3000);
         }
     });
-    
+
 
     $('#create_button').click(function () {
         const textareas = document.querySelectorAll('.modal-body textarea.required');
         let allTextareasFilled = true;
-    
+
         textareas.forEach(textarea => {
             if (textarea.value.trim() === '') {
                 allTextareasFilled = false;
@@ -211,12 +211,12 @@ $(document).ready(function () {
                 textarea.classList.remove('is-invalid');
             }
         });
-    
+
         if (allTextareasFilled) {
             create_cid();
         }
     });
-    
+
     function create_cid_number() {
         $.ajax({
             url: "../PHP/create_cid_number.php",

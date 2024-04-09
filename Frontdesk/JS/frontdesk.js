@@ -292,7 +292,7 @@ $(document).ready(function () {
                 },
                 success: function (response) {
                     if (response.status === "success") {
-                        populate_claiming_slip(response.cids_data);
+                        // populate_claiming_slip(response.cids_data);
                     } else {
                         console.log("Error: No data found.");
                     }
@@ -305,24 +305,10 @@ $(document).ready(function () {
 
         function populate_claiming_slip(data) {
             const claiming_slip_container = $('#claiming_slip_container'); // Adjust container ID if needed
-            claiming_slip_container.empty();
+            // claiming_slip_container.empty();
             var claiming_slip_HTML =
-                `
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="modalTitleId">
-                            ${data[0].cid_number} ${data[0].cid_client_full_name}
-                            </h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <p>Unit Details: ${data[0].cid_unit_details}</div>yawa
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                                Close
-                            </button>
-                            <button type="button" class="btn btn-primary">Save</button>
-                        </div>
+                    `
+                        
                     `;
             claiming_slip_container.append(claiming_slip_HTML);
         }

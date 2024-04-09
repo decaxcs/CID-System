@@ -374,54 +374,61 @@ p {
     flex-direction: row;
 }
 
-.title_release{
+.title_release {
     font-size: 2.2em;
     font-weight: 700;
     opacity: 0.4;
     margin-left: 40px;
 }
 
-.title_on-going{
+.title_on-going {
     font-size: 2.2em;
     font-weight: 700;
     opacity: 0.4;
     margin-left: 40px;
 }
 
-.title_warranty{
+.title_warranty {
     font-size: 2.2em;
     font-weight: 700;
     opacity: 0.4;
     margin-left: 40px;
 }
 
-.table{
+.table {
     padding: 20px;
 }
 
-  /* CSS styles for notification dropdown */
-  #notif_dropdown {
+/* CSS styles for notification dropdown */
+#notif_dropdown {
     display: none;
     position: absolute;
-    top: 50px; /* Adjust as needed */
-    right: 30px; /* Adjust as needed */
-    width: 480px; /* Adjust as needed */
+    top: 50px;
+    /* Adjust as needed */
+    right: 30px;
+    /* Adjust as needed */
+    width: 680px;
+    /* Adjust as needed */
     background-color: #fff;
     border: 1px solid #ccc;
     border-radius: 5px;
     padding: 10px;
     z-index: 1000;
-    max-height: 300px; /* Adjust as needed */
+    max-height: 400px;
+    /* Adjust as needed */
     overflow-y: auto;
 }
+
 #notif_dropdown .header_notification {
     font-weight: bold;
     margin-bottom: 10px;
 }
+
 #notif_dropdown .footer_see_all {
     text-align: center;
     margin-top: 10px;
 }
+
 #notif_dropdown .notification {
     display: flex;
     align-items: center;
@@ -430,47 +437,76 @@ p {
 }
 
 .notification .checkbox-container {
-    margin-left: auto; /* Push to the right */
-}
-/* Hover effect for checkbox */
-.notification:hover input[type="checkbox"] {
-    transform: scale(1.2); /* Increase size */
+    margin-left: auto;
+    /* Push to the right */
 }
 
-.header_notification{
+/* Hover effect for checkbox */
+.notification:hover input[type="checkbox"] {
+    transform: scale(1.2);
+    /* Increase size */
+}
+
+.header_notification {
     background-color: #345AFD;
+    color: #fff;
     height: 50px;
     display: flex;
-    justify-content: center; 
-    align-items: center; 
-  
+    justify-content: center;
+    align-items: center;
+
 }
 
 .footer_see_all {
-    background-color: #345AFD; /* Kulay na background */
-    color: black; /* Kulay ng teksto */
-    text-decoration: underline;
-    padding: 10px; /* Dagdag na estilo upang magkaroon ng space sa paligid ng link */
-    text-align: center; /* I-align ang teksto sa gitna */
+    background-color: #345AFD;
+    /* Kulay na background */
+    color: black;
+    /* Kulay ng teksto */
+    padding: 10px;
+    /* Dagdag na estilo upang magkaroon ng space sa paligid ng link */
+    text-align: center;
+    /* I-align ang teksto sa gitna */
     margin-top: 20px;
 }
 
 .footer_see_all a {
-    color: black; /* Kulay na gusto mo */
+    color: #FFFFFF;
+    /* Kulay na gusto mo */
 }
 
-.notification_text{
-   display: flex;
-   justify-content: left; 
-   align-items: left; 
-    margin-left: 10px; /* Magdagdag ng margin sa kaliwa ng teksto */
+.notification_text {
+    display: flex;
+    justify-content: left;
+    align-items: left;
+    margin-left: 10px;
+    /* Magdagdag ng margin sa kaliwa ng teksto */
     margin: 0;
-    flex: 2; /* Fill remaining space */
+    flex: 2;
+    /* Fill remaining space */
 
 }
 
-.img_notification{
-    width: 50px; /* Adjust as needed */
+.checkbox-container {
+    float: left;
+    /* I-move ang checkbox sa kaliwa */
+    margin-right: 10px;
+    /* Magdagdag ng pahintulot sa kanan upang hindi maglapit ang checkbox sa text */
+}
+
+.img_notification {
+    width: 50px;
+    /* Adjust as needed */
     height: auto;
     margin-right: 10px;
+}
+
+
+/* Claiming Slip */
+#claiming_slip_container .modal-body {
+    padding: 20px;
+}
+
+#claiming_slip_details {
+    line-height: 2;
+    text-align: justify;
 }
