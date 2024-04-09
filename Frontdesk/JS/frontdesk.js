@@ -276,26 +276,21 @@ $(document).ready(function () {
             const rowData = $('#recent_cids_table').DataTable().row($(this).parents('tr')).data();
             const cid_number = rowData.cid_number;
 
-
-            get_cid_info(cid_number);
+            create_cid_cs_number(cid_number);
 
             $("#claiming_slip_cid").modal("show");
         });
 
-
-        function get_cid_info(cid_number) {
+        function create_cid_cs_number(cid_number) {
             $.ajax({
-                url: "../PHP/get_cids.php",
+                url: "../PHP/create_claiming_slip_number.php",
                 type: "GET",
                 data: {
                     cid_number: cid_number
                 },
                 success: function (response) {
-                    if (response.status === "success") {
-                        populate_claiming_slip(response.cids_data);
-                    } else {
-                        console.log("Error: No data found.");
-                    }
+                    console.log(response);
+                    populate_claiming_slip(response);
                 },
                 error: function (xhr, status, error) {
                     ajax_error_handling(xhr, status, error);
@@ -304,7 +299,11 @@ $(document).ready(function () {
         }
 
         function populate_claiming_slip(data) {
-            const claiming_slip_container = $('#claiming_slip_container'); // Adjust container ID if needed
+            var claiming_slip_number = data.cid_cs_number;
+            var cid_info = data.cids_data;
+
+
+            const claiming_slip_container = $('#claiming_slip_container');
             claiming_slip_container.empty();
             var claiming_slip_HTML =
                 `
@@ -316,17 +315,17 @@ $(document).ready(function () {
                     </div>
                     <div class="modal-body">
                         <div id="claiming_slip_details">
-                            <p>Claiming Slip #: ${data[0].cid_number}</p>
-                            <p>Name: ${data[0].cid_client_full_name}</p>
-                            <p>Contact Number: ${data.cid_client_contact}</p>
-                            <p>CID #: ${data[0].cid_number}</p>
-                            <p>Date: ${data[0].formatted_created}</p>
-                            <p>Tech in Charge: ${data[0].technician_name}</p>
+                            <p>Claiming Slip #: ${claiming_slip_number}</p>
+                            <p>Name: ${cid_info[0].cid_client_full_name}</p>
+                            <p>Contact Number: ${cid_info[0].cid_client_contact}</p>
+                            <p>CID #: ${cid_info[0].cid_number}</p>
+                            <p>Date: ${""}</p>
+                            <p>Tech in Charge: ${cid_info[0].technician_name}</p>
                             <hr>
                             <p>ITEM/SERVICES: WARRANTY CLAIM</p>
                             <p id="cs_title">Unit Details</p>
-                            <p>Unit Type: ${data[0].cid_type}</p>
-                            <p>Brand: ${data[0].cid_unit_details}</p>
+                            <p>Unit Type: ${cid_info[0].service_name}</p>
+                            <p>Brand: ${cid_info[0].cid_unit_details}</p>
                             <div>
                                 <label for="cs_color">Color:</label>
                                 <input type="text" name="cs_color" id="cs_color">
@@ -335,29 +334,35 @@ $(document).ready(function () {
                                 <label for="cs_accesories">Accesories:</label>
                                 <input type="text" name="cs_accesories" id="cs_accesories">
                             </div>
-                            <p>Notes / Remarks: ${data[0].cid_remarks}</p>
+                            <p>Notes / Remarks: ${cid_info[0].cid_remarks}</p>
                         </div>
                     </div>
                     `;         
-                    
-                    var test_slip =
-                    `
-                    
-                    `
-            claiming_slip_container.append(test_slip);
+
+            claiming_slip_container.append(claiming_slip_HTML);
         }
 
         
     }
 
     $(document).on('click', '#print_claiming_slip', function () {
-        // Create a new window to hold the content to be printed
         var printWindow = window.open('', '_blank');
-        // Get the content of the claiming slip details div
+
         var claimingSlipContent = $('#claiming_slip_details').html();
-        // Set the content of the new window to the claiming slip details
+
         printWindow.document.write('<html><head><title>Claiming Slip</title></head><body>' + claimingSlipContent + '</body></html>');
-        // Print the content
+
+        printWindow.document.close();
+        printWindow.print();
+    });
+
+    $(document).on('click', '#print_claiming_slip', function () {
+        var printWindow = window.open('', '_blank');
+
+        var claimingSlipContent = $('#claiming_slip_details').html();
+
+        printWindow.document.write('<html><head><title>Claiming Slip</title></head><body>' + claimingSlipContent + '</body></html>');
+
         printWindow.document.close();
         printWindow.print();
     });
@@ -390,12 +395,5 @@ document.addEventListener('DOMContentLoaded', function () {
         if (!notifIcon.contains(event.target) && !notifDropdown.contains(event.target)) {
             notifDropdown.style.display = 'none';
         }
-    });
-});
-
-document.getElementById('select-all-checkbox').addEventListener('change', function () {
-    var checkboxes = document.querySelectorAll('.message_checkbox');
-    checkboxes.forEach(function (checkbox) {
-        checkbox.checked = document.getElementById('select-all-checkbox').checked;
     });
 });

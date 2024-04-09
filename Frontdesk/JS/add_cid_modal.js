@@ -23,21 +23,6 @@ updateDateTime();
 
 setInterval(updateDateTime, 1000);
 
-
-document.querySelector('.btn_cancel').addEventListener('click', function () {
-    var inputFields = document.querySelectorAll('.modal-body input');
-    var checkboxes = document.querySelectorAll('.modal-body input[type="checkbox"]');
-
-    inputFields.forEach(function (input) {
-        input.value = '';
-    });
-
-    checkboxes.forEach(function (checkbox) {
-        checkbox.checked = false;
-    });
-    $('#add_CID_modal').modal('hide');
-});
-
 $(document).ready(function () {
     var signature_dataURL;
 
