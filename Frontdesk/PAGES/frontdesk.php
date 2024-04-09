@@ -237,7 +237,7 @@
                             Close
                         </button>
                         <button type="button" class="btn btn-info" id="print_claiming_slip">Print</button>
-                        <button type="button" class="btn btn-primary">Save</button>
+                        <button type="button" class="btn btn-primary" id="save_claiming_slip">Save</button>
                     </div>
                 </div>
             </div>

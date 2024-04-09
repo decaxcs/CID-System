@@ -1,0 +1,67 @@
+.claiming_info{
+    padding: 5% 10%;
+    justify-content: left;
+    text-align: left;
+}
+
+#claiming{
+    border: 1px solid #ccc; /* Set the border style */
+    border-radius: 5px; /* Add rounded corners */
+    padding: 20px; /* Add some padding for spacing */
+    align-items: center;
+    justify-content: space-between;
+    margin: 0px 0px 0px;
+    padding: 10% 20% 15% 20%;
+  
+}
+
+.header_claiming_slip{
+    font-weight: bold;
+    color: rgb(255, 0, 0);
+    font-size: 30px;
+    justify-content: center;
+    text-align: center;
+}
+
+.header_claiming_slip_number{
+    font-weight: bold;
+    color: rgb(255, 0, 0);
+    font-size: 30px;
+    justify-content: center;
+    text-align: center;
+}
+
+.claiming_bold{
+    font-weight: bold;
+}
+
+.instruction{
+    font-size: 14px;
+    text-align: center;
+}
+
+#claiming_hr{
+    border: 2px solid black;
+    opacity: 1;
+
+}
+
+.create_claim_page {
+    border: 1px solid #ccc; /* Set the border style */
+    border-radius: 5px; /* Add rounded corners */
+    padding: 20px; /* Add some padding for spacing */
+}
+
+.create_claim {
+    border: 3px solid black; /* Set the border style */
+    border-radius: 5px; /* Add rounded corners */
+    padding: 20px; /* Add some padding for spacing */
+}
+
+.claiming_text{
+    font-size: 20px;
+}
+
+.claiming_text_samp{
+    font-size: 20px;
+}

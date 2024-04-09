@@ -299,6 +299,7 @@ $(document).ready(function () {
         }
 
         function populate_claiming_slip(data) {
+            var current_datetime = data.current_datetime;
             var claiming_slip_number = data.cid_cs_number;
             var cid_info = data.cids_data;
 
@@ -315,11 +316,11 @@ $(document).ready(function () {
                     </div>
                     <div class="modal-body">
                         <div id="claiming_slip_details">
-                            <p>Claiming Slip #: ${claiming_slip_number}</p>
+                            <p>Claiming Slip #: <span id="cs_number">${claiming_slip_number}</span></p>
                             <p>Name: ${cid_info[0].cid_client_full_name}</p>
                             <p>Contact Number: ${cid_info[0].cid_client_contact}</p>
-                            <p>CID #: ${cid_info[0].cid_number}</p>
-                            <p>Date: ${""}</p>
+                            <p>CID #: <span id="cid_number">${cid_info[0].cid_number}</span></p>
+                            <p>Date: ${current_datetime}</p>
                             <p>Tech in Charge: ${cid_info[0].technician_name}</p>
                             <hr>
                             <p>ITEM/SERVICES: WARRANTY CLAIM</p>
@@ -337,12 +338,10 @@ $(document).ready(function () {
                             <p>Notes / Remarks: ${cid_info[0].cid_remarks}</p>
                         </div>
                     </div>
-                    `;         
+                    `;
 
             claiming_slip_container.append(claiming_slip_HTML);
         }
-
-        
     }
 
     $(document).on('click', '#print_claiming_slip', function () {
@@ -356,16 +355,39 @@ $(document).ready(function () {
         printWindow.print();
     });
 
-    $(document).on('click', '#print_claiming_slip', function () {
-        var printWindow = window.open('', '_blank');
-
-        var claimingSlipContent = $('#claiming_slip_details').html();
-
-        printWindow.document.write('<html><head><title>Claiming Slip</title></head><body>' + claimingSlipContent + '</body></html>');
-
-        printWindow.document.close();
-        printWindow.print();
+    $(document).on('click', '#save_claiming_slip', function () {
+        create_claiming_slip();
     });
+
+    function create_claiming_slip() {
+        var cs_number = $('#cs_number').text();
+        var cid_number = $('#cid_number').text();
+        var cs_color = $('#cs_color').val();
+        var cs_accesories = $('#cs_accesories').val();
+
+        console.log(cs_number);
+        console.log(cid_number);
+        $.ajax({
+            url: "../PHP/create_claiming_slip.php",
+            type: "POST",
+            data: {
+                cs_number: cs_number,
+                cid_number: cid_number,
+                cs_color: cs_color,
+                cs_accesories: cs_accesories
+            },
+            success: function (response) {
+                if (response.status === "success") {
+                    $("#claiming_slip_cid").modal("hide");
+                } else {
+                    ajax_error_handling(xhr, status, error);
+                }
+            },
+            error: function (xhr, status, error) {
+                ajax_error_handling(xhr, status, error);
+            }
+        });
+    }
 
     get_user_account();
     get_technician_ongoing();

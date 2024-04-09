@@ -32,6 +32,8 @@ function generateUniqueCidNumber($cid_number) {
     }
 }
 
+
+
 if(isset($_GET['cid_number']) && !empty($_GET['cid_number'])) {
     $cid_number = $_GET['cid_number'];
     $sql_cids = "SELECT cid.*, technicians.csu_name AS technician_name, services_type.cs_service_name AS service_name, 
@@ -69,6 +71,11 @@ if ($result_cids === false) {
         $response = array("status" => "success", "message" => "No CIDs found");
     }
 }
+
+$currentDateTime = date('F j, Y g:i A');
+
+
+$response['current_datetime'] = $currentDateTime; 
 
 echo json_encode($response);
 $conn->close();
