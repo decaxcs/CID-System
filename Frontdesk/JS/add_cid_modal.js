@@ -36,6 +36,7 @@ $(document).ready(function () {
     var cid_number;
     var client_full_name;
     var client_contact;
+    var client_email;
     var platinum;
     var platinum_number;
     var representative;
@@ -126,6 +127,7 @@ $(document).ready(function () {
 
         client_full_name = $("#client_name").val();
         client_contact = $("#contact_number").val();
+        // client_email = $("#email").val();
         platinum = $("#platinum_member").val() === "Yes" ? 1 : 0;
         platinum_number = $("#platinum_number").val();
         representative = $("#representative").val();
@@ -239,6 +241,7 @@ $(document).ready(function () {
                 selectedOption: selectedOption,
                 client_full_name: client_full_name,
                 client_contact: client_contact,
+                client_email: client_email,
                 platinum: platinum,
                 platinum_number: platinum_number,
                 representative: representative,

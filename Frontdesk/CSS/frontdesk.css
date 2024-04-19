@@ -30,6 +30,16 @@ p {
     margin: 15px;
 }
 
+.logo {
+    width: auto;
+    height: 40px;
+    margin: 15px;
+}
+
+#logo:hover {
+    cursor: pointer;
+}
+
 #notif_container {
     display: flex;
     align-items: center;
@@ -363,10 +373,11 @@ p {
     cursor: pointer !important;
 }
 
-.view_details,
+.edit_cid,
 .claiming_slip {
     display: flex;
     margin: auto;
+
 }
 
 .recent_cid_buttons_container {
@@ -500,6 +511,10 @@ p {
     margin-right: 10px;
 }
 
+#notification_img{
+    border-radius: 100%;
+}
+
 
 /* Claiming Slip */
 #claiming_slip_container .modal-body {
@@ -516,13 +531,13 @@ p {
 }
 
 /* Logout */
-#logout_titled{
+#logout_titled {
     background-color: #345AFD;
     color: #fff;
     text-align: center;
     justify-content: center;
 }
 
-#logout_footer{
+#logout_footer {
     justify-content: center;
 }

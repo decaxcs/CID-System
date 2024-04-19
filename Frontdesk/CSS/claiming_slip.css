@@ -1,3 +1,8 @@
+@page {
+    size: A4;
+    margin: 0;
+}
+
 .claiming_info{
     justify-content: left;
     text-align: left;
@@ -66,4 +71,5 @@
 
 .claiming_text_samp{
     font-size: 10px;
+    margin: 0px 5px;
 }

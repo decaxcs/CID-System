@@ -16,7 +16,7 @@
 </head>
 
 <body>
-    <div id="release_page">
+    <div id="ongoing_page">
         <div id="frontdesk_page">
             <div id="header">
                 <img id="logo" src="../../Assets/Images/logo.png" alt="logo">
@@ -27,14 +27,29 @@
 
                         </div>
                     </div>
-                    <!-- <img id="profile_pic" src="../../Assets/Images/logo.png" alt="logo"> -->
+                    <div id="notif_dropdown">
+                        <div class="header_notification">Notifications</div>
+                        <div class="notification">
+                            <img class="img_notification" src="https://via.placeholder.com/50" alt="Notification 1">
+                            <p class="notification_text">Lorem Ipsum is simply dummy text of the printing and
+                                typesetting
+                                industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
+                                when
+                                an unknown printer took a galley of type and scrambled it to make a type specimen book.
+                            </p>
+                            <div class="checkbox-container">
+                                <input class="form-check-input" type="checkbox" value="" id="message_checkbox1">
+                            </div>
+                        </div>
+                        <div class="footer_see_all"><a href="Inbox.php">See All</a></div>
+                    </div>
                     <p id="tech_name"></p>
 
                     <iconify-icon id="drop_down_icon" icon="basil:logout-solid  " id="logout"></iconify-icon>
                 </div>
             </div>
             <div id="greetings_header">
-                <p class="title_release">RELEASE</p>
+                <p class="title_on-going">Release</p>
             </div>
             <div class="table_container">
                 <div id="table_container">
@@ -47,7 +62,7 @@
                                         <th>Client</th>
                                         <th>Technician</th>
                                         <th>Unit Details</th>
-                                        <th>Date</th>
+                                        <th>Start of Repair Date</th>
                                     </tr>
                                 </thead>
                                 <tbody>

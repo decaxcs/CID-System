@@ -31,8 +31,8 @@ $(document).ready(function () {
                 password: password
             },
             success: function (response) {
-                var data = JSON.parse(response);
-
+                var data = JSON.parse(response);    
+                console.log(data);
                 if (data.status === "success") {
                     switch (data.permission) {
                         case "Frontdesk":

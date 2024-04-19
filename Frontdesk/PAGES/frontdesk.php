@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="../../style.css">
     <link rel="stylesheet" href="../CSS/create_cid.css">
     <link rel="stylesheet" href="../CSS/frontdesk.css">
+    <link rel="stylesheet" href="../CSS/cid.css">
 
     <title>Frontdesk Page</title>
 </head>
@@ -19,7 +20,7 @@
 <body>
     <div id="frontdesk_page">
         <div id="header">
-            <img id="logo" src="../../Assets/Images/logo.png" alt="logo">
+            <img class="logo" src="../../Assets/Images/logo.png" alt="logo">
             <div id="notif_container">
                 <div id="notif_icon_container">
                     <iconify-icon id="notif_icon" icon="mingcute:notification-line"></iconify-icon>
@@ -30,31 +31,14 @@
                 <div id="notif_dropdown">
                     <div class="header_notification">Notifications</div>
                     <div class="notification">
-                        <img class="img_notification" src="https://via.placeholder.com/50" alt="Notification 1">
-                        <p class="notification_text">Lorem Ipsum is simply dummy text of the printing and typesetting
-                            industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when
-                            an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
                         <div class="checkbox-container">
                             <input class="form-check-input" type="checkbox" value="" id="message_checkbox1">
                         </div>
-                    </div>
-                    <div class="notification">
-                        <img class="img_notification" src="https://via.placeholder.com/50" alt="Notification 2">
-                        <p class="notification_text">Lorem Ipsum is simply dummy text of the printing and typesetting
-                            industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when
-                            an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
-                        <div class="checkbox-container">
-                            <input class="form-check-input" type="checkbox" value="" id="message_checkbox2">
-                        </div>
-                    </div>
-                    <div class="notification">
-                        <img class="img_notification" src="https://via.placeholder.com/50" alt="Notification 3">
-                        <p class="notification_text">Lorem Ipsum is simply dummy text of the printing and typesetting
-                            industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when
-                            an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
-                        <div class="checkbox-container">
-                            <input class="form-check-input" type="checkbox" value="" id="message_checkbox3">
-                        </div>
+                        <img class="img_notification" id="notification_img" src="https://via.placeholder.com/50"
+                            alt="Notification 1">
+                        <p class="notification_text">Lorem ipsum dolor sit amet. Ex atque reiciendis At voluptate eius
+                            non inventore voluptatum. Est dicta quas est officiis nesciunt et atque repudiandae aut
+                            earum quasi est sunt incidunt.</p>
                     </div>
                     <div class="footer_see_all"><a href="Inbox.php">See All</a></div>
                 </div>
@@ -199,7 +183,7 @@
                                     <th>Client</th>
                                     <th>Technician</th>
                                     <th>Unit Details</th>
-                                    <th>Date</th>
+                                    <th>Date Added</th>
                                     <th>Actions</th>
                                 </tr>
                             </thead>
@@ -217,7 +201,7 @@
 
         <div class="modal fade" id="view_cid" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false"
             role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg " role="document">
+            <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-xl" role="document">
                 <div class="modal-content" id="cid_contents_container">
 
                 </div>

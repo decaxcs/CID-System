@@ -1,0 +1,56 @@
+#cid_dialog{
+    max-width: 1200px;
+}
+
+#claiming{
+    width: 200px !important; 
+}
+
+.line {
+    width: 100%;
+    height: 2px;
+    background-color: black;
+    margin: 5px 0;
+}
+
+  
+#st_notification{
+    width: 80px !important; 
+}
+
+#end{
+    width: 160px;
+}
+
+#unit_history{
+    height: 100px; /* Taas ng unit_history */
+    
+}
+
+
+#person_in_charge{
+    color: #C70039;
+    font-weight: bold;
+}
+
+#cid_number{
+    color: #C70039;
+    font-weight: bold;
+}
+
+#date_of_st{
+    color: #C70039;
+    font-weight: bold;
+}
+
+#cid_bold{
+    font-weight: bold;
+}
+
+.cid_bold{
+    font-weight: bold;
+}
+
+.cid_text{
+    font-weight: normal;
+}
