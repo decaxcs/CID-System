@@ -1,0 +1,62 @@
+body {
+    margin: 0;
+    height: 100vh;
+}
+
+p {
+    margin-bottom: 0;
+}
+
+#frontdesk_page {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    height: 100vh;
+    flex-grow: 1;
+}
+
+#header {
+    height: 70px;
+    width: 100%;
+    background-color: #345AFD;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.logo {
+    width: auto;
+    height: 40px;
+    margin: 15px;
+}
+
+#logout {
+    margin-right: 35px;
+    color: #fff;
+    font-size: 1em;
+}
+
+#logout:hover {
+    cursor: pointer;
+}
+
+#header_container {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    margin-left: auto;
+}
+
+.nav_current {
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+.nav_container a {
+    color: #fff;
+    text-decoration: none;
+}
+
+.nav_container a:hover {
+    color: black;
+}

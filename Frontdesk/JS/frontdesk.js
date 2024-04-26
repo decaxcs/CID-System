@@ -170,6 +170,30 @@ $(document).ready(function () {
         $('#warranty_count').text(data.Warranty);
     }
 
+    var cid_data;
+
+    function get_cid_info(cid_number, callback) {
+        $.ajax({
+            url: "../PHP/get_cids.php",
+            type: "GET",
+            data: {
+                cid_number: cid_number
+            },
+            success: function (response) {
+                if (response.status === "success") {
+                    callback(response.cids_data);
+                    cid_data = response.cids_data;
+                } else {
+                    console.log("Error: No data found.");
+                }
+            },
+            error: function (xhr, status, error) {
+                ajax_error_handling(xhr, status, error);
+            }
+        });
+    }
+
+
     function get_cids() {
         $('#recent_cids_table').DataTable({
             "autoWidth": false,
@@ -199,7 +223,6 @@ $(document).ready(function () {
                         return `
                             <div class="recent_cid_buttons_container">
                                 <button type="button" class="btn btn-success claiming_slip"><iconify-icon icon="quill:paper"></iconify-icon></button>
-                                <button type="button" class="btn btn-primary edit_cid"><iconify-icon icon="ic:baseline-edit"></iconify-icon></button>
                             </div>
                         `;
                     }
@@ -221,27 +244,7 @@ $(document).ready(function () {
             var cid_number = rowData.cid_number;
             $("#view_cid").modal("show");
 
-            get_cid_info(cid_number);
-
-            function get_cid_info(cid_number) {
-                $.ajax({
-                    url: "../PHP/get_cids.php",
-                    type: "GET",
-                    data: {
-                        cid_number: cid_number
-                    },
-                    success: function (response) {
-                        if (response.status === "success") {
-                            populate_cid_contents(response.cids_data);
-                        } else {
-                            console.log("Error: No data found.");
-                        }
-                    },
-                    error: function (xhr, status, error) {
-                        ajax_error_handling(xhr, status, error);
-                    }
-                });
-            }
+            get_cid_info(cid_number, populate_cid_contents);
 
             function populate_cid_contents(data) {
                 console.log(data);
@@ -265,7 +268,7 @@ $(document).ready(function () {
                                 <div class="col-auto" id="cid_number">CID ${data[0].cid_number}</div>
                             </div>
                             <div class="row">
-                            <div class="col-auto ms-auto" id="cid_bold">Claiming Slip:${data[0].cid_number} <span></p>
+                            <div class="col-auto ms-auto" id="cid_bold">Claiming Slip: ${data[0].cid_cs_number ? data[0].cid_cs_number : ''} <span></p>
                             </div>
                             </div>
                             <div class="row">
@@ -311,7 +314,7 @@ $(document).ready(function () {
                                 <p class="summary_of_repairs_content mb-4"></p>
                             </div>
                             <div class="row d-flex justify-content-center justify-content-between">
-                                <div class="col-auto"><span class="cid_bold">START OF REPAIR DATE: </span></p>
+                                <div class="col-auto"><span class="cid_bold">START OF REPAIR DATE: </span>${data[0].formatted_created}</p>
                                 </div>
                                 <div class="col-auto"><span class="cid_bold">END OF REPAIR DATE: </span></p>
                                 </div>
@@ -587,6 +590,7 @@ $(document).ready(function () {
 
     $(document).on('click', '#print_cid', function () {
         function print_cid() {
+            console.log(cid_data);
             var printWindow = window.open('', '_blank');
 
             fetch('../../header.php')
@@ -604,103 +608,11 @@ $(document).ready(function () {
                     <!-- Header -->
                     ${headerContent}
                     <link rel="stylesheet" href="../../style.css">
+                    <link rel="stylesheet" href="../CSS/cid_print.css">
                 
                     <title>Print CID</title>
                     <style>
-                        @media print {
-                            .line {
-                                background-color: black;
-                                height: 2px;
-                                margin: 5px 0;
-                                border: 1px solid black;
-                            }
-                
-                            .cid_footer {
-                                position: absolute;
-                                bottom: 0;
-                                margin-bottom: 20px;
-                                margin-right: 40px;
-                            }
-                        }
-                
-                        @page {
-                            size: A4;
-                            margin: 0;
-                        }
-                
-                        body {
-                            margin: 0;
-                            padding: 0;
-                            font-family: "Work Sans", sans-serif;
-                            background-color: #ffffff;
-                        }
-                
-                        .cid_print_container {
-                            width: 100%;
-                            max-width: 100%;
-                            margin: 0 auto;
-                            padding: 20px;
-                            box-sizing: border-box;
-                        }
-                
-                        .cid_print_content {
-                            width: 100%;
-                            max-width: 800px;
-                            margin: 0 auto;
-                            padding: 20px;
-                            box-sizing: border-box;
-                            background-color: #f0f0f0;
-                
-                            text-align: justify;
-                            line-height: 1.5;
-                            font-size: 10px;
-                        }
-                
-                        .cid_print_content p,
-                        .cid_print_content label {
-                            margin-top: auto;
-                            margin-bottom: auto;
-                        }
-                
-                        .cid_print_text_bold {
-                            font-weight: 700;
-                        }
-                
-                        .text_red {
-                            color: #c22510;
-                        }
-                
-                        .cid_print_text_small {
-                            font-size: 8px;
-                        }
-                
-                        .text-right {
-                            text-align: right;
-                        }
-                
-                        .line {
-                            width: 100%;
-                            height: 2px;
-                            background-color: black;
-                            margin: 5px 0;
-                        }
-                
-                        input[type="text"] {
-                            border: none;
-                            border-bottom: 1px solid black;
-                        }
-                
-                        .logo {
-                            width: auto;
-                            height: 40px;
-                            margin: 15px;
-                        }
-                
-                        .title {
-                            font-weight: bold;
-                            font-family: 'Ethnocentric', sans-serif;
-                            color: #2291FD;
-                        }
+                        
                     </style>
                 </head>
                 
@@ -719,11 +631,11 @@ $(document).ready(function () {
                             </div>
                             <div>
                                 <p class="text-right"><span class="cid_print_text_bold">DIAGNOSTIC REPAIR REPORT</span></p>
-                                <p class="text-right"><span class="cid_print_text_bold text_red">CID </span></p>
-                                <p class="text-right"><span class="cid_print_text_bold">Claiming Slip: </span></p>
+                                <p class="text-right"><span class="cid_print_text_bold text_red">CID ${cid_data[0].cid_number}</span></p>
+                                <p class="text-right"><span class="cid_print_text_bold">Claiming Slip: ${cid_data[0].cid_cs_number ? cid_data[0].cid_cs_number : ''}</span></p>
                             </div>
                             <div>
-                                <p><span class="cid_print_text_bold">Unit Details / Brand Model: </span></p>
+                                <p><span class="cid_print_text_bold">Unit Details / Brand Model: </span>${cid_data[0].cid_unit_details}</p>
                                 <div>
                                     <p class="unit_details_content"></p>
                                 </div>
@@ -735,7 +647,7 @@ $(document).ready(function () {
                                 <div>
                                     <p><span class="cid_print_text_bold">REMARKS: (SCRATCHES, COLORS, LCD, ETC)</span></p>
                                     <div>
-                                        <p class="remarks_content"></p>
+                                        <p class="remarks_content">${cid_data[0].cid_remarks}</p>
                                     </div>
                                 </div>
                 
@@ -769,7 +681,7 @@ $(document).ready(function () {
                                     <p class="summary_of_repairs_content"></p>
                                 </div>
                                 <div class="d-flex flex-row justify-content-between">
-                                    <p><span class="cid_print_text_bold">START OF REPAIR DATE: </span></p>
+                                    <p><span class="cid_print_text_bold">START OF REPAIR DATE: </span>${cid_data[0].formatted_created}</p>
                                     <p><span class="cid_print_text_bold">END OF REPAIR DATE: </span></p>
                                     <p><span class="cid_print_text_bold">TECH IN CHARGE: </span></p>
                                 </div>
@@ -854,8 +766,7 @@ $(document).ready(function () {
                                         <input type="text" id="released_thru" name="released_thru"><br>
                                     </div>
                                 </div>
-                                <div class="line"></div>
-                                <div class="cid_print_text_small text_red">Confidentiality, Copyright and other Intellectual property rights.
+                                <div class="cid_print_text_small text_red mt-3">Confidentiality, Copyright and other Intellectual property rights.
                                 </div>
                                 <div class="cid_print_text_small">
                                     The information contained herein is confidential and proprietary to TECHYDAVID I.T SOLUTIONS.It may
