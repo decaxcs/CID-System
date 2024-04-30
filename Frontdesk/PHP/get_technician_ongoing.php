@@ -5,17 +5,18 @@ header('Content-Type: application/json');
 
 $sql_technician_services = "
     SELECT
-        u.csu_id AS technician_id,
-        u.csu_name AS technician_name,
-        COUNT(c.cid_id) AS ongoing_cases_count
+        u.csu_name AS technician_names,
+        COUNT(DISTINCT c.cid_number) AS ongoing_cases_count
     FROM
         cs_cid_information c
-    JOIN
-        cs_users u ON c.cid_technician_id = u.csu_id
+    LEFT JOIN
+        cs_cid_technicians ct ON c.cid_number = ct.cid_number
+    LEFT JOIN
+        cs_users u ON ct.cid_technician_id = u.csu_id
     WHERE
         c.cid_status = 'On-going'
     GROUP BY
-        u.csu_id, u.csu_name;
+        u.csu_id;
 ";
 
 $result_users = $conn->query($sql_technician_services);
@@ -30,10 +31,9 @@ $data = array();
 
 if ($result_users->num_rows > 0) {      
     while ($row = $result_users->fetch_assoc()) {
-        $technician_id = $row["technician_id"];
-        $technician_name = $row["technician_name"];
+        $technician_names = $row["technician_names"];
         $ongoing_cases_count = $row["ongoing_cases_count"];
-        $data[] = array("technician_id" => $technician_id, "technician_name" => $technician_name, "ongoing_service_count" => $ongoing_cases_count);
+        $data[] = array("technician_names" => $technician_names, "ongoing_service_count" => $ongoing_cases_count);
     }
 }
 

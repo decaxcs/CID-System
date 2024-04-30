@@ -18,7 +18,15 @@ function DataTable(selector, cidStatus) {
         columns = [
             {"data": "cid_number"},
             {"data": "cid_client_full_name"},
-            {"data": "technician_name"},
+            {
+                "data": "technician_names",
+                "render": function(data) {
+                    if(data) {
+                        return data.split(',').join(', ');
+                    }
+                    return '';
+                }
+            },
             {"data": "cid_unit_details"},
             {"data": "formatted_created"},
         ];
@@ -26,7 +34,15 @@ function DataTable(selector, cidStatus) {
         columns = [
             {"data": "cid_number"},
             {"data": "cid_client_full_name"},
-            {"data": "technician_name"},
+            {
+                "data": "technician_names",
+                "render": function(data) {
+                    if(data) {
+                        return data.split(',').join(', ');
+                    }
+                    return '';
+                }
+            },
             {"data": "cid_unit_details"},
             {"data": "formatted_created"},
         ];
@@ -34,7 +50,15 @@ function DataTable(selector, cidStatus) {
         columns = [
             {"data": "cid_number"},
             {"data": "cid_client_full_name"},
-            {"data": "technician_name"},
+            {
+                "data": "technician_names", // Display technician names here
+                "render": function(data) {
+                    if(data) {
+                        return data.split(',').join(', ');
+                    }
+                    return '';
+                }
+            },
             {"data": "cid_unit_details"},
             {"data": "formatted_created"},
         ];

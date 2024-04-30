@@ -66,6 +66,7 @@ $(document).ready(function () {
             type: "GET",
             success: function (response) {
                 if (response.status === "success") {
+                    console.log(response.data);
                     populate_technician_ongoing(response.data);
                 } else {
                     console.log("Error: No data found.");
@@ -84,7 +85,7 @@ $(document).ready(function () {
         data.forEach(function (item) {
             var technician_ongoing_HTML =
                 `
-                <p class="technician_name">${item.technician_name}</p>
+                <p class="technician_name">${item.technician_names}</p>
                 <div class="progress">
                     <div class="progress-bar w-75" role="progressbar" aria-valuenow="${item.ongoing_service_count}" aria-valuemin="0"
                         aria-valuemax="100">${item.ongoing_service_count}</div>
@@ -210,7 +211,13 @@ $(document).ready(function () {
                     "data": "cid_client_full_name"
                 },
                 {
-                    "data": "technician_name"
+                    "data": "technician_names", // Display technician names here
+                    "render": function(data) {
+                        if(data) {
+                            return data.split(',').join(', ');
+                        }
+                        return '';
+                    }
                 },
                 {
                     "data": "cid_unit_details"
@@ -222,7 +229,7 @@ $(document).ready(function () {
                     "render": function (data, type, row) {
                         return `
                             <div class="recent_cid_buttons_container">
-                                <button type="button" class="btn btn-success claiming_slip"><iconify-icon icon="quill:paper"></iconify-icon></button>
+                                <button type="button" class="btn btn-success claiming_slip"><iconify-icon icon="quill:paper"></iconify-icon></button>   
                             </div>
                         `;
                     }
@@ -230,7 +237,6 @@ $(document).ready(function () {
 
             ],
             "columnDefs": [{
-                "targets": 5,
                 "orderable": false,
                 "searchable": false
             }],
@@ -318,7 +324,7 @@ $(document).ready(function () {
                                 </div>
                                 <div class="col-auto"><span class="cid_bold">END OF REPAIR DATE: </span></p>
                                 </div>
-                                <div class="col-auto"><span class="cid_bold">TECH IN CHARGE: </span> ${data[0].technician_name}</p>
+                                <div class="col-auto"><span class="cid_bold">TECH IN CHARGE: </span> ${data[0].technician_names ? data[0].technician_names : ""}</p>
                                 </div>
                             </div>
                             <div class="row">
@@ -401,7 +407,7 @@ $(document).ready(function () {
                 cid_platinum_number: cid_info[0].cid_platinum_number,
                 cid_number: cid_info[0].cid_number,
                 current_datetime: current_datetime,
-                technician_name: cid_info[0].technician_name,
+                technician_names: cid_info[0].technician_names,
                 service_name: cid_info[0].service_name,
                 cid_unit_details: cid_info[0].cid_unit_details,
                 cid_remarks: cid_info[0].cid_remarks,
@@ -425,7 +431,7 @@ $(document).ready(function () {
                             <p>Contact Number: ${claiming_slip_data.cid_client_contact}</p>
                             <p>CID #: <span id="cid_number">${claiming_slip_data.cid_number}</span></p>
                             <p>Date: ${claiming_slip_data.current_datetime}</p>
-                            <p>Tech in Charge: ${claiming_slip_data.technician_name}</p>
+                            <p>Tech in Charge: ${claiming_slip_data.technician_names}</p>
                             <hr>
                             <p>ITEM/SERVICES: WARRANTY CLAIM</p>
                             <p id="cs_title">Unit Details</p>
@@ -502,7 +508,7 @@ $(document).ready(function () {
                                         </div>
                                     </div>
                                     <div class="row mb-3">
-                                        <p class="claiming_text_samp"><span class="claiming_text">Tech In Charge:</span> ${claiming_slip_data.technician_name}</p>
+                                        <p class="claiming_text_samp"><span class="claiming_text">Tech In Charge:</span> ${claiming_slip_data.technician_names}</p>
                                     </div>
                                     <hr id="claiming_hr">
                                     <div class="row mb-3">
@@ -683,7 +689,7 @@ $(document).ready(function () {
                                 <div class="d-flex flex-row justify-content-between">
                                     <p><span class="cid_print_text_bold">START OF REPAIR DATE: </span>${cid_data[0].formatted_created}</p>
                                     <p><span class="cid_print_text_bold">END OF REPAIR DATE: </span></p>
-                                    <p><span class="cid_print_text_bold">TECH IN CHARGE: </span></p>
+                                    <p><span class="cid_print_text_bold">TECH IN CHARGE: </span>${cid_data[0].technician_names ? cid_data[0].technician_names : ""}</p>
                                 </div>
                             </div>
                 

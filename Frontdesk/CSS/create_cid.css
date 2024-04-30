@@ -259,3 +259,6 @@ input[type="radio"]:checked {
     background-color: white;
 }
 
+.select2-dropdown {
+    z-index: 99999; /* Higher than modal's z-index */
+}

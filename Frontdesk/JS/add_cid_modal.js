@@ -24,6 +24,7 @@ updateDateTime();
 setInterval(updateDateTime, 1000);
 
 $(document).ready(function () {
+    
     var signature_dataURL;
 
     var checkboxes = {};
@@ -60,6 +61,7 @@ $(document).ready(function () {
         const platinumValidation = validatePlatinumNumber();
 
         return allRequiredChecked && allRadioGroupsValid && platinumValidation;
+        // return true;
     }
 
     function validateRequiredFields() {
@@ -67,7 +69,7 @@ $(document).ready(function () {
         $('input[type="text"], input[type="number"], select').each(function () {
             if ($(this).hasClass('required') && !$(this).val()) {
                 allRequiredChecked = false;
-                return false; // Stop iterating if a required input is empty
+                return false;
             }
         });
 
@@ -88,7 +90,7 @@ $(document).ready(function () {
 
             if (!isChecked) {
                 allRadioGroupsValid = false;
-                return false; // Stop iterating if a radio group is not checked
+                return false;
             }
         });
 
@@ -100,10 +102,10 @@ $(document).ready(function () {
         const platinumNumber = $('#platinum_number');
 
         if (platinumMember === 'Yes' && !platinumNumber.val()) {
-            return false; // Platinum number required
+            return false;
         }
 
-        return true; // Platinum number is not required or is filled in
+        return true;
     }
 
     function add_cid() {
@@ -127,13 +129,14 @@ $(document).ready(function () {
 
         client_full_name = $("#client_name").val();
         client_contact = $("#contact_number").val();
-        // client_email = $("#email").val();
+        client_email = $("#client_email").val();
         platinum = $("#platinum_member").val() === "Yes" ? 1 : 0;
         platinum_number = $("#platinum_number").val();
         representative = $("#representative").val();
         advertisement = $("#how_know").val();
 
         $("#newModal").modal("show");
+
     }
 
     signatureDisplayImage.addEventListener("click", function () {
@@ -161,8 +164,9 @@ $(document).ready(function () {
     $('#newModal').on('show.bs.modal', function (event) {
         create_cid_number();
         get_technician_services();
-    })
 
+       
+    })
     $('#proceed_button').click(function () {
         if (validate_inputs()) {
             add_cid();
@@ -222,6 +226,7 @@ $(document).ready(function () {
         var cid_number = $('#cid_number').text();
         var unit_details = $('#unit_details').val();
         var remarks = $('#remarks').val();
+        var unit_history = $('#unit_history').val();
         var technician = $('#technician').val();
         var computer_service = $('#computer_service').val();
 
@@ -250,6 +255,7 @@ $(document).ready(function () {
                 cid_number: cid_number,
                 unit_details: unit_details,
                 remarks: remarks,
+                unit_history: unit_history,
                 technician: technician,
                 computer_service: computer_service
             },
@@ -294,6 +300,10 @@ $(document).ready(function () {
                 <option value="${item.csu_id}">${item.csu_name}</option>
                 `;
             select_technician_containers.append(select_technician_HTML);
+        });
+
+        $('.multiple_select').select2({
+            width: '20%', // Set width to 100% to ensure it takes up the full width
         });
     }
 
@@ -373,7 +383,7 @@ $(document).ready(function () {
             var tos_HTML =
                 `
                 <div class="row mb-3">
-                    <div class="col">
+                    <div class="row">
                         <div class="form-check">
                             <input class="form-check-input required_${tos_item.tos_required}" type="checkbox" class=""  id="${tos_item.tos_id}">
                             <label class="form-check-label" for="${tos_item.tos_id}">
@@ -386,9 +396,10 @@ $(document).ready(function () {
                                     </div>
                                 </div>
                             </label>
-                            ${checkboxContentHTML} <!-- Append checkbox content HTML -->
-                            ${radiobuttonContentHTML} <!-- Append radiobutton content HTML -->
+                            ${checkboxContentHTML}
+                            ${radiobuttonContentHTML}
                         </div>
+                        
                     </div>
                 </div>
                 `;

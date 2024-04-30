@@ -5,19 +5,29 @@ header('Content-Type: application/json');
 
 if(isset($_GET['cid_status']) && !empty($_GET['cid_status'])) {
     $cid_status = $_GET['cid_status'];
-    $sql_cids = "SELECT cid.*, technicians.csu_name AS technician_name, 
-                 DATE_FORMAT(cid.cid_created, '%M %e, %Y %l:%i %p') AS formatted_created 
+    
+    $sql_cids = "SELECT 
+                    cid.*, 
+                    GROUP_CONCAT(technicians.csu_name) AS technician_names,
+                    DATE_FORMAT(cid.cid_created, '%M %e, %Y %l:%i %p') AS formatted_created  
                  FROM cs_cid_information AS cid
-                 LEFT JOIN cs_users AS technicians ON cid.cid_technician_id = technicians.csu_id
+                 LEFT JOIN cs_cid_technicians AS cid_tech ON cid.cid_number = cid_tech.cid_number
+                 LEFT JOIN cs_users AS technicians ON cid_tech.cid_technician_id = technicians.csu_id
                  WHERE cid.cid_status = '$cid_status'
+                 GROUP BY cid.cid_number, cid.cid_created
                  ORDER BY cid.cid_created DESC";
 } else {
-    $sql_cids = "SELECT cid.*, technicians.csu_name AS technician_name, 
-                 DATE_FORMAT(cid.cid_created, '%M %e, %Y %l:%i %p') AS formatted_created 
+    $sql_cids = "SELECT 
+                    cid.*, 
+                    GROUP_CONCAT(technicians.csu_name) AS technician_names,
+                    DATE_FORMAT(cid.cid_created, '%M %e, %Y %l:%i %p') AS formatted_created  
                  FROM cs_cid_information AS cid
-                 LEFT JOIN cs_users AS technicians ON cid.cid_technician_id = technicians.csu_id
+                 LEFT JOIN cs_cid_technicians AS cid_tech ON cid.cid_number = cid_tech.cid_number
+                 LEFT JOIN cs_users AS technicians ON cid_tech.cid_technician_id = technicians.csu_id
+                 GROUP BY cid.cid_number, cid.cid_created
                  ORDER BY cid.cid_created DESC";
 }
+
 
 $result_cids = $conn->query($sql_cids);
 
