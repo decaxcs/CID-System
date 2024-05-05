@@ -21,6 +21,7 @@
         <div class="content_container">
             <div id="table_container">
                 <div class="card">
+                    <p class="title">Your CIDs</p>
                     <div class="card-body">
                         <table id="cids_table" data-type="claimed" class="table table-striped table-hover" width="100%">
                             <thead>
@@ -29,7 +30,7 @@
                                     <th>Client</th>
                                     <th>Unit Details</th>
                                     <th>Unit History</th>
-                                    <th>Start of Repair Date</th>
+                                    <th>Date Added</th>
                                 </tr>
                             </thead>
                             <tbody>

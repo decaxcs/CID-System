@@ -85,10 +85,10 @@ $(document).ready(function () {
         data.forEach(function (item) {
             var technician_ongoing_HTML =
                 `
-                <p class="technician_name">${item.technician_names}</p>
+                <p class="technician_name">${item.technician_names ? item.technician_names : "No Technician"}</p>
                 <div class="progress">
                     <div class="progress-bar w-75" role="progressbar" aria-valuenow="${item.ongoing_service_count}" aria-valuemin="0"
-                        aria-valuemax="100">${item.ongoing_service_count}</div>
+                        aria-valuemax="10">${item.ongoing_service_count}</div>
                 </div>
                 `;
             technician_ongoing_container.append(technician_ongoing_HTML);

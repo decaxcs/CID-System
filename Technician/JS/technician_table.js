@@ -36,3 +36,12 @@ function populate_cids_table(data) {
         });
     }
 }
+
+$('#cids_table[data-type="claimed"] tbody').on('click', 'tr', function () {
+    var rowData = $(this).closest('table').DataTable().row(this).data();
+    var cid_number = rowData[0];
+
+    sessionStorage.setItem('cid_number', cid_number);
+
+    window.location.href = 'cidsedit.php';
+});

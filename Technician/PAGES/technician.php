@@ -17,7 +17,7 @@
 
 <body>
     <div>
-        <?php include "technician_header.php"; ?>`
+        <?php include "technician_header.php"; ?>
         <div class="content_container">
 
         </div>
