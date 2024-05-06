@@ -41,7 +41,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $response['message'] = 'Summary of Repairs saved successfully.';
             } else {
                 $response['status'] = 'error';
-                $response['message'] = 'Failed to save data';
+                $response['message'] = 'Failed to save data.';
             }
         }
         else if ($type === "reco_save") {
@@ -58,7 +58,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $response['message'] = 'Recommendation(s) saved successfully.';
             } else {
                 $response['status'] = 'error';
-                $response['message'] = 'Failed to save data';
+                $response['message'] = 'Failed to save data.';
             }
         }
         else if ($type === "sop_data_save") {
@@ -96,7 +96,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $response['message'] = 'Payment record saved successfully.';
             } else {
                 $response['status'] = 'error';
-                $response['message'] = 'Failed to save data';
+                $response['message'] = 'Failed to save data.';
             }
         }    
         else if ($type === "sop_data_delete") {
@@ -113,7 +113,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $response['message'] = 'Payment record deleted successfully.';
             } else {
                 $response['status'] = 'error';
-                $response['message'] = 'Error deleting payment record.';
+                $response['message'] = 'Failed to delete data.';
             }
         } 
         else if ($type === "sop_r_save") {
@@ -134,7 +134,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $response['message'] = 'Payment Receipt saved successfully.';
             } else {
                 $response['status'] = 'error';
-                $response['message'] = 'Failed to save data';
+                $response['message'] = 'Failed to save data.';
             }
         }
         else if ($type === "cid_claim") {
@@ -149,8 +149,42 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $response['message'] = 'CID claimed saved successfully.';
             } else {
                 $response['status'] = 'error';
-                $response['message'] = 'Failed to claim cid';
+                $response['message'] = 'Failed to claim cid.';
             }
+        }
+        else if ($type === "opt_tech") {
+            $removeQuery = "DELETE FROM cs_cid_technicians
+                    WHERE cid_number = ? AND cid_technician_id = ?";
+    
+            $stmt = $conn->prepare($removeQuery);
+            $stmt->bind_param("si", $cid_number, $technician);
+        
+            if ($stmt->execute()) {
+                $response['status'] = 'success';
+                $response['message'] = 'Technician successfully removed from the project.';
+            } else {
+                $response['status'] = 'error';
+                $response['message'] = 'Failed to delete data.';
+            }  
+        }
+        else if ($type === "save_tech") {
+            $technicians = $_POST["technicians"]; 
+
+            $insertQuery = "INSERT INTO cs_cid_technicians (cid_number, cid_technician_id) VALUES (?, ?)";
+        
+            $stmt = $conn->prepare($insertQuery);
+            
+            $stmt->bind_param("si", $cid_number, $technician_id);
+
+            foreach($technicians as $technician_id) {
+            if ($stmt->execute()) {
+                $response['status'] = 'success';
+                $response['message'] = 'Technician(s) successfully added from the project.';
+            } else {
+                $response['status'] = 'error';
+                $response['message'] = 'Failed to save data.';
+            }
+        }
         }
         else {
             $response['status'] = 'error';

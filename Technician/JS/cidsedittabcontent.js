@@ -8,6 +8,12 @@ $(document).ready(function () {
     $('.save_btn').click(function () {
         var type = $(this).data('type');
         switch (type) {
+            case 'opt_tech':
+                opt_tech(type);
+                break;
+            case 'save_tech':
+                save_tech(type);
+                break;
             case 'sor_save':
                 sor_save(type);
                 break;
@@ -27,8 +33,17 @@ $(document).ready(function () {
     });
 
     sop_validations();
-});
 
+    $(document).on('click', '.opt_tech', function () {
+        $('#u_tech_opt_modal').modal('show');
+    });
+
+    $(document).on('click', '.edit_tech', function () {
+        $('#u_tech_edit_modal').modal('show');
+    });
+
+    get_technician();
+});
 
 var cid_number = $('#cid_number_text');
 
@@ -55,6 +70,27 @@ function get_data() {
     }
 }
 
+function get_technician() {
+    if (cid_number) {
+        $.ajax({
+            url: "../PHP/get_technician.php",
+            method: "POST",
+            dataType: "json",
+            data: {
+                cid_number: cid_number,
+            },
+            success: function (data) {
+                populate_select_technician(data.data);
+            },
+            error: function (xhr, status, error) {
+                console.error("Error fetching data:", error, xhr, status);
+            }
+        });
+    } else {
+        console.error("cid_number not found in session storage");
+    }
+}
+
 function populate_cid_content(data) {
 
     $('#cid_number_text').text(data.cid_number_cid);
@@ -65,24 +101,36 @@ function populate_cid_content(data) {
     var info_HTML =
         `
     <div>
-        <p><span>Claiming Slip:</span> ${data.cid_cs_number ? data.cid_cs_number : ''}</p>
+        <p><span>Claiming Slip:</span> ${data.cid_cs_number ? data.cid_cs_number : 'N/A'}</p>
     </div>
     <hr>
     <div>
-        <p><span>Unit Details / Brand Model: </span>${data.cid_unit_details ? data.cid_unit_details : ''}</p>
+        <p><span>Unit Details / Brand Model: </span>${data.cid_unit_details ? data.cid_unit_details : 'N/A'}</p>
     </div>
     <hr>
     <div>
         <p><span>REMARKS: (SCRATCHES, COLORS, LCD, ETC)</span></p>
         <div>
-            <p>${data.cid_remarks ? data.cid_remarks : ''}</p>
+            <p>${data.cid_remarks ? data.cid_remarks : 'N/A'}</p>
         </div>
     </div>
     <hr>
     <div>
         <p><span>UNIT HISTORY / PROBLEMS / ISSUES & INFORMATION PROVIDED BY CLIENT:</span></p>
         <div>   
-            <p>${data.cid_unit_history ? data.cid_unit_history : ''}</p>
+            <p>${data.cid_unit_history ? data.cid_unit_history : 'N/A'}</p>
+        </div>
+    </div>
+    <hr>
+    <div>
+        <div class="my-auto">
+        <p><span>TECHNICIAN(s): 
+        <iconify-icon class="ms-2 edit_tech" icon="tabler:edit"></iconify-icon>
+        <iconify-icon class="ms-2 opt_tech" icon="gg:remove"></iconify-icon>
+        </span></p>
+        </div>
+        <div>   
+            <p>${data.technician_names ? data.technician_names : 'N/A'}</p>
         </div>
     </div>
     `
@@ -106,6 +154,23 @@ function populate_cid_content(data) {
     $('#total_amount').text(data.total_discounted_price ? data.total_discounted_price : '0');
     $('#unpaid_amount').text(data.unpaid_discounted_price ? data.unpaid_discounted_price : '0');
     $('#paid_amount').text(data.paid_discounted_price ? data.paid_discounted_price : '0');
+}
+
+function populate_select_technician(data) {
+    var select_technician_containers = $('.select_technician');
+    select_technician_containers.empty();
+
+    data.forEach(function (data) {
+        var select_technician_HTML =
+            `
+                <option value="${data.csu_id}">${data.csu_name}</option>
+                `;
+        select_technician_containers.append(select_technician_HTML);
+    });
+
+    $('.multiple_select').select2({
+        width: '100%',
+    });
 }
 
 //Populate Summmry of Payments
@@ -152,6 +217,28 @@ function populate_summary_of_payments(data) {
             `;
         sop_data_container.append(sop_data_HTML);
     });
+}
+
+function opt_tech(type) {
+    var dataToSend = {
+        cid_number: cid_number,
+        type: type
+    };
+    save_data(dataToSend, function () {
+        window.location.href = "../PAGES/cids.php";
+    });
+}
+
+function save_tech(type) {
+    var technicians = $('#technician').val();
+
+    var dataToSend = {
+        cid_number: cid_number,
+        type: type,
+        technicians: technicians
+    };
+   console.log(dataToSend);
+    save_data(dataToSend);
 }
 
 function sor_save(type) {

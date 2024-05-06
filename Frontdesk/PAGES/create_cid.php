@@ -119,7 +119,7 @@
                                     <div class="form-group">
                                         <label for="unit_details"><span class="tos_span ">Unit Details/Brand
                                                 Models:</span></label>
-                                        <textarea class="form-control required" id="unit_details" rows="3"></textarea>
+                                        <textarea class="form-control required" id="unit_details" rows="5"></textarea>
                                     </div>
                                 </div>
                             </div>

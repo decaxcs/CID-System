@@ -57,13 +57,37 @@ p {
     text-decoration: none;
 }
 
-.nav_container a:hover {
-    color: black;
+.nav_container a {
+    position: relative;
+    text-decoration: none;
+}
+
+.nav_container a::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -2px; /* Adjust this value to control the distance of the underline from the text */
+    width: 0;
+    height: 2px; /* Adjust this value to control the thickness of the underline */
+    background-color: #fff; /* Adjust this value to set the color of the underline */
+    transition: width 0.3s ease; /* Adjust the duration and timing function of the transition as needed */
+}
+
+.nav_container a:hover::after {
+    width: 100%;
 }
 
 .title {
     font-weight: bold;
     margin-left: 20px;
     margin-top: 20px;
+}
+
+.edit_tech:hover, .opt_tech:hover {
+    cursor: pointer;
+}
+
+.select2-dropdown {
+    z-index: 99999;
 }
 
