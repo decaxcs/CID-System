@@ -231,14 +231,17 @@ function opt_tech(type) {
 
 function save_tech(type) {
     var technicians = $('#technician').val();
+    var technicians_container = $('#technician');
 
     var dataToSend = {
         cid_number: cid_number,
         type: type,
         technicians: technicians
     };
-   console.log(dataToSend);
-    save_data(dataToSend);
+    
+    save_data(dataToSend, function () {
+        technicians_container.empty();
+    });
 }
 
 function sor_save(type) {

@@ -168,9 +168,12 @@
             </div>
             <div class="modal-body text-center" id="u_tech_opt_modal_body">
                 <p>Add Technician:</p>
-                <select class="select_technician multiple_select form-control" id="technician" multiple="multiple">
+                <select class="select_technician multiple_select form-control mb-2" id="technician" multiple="multiple">
 
                 </select>
+                <div class="alert_container">
+
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
