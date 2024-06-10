@@ -44,14 +44,68 @@
             </nav>
             <div class="tab-content" id="nav-tabContent">
             <?php include "cidsedittabcontent.php"; ?>
+            
             </div>
         </div>
     </div>
+    <div class="modal fade" id="u_tech_opt_modal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false"
+            role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-sm" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">
+                            Warning: Technician Options
+                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body text-center" id="u_tech_opt_modal_body">
+                        <p>Are you sure you want to withdraw from the project?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                            Close
+                        </button>
+                        <button type="button" class="btn btn-primary save_btn" data-type="opt_tech">Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="u_tech_edit_modal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false"
+            role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-sm" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">
+                            Add Technician
+                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body text-center" id="u_tech_opt_modal_body">
+                        <p>Add Technician:</p>
+                        <select class="select_technician multiple_select form-control" id="technician"
+                            multiple="multiple" required>
+
+                        </select>
+                        <div class="alert_container mt-2">
+
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                            Close
+                        </button>
+                        <button type="button" class="btn btn-primary save_btn" data-type="save_tech">Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     <script>
         document.getElementById('backButton').addEventListener('click', function () {
             history.back();
         });
     </script>
+     <script src="../JS/cidsedittabcontent.js"></script>
 </body>
 
 </html>

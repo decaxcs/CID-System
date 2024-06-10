@@ -9,15 +9,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_POST["technician"]) && !empty($_POST["technician"])) {
         $technicians = $_POST["technician"];
     } else {
-        $technicians = array(); // Set technicians to an empty array if not provided
+        $technicians = array();
     }
 
     $signature_dataURL = $_POST["signature_dataURL"];
 
     $checkboxes = $_POST["checkboxes"];
-    $additional_checkboxes = $_POST["additional_checkboxes"];
+    // $additional_checkboxes = $_POST["additional_checkboxes"];
 
-    $additional_radiobuttons = $_POST["additional_radiobuttons"];
+    // $additional_radiobuttons = $_POST["additional_radiobuttons"];
     $client_full_name = mysqli_real_escape_string($conn, $_POST["client_full_name"]);
     $client_contact = mysqli_real_escape_string($conn, $_POST["client_contact"]);
     $client_email = mysqli_real_escape_string($conn, $_POST["client_email"]);
@@ -30,12 +30,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $remarks = mysqli_real_escape_string($conn, $_POST["remarks"]);
     $unit_history = mysqli_real_escape_string($conn, $_POST["unit_history"]);
    
-    $computer_service = mysqli_real_escape_string($conn, $_POST["computer_service"]);
+    $computer_service = $_POST["computer_service"];
+
+    $device = mysqli_real_escape_string($conn, $_POST["device"]);
  
     $platinum = $_POST["platinum"] == 1 ? 1 : 0;
 
-    $insertQuery = "INSERT INTO cs_cid_information (cid_client_full_name, cid_signature, cid_platinum, cid_client_contact, cid_client_email, cid_platinum_number, cid_representative, cid_advertisement, cid_number, cid_unit_details, cid_remarks, cid_unit_history, cid_service_id, cid_status) 
-                    VALUES ('$client_full_name', '$signature_dataURL', '$platinum', '$client_contact', '$client_email', '$platinum_number', '$representative', '$advertisement', '$cid_number', '$unit_details', '$remarks', '$unit_history', '$computer_service', 'On-going')";
+    $insertQuery = "INSERT INTO cs_cid_information (cid_client_full_name, cid_signature, cid_platinum, cid_client_contact, cid_client_email, cid_platinum_number, cid_representative, cid_advertisement, cid_number, cid_unit_details, cid_remarks, cid_unit_history, cid_device_id, cid_status) 
+                    VALUES ('$client_full_name', '$signature_dataURL', '$platinum', '$client_contact', '$client_email', '$platinum_number', '$representative', '$advertisement', '$cid_number', '$unit_details', '$remarks', '$unit_history', '$device', 'On-going')";
 
     if ($conn->query($insertQuery) === TRUE) {
 
@@ -48,6 +50,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             }
         }
 
+        if (!empty($computer_service)) {
+            foreach ($computer_service as $service) {
+                $insertCheckboxQuery = "INSERT INTO cid_summary_of_payments (cid_number, cid_service_id) 
+                                        VALUES ('$cid_number', '$service')";
+                $conn->query($insertCheckboxQuery);
+            }
+        }
 
         foreach ($checkboxes as $checkboxName => $checkboxValue) {
             $checkboxValue = $checkboxValue == "true" ? 1 : 0;
@@ -58,22 +67,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $conn->query($insertCheckboxQuery);
         }
         
-        foreach ($additional_checkboxes as $checkboxName => $checkboxValue) {
-            $checkboxValue = $checkboxValue == "true" ? 1 : 0;
-            $insertCheckboxQuery = "INSERT INTO cs_cid_terms_of_service_a (cid_number, tos_id, cid_tos_agreement) 
-                                    VALUES ('$cid_number', '$checkboxName', '$checkboxValue')";
+        // foreach ($additional_checkboxes as $checkboxName => $checkboxValue) {
+        //     $checkboxValue = $checkboxValue == "true" ? 1 : 0;
+        //     $insertCheckboxQuery = "INSERT INTO cs_cid_terms_of_service_a (cid_number, tos_id, cid_tos_agreement) 
+        //                             VALUES ('$cid_number', '$checkboxName', '$checkboxValue')";
         
-            $conn->query($insertCheckboxQuery);
-        }
+        //     $conn->query($insertCheckboxQuery);
+        // }
 
-        foreach ($additional_radiobuttons as $radioButtonName => $radioButtonValue) {
-            $radioButtonValue = $radioButtonValue == "Yes" ? 1 : 0;
+        // foreach ($additional_radiobuttons as $radioButtonName => $radioButtonValue) {
+        //     $radioButtonValue = $radioButtonValue == "Yes" ? 1 : 0;
 
-            $insertRadioButtonQuery = "INSERT INTO cs_cid_terms_of_service_a (cid_number, tos_id, cid_tos_agreement) 
-                                        VALUES ('$cid_number', '$radioButtonName', '$radioButtonValue')";
+        //     $insertRadioButtonQuery = "INSERT INTO cs_cid_terms_of_service_a (cid_number, tos_id, cid_tos_agreement) 
+        //                                 VALUES ('$cid_number', '$radioButtonName', '$radioButtonValue')";
         
-            $conn->query($insertRadioButtonQuery);
-        }
+        //     $conn->query($insertRadioButtonQuery);
+        // }
         
         // $insertOptionQuery = "INSERT INTO cs_cid_terms_of_service (cid_number, cid_tos_terms, cid_tos_agreement) 
         //                       VALUES ('$cid_number', 'tos_advertising_answer', '$selectedOption')";

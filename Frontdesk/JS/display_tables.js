@@ -1,8 +1,8 @@
-$(document).ready(function () {
+$(document).ready(function () { 
     // Initialize DataTables for each table
-    new DataTable('#release_table', 'release');
+    new DataTable('#release_table', 'for release');
     new DataTable('#on-going_table', 'on-going');
-    new DataTable('#warranty_table', 'warranty');
+    new DataTable('#warranty_table', 'on-going warranty');
 
     notification(); 
 
@@ -14,7 +14,7 @@ $(document).ready(function () {
 function DataTable(selector, cidStatus) {
     var columns = [];
 
-    if (cidStatus === 'release') {
+    if (cidStatus === 'for release') {
         columns = [
             {"data": "cid_number"},
             {"data": "cid_client_full_name"},
@@ -46,7 +46,7 @@ function DataTable(selector, cidStatus) {
             {"data": "cid_unit_details"},
             {"data": "formatted_created"},
         ];
-    } else if (cidStatus === 'warranty') {
+    } else if (cidStatus === 'on-going warranty') {
         columns = [
             {"data": "cid_number"},
             {"data": "cid_client_full_name"},

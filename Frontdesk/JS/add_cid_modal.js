@@ -24,11 +24,11 @@ updateDateTime();
 setInterval(updateDateTime, 1000);
 
 $(document).ready(function () {
-    
+
     var signature_dataURL;
 
     var checkboxes = {};
-    var additional_checkboxes = {};
+    // var additional_checkboxes = {};
 
     var additional_radiobuttons = {};
 
@@ -113,11 +113,11 @@ $(document).ready(function () {
             var checkboxName = $(this).attr('name');
             var checkboxValue = $(this).prop('checked');
 
-            if (checkboxName === 'additional') {
-                additional_checkboxes[$(this).attr('id')] = checkboxValue;
-            } else {
+            // if (checkboxName === 'additional') {
+            //     additional_checkboxes[$(this).attr('id')] = checkboxValue;
+            // } else {
                 checkboxes[$(this).attr('id')] = checkboxValue;
-            }
+            // }
         });
 
         $('input[type="radio"]').each(function () {
@@ -165,24 +165,44 @@ $(document).ready(function () {
         create_cid_number();
         get_technician_services();
 
-       
+
     })
     $('#proceed_button').click(function () {
-        if (validate_inputs()) {
+        if (validate_inputs() && signature_dataURL) { // Check if the inputs are valid and signature is provided
             add_cid();
         } else {
-            $('#alertContainer').append(
-                `<div id="alert" class="alert alert-danger" role="alert">
-                Please check all required checkboxes.
-            </div>`
-            );
+            if (!signature_dataURL) {
+                // If signature is not provided, show an alert
+                $('#alertContainer').append(
+                    `<div id="alert" class="alert alert-danger" role="alert">
+                        Please provide a signature.
+                    </div>`
+                );
 
-            setTimeout(function () {
-                $('#alert').fadeOut(500, function () {
-                    $(this).remove();
-                });
-            }, 3000);
+                setTimeout(function () {
+                    $('#alert').fadeOut(500, function () {
+                        $(this).remove();
+                    });
+                }, 3000);
+            } else {
+                // If other required fields are not filled, show another alert
+                $('#alertContainer').append(
+                    `<div id="alert" class="alert alert-danger" role="alert">
+                        Please check all required checkboxes.
+                    </div>`
+                );
+
+                setTimeout(function () {
+                    $('#alert').fadeOut(500, function () {
+                        $(this).remove();
+                    });
+                }, 3000);
+            }
         }
+    });
+
+    $('#cancel_button').click(function () {
+        window.location.href = "frontdesk.php";
     });
 
 
@@ -229,6 +249,9 @@ $(document).ready(function () {
         var unit_history = $('#unit_history').val();
         var technician = $('#technician').val();
         var computer_service = $('#computer_service').val();
+        var device = $('#device').val();
+        
+        console.log(computer_service);
 
         $.ajax({
             url: "../PHP/create_cid.php",
@@ -239,7 +262,7 @@ $(document).ready(function () {
                 cid_number: cid_number,
 
                 checkboxes: checkboxes,
-                additional_checkboxes: additional_checkboxes,
+                // additional_checkboxes: additional_checkboxes,
 
                 additional_radiobuttons: additional_radiobuttons,
 
@@ -257,7 +280,8 @@ $(document).ready(function () {
                 remarks: remarks,
                 unit_history: unit_history,
                 technician: technician,
-                computer_service: computer_service
+                computer_service: computer_service,
+                device: device
             },
             success: function (response) {
                 if (response.status === "success") {
@@ -279,7 +303,10 @@ $(document).ready(function () {
             success: function (response) {
                 if (response.status === "success") {
                     select_technician(response.users_data);
+                    select_source(response.sources_data);
                     select_services(response.services_data);
+                    select_devices(response.devices_data);
+                    console.log(response);
                 } else {
                     console.log("Error: No data found.");
                 }
@@ -301,14 +328,28 @@ $(document).ready(function () {
                 `;
             select_technician_containers.append(select_technician_HTML);
         });
-
+        
         $('.multiple_select').select2({
-            width: '20%', // Set width to 100% to ensure it takes up the full width
+            width: '30%', // Set width to 100% to ensure it takes up the full width
         });
     }
 
+    function select_source(data) {
+        var select_source_containers = $('.select_source');
+        select_source_containers.empty();
+
+        data.forEach(function (item) {
+            var select_source_HTML =
+                `
+                <option value="${item.cs_source_name}">${item.cs_source_name}</option>
+                `;
+                select_source_containers.append(select_source_HTML);
+        });
+    }
+
+
     function select_services(data) {
-        var select_services_containers = $('.select_services');
+        var select_services_containers = $('.select_service');
         select_services_containers.empty();
 
         data.forEach(function (item) {
@@ -318,8 +359,25 @@ $(document).ready(function () {
                 `;
             select_services_containers.append(select_services_HTML);
         });
+        $('.multiple_select').select2({
+            width: '30%', // Set width to 100% to ensure it takes up the full width
+        });
     }
 
+    function select_devices(data) {
+        var select_devices_containers = $('.select_device');
+        select_devices_containers.empty();
+
+        data.forEach(function (item) {
+            var select_devices_HTML =
+                `
+                <option value="${item.cs_device_id}">${item.cs_device_name}</option>
+                `;
+            select_devices_containers.append(select_devices_HTML);
+        });
+    }
+
+ 
     function get_tos() {
         $.ajax({
             url: "../PHP/get_tos.php",
@@ -348,37 +406,37 @@ $(document).ready(function () {
 
         tos_data.forEach(function (tos_item) {
 
-            var checkboxContentHTML = '';
-            var radiobuttonContentHTML = '';
+            // var checkboxContentHTML = '';
+            // var radiobuttonContentHTML = '';
 
-            additional_data.forEach(function (additional_item) {
-                if (additional_item.tos_id === tos_item.tos_id) {
-                    if (additional_item.additional_type === 'checkbox') {
-                        checkboxContentHTML += `
-                            <div class="form-check-nested">
-                                <input class="form-check-input" type="checkbox" value="" name="additional" id="${additional_item.tos_a_id}">
-                                <label class="form-check-label" for="${additional_item.tos_a_id}">
-                                    ${additional_item.additional_content}
-                                </label>
-                            </div>
-                        `;
-                    } else if (additional_item.additional_type === 'radiobutton') {
-                        radiobuttonContentHTML += `
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="${additional_item.tos_a_id}"
-                                        id="yes_${tos_item.tos_a_id}" value="Yes">
-                                    <label class="form-check-label" for="yesRadioButton">Yes</label>
-                                </div>
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="${additional_item.tos_a_id}"
-                                        id="no_${tos_item.tos_id}" value="No">
-                                    <label class="form-check-label" for="no_${tos_item.tos_a_id}">No</label>
-                                </div>
-                            </div>
-                        `;
-                    }
-                }
-            });
+            // additional_data.forEach(function (additional_item) {
+            //     if (additional_item.tos_id === tos_item.tos_id) {
+            //         if (additional_item.additional_type === 'checkbox') {
+            //             checkboxContentHTML += `
+            //                 <div class="form-check-nested">
+            //                     <input class="form-check-input" type="checkbox" value="" name="additional" id="${additional_item.tos_a_id}">
+            //                     <label class="form-check-label" for="${additional_item.tos_a_id}">
+            //                         ${additional_item.additional_content}
+            //                     </label>
+            //                 </div>
+            //             `;
+            //         } else if (additional_item.additional_type === 'radiobutton') {
+            //             radiobuttonContentHTML += `
+            //                     <div class="form-check form-check-inline">
+            //                         <input class="form-check-input" type="radio" name="${additional_item.tos_a_id}"
+            //                             id="yes_${tos_item.tos_a_id}" value="Yes">
+            //                         <label class="form-check-label" for="yesRadioButton">Yes</label>
+            //                     </div>
+            //                     <div class="form-check form-check-inline">
+            //                         <input class="form-check-input" type="radio" name="${additional_item.tos_a_id}"
+            //                             id="no_${tos_item.tos_id}" value="No">
+            //                         <label class="form-check-label" for="no_${tos_item.tos_a_id}">No</label>
+            //                     </div>
+            //                 </div>
+            //             `;
+            //         }
+            //     }
+            // });
 
             var tos_HTML =
                 `
@@ -396,8 +454,8 @@ $(document).ready(function () {
                                     </div>
                                 </div>
                             </label>
-                            ${checkboxContentHTML}
-                            ${radiobuttonContentHTML}
+                            <!-- checkboxContentHTML -->
+                            <!-- radiobuttonContentHTML -->
                         </div>
                         
                     </div>

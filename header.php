@@ -26,3 +26,11 @@
 <!-- Data Tables -->
 <link rel="stylesheet" href="https://cdn.datatables.net/2.0.3/css/dataTables.dataTables.css" />
 <script src="https://cdn.datatables.net/2.0.3/js/dataTables.js"></script>
+
+<?php
+session_start();
+if (!isset($_SESSION["login"])) {
+    header("Location: /CID-System/index.php");
+    exit();
+}
+?>

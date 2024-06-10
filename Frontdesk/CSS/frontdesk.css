@@ -541,3 +541,7 @@ p {
 #logout_footer {
     justify-content: center;
 }
+
+.payment_data {
+    border-bottom: 5px solid black; /* Adjust the color and width as needed */
+}

@@ -11,9 +11,11 @@ $sql_services = "
     FROM
         cs_services s
     LEFT JOIN
-        cs_cid_information c ON s.cs_service_id = c.cid_service_id
+        cid_summary_of_payments c ON s.cs_service_id = c.cid_service_id
+    WHERE
+        s.isDeleted = 0
     GROUP BY
-        s.cs_service_id, s.cs_service_name, c.cid_type;
+        s.cs_service_id, s.cs_service_name
 ";
 
 $result_services = $conn->query($sql_services);

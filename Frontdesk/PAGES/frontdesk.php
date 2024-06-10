@@ -22,7 +22,7 @@
         <div id="header">
             <img class="logo" src="../../Assets/Images/logo.png" alt="logo">
             <div id="notif_container">
-                <div id="notif_icon_container">
+                <div id="notif_icon_container" class="d-none">
                     <iconify-icon id="notif_icon" icon="mingcute:notification-line"></iconify-icon>
                     <div id="notif_dot">
 
@@ -183,6 +183,7 @@
                                     <th>Client</th>
                                     <th>Technician</th>
                                     <th>Unit Details</th>
+                                    <th>Status</th>
                                     <th>Date Added</th>
                                     <th>Actions</th>
                                 </tr>
@@ -214,14 +215,6 @@
                 <div class="modal-content">
                     <div id="claiming_slip_container">
 
-                    </div>
-
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                            Close
-                        </button>
-                        <button type="button" class="btn btn-info" id="print_claiming_slip">Print</button>
-                        <button type="button" class="btn btn-primary" id="save_claiming_slip">Save</button>
                     </div>
                 </div>
             </div>

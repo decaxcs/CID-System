@@ -18,33 +18,48 @@ $type = $_GET['type'];
 if ($type === "claimed") {
     $sql_cids = "SELECT 
                     cid.*, 
-                    services_type.cs_service_name AS service_name, 
+                    devices_type.cs_device_name AS service_name, 
                     DATE_FORMAT(cid.cid_created, '%M %e, %Y %l:%i %p') AS formatted_created,
                     GROUP_CONCAT(technicians.csu_name) AS technician_names
                 FROM cs_cid_information AS cid
                 LEFT JOIN cs_cid_technicians AS cid_tech ON cid.cid_number = cid_tech.cid_number
                 LEFT JOIN cs_users AS technicians ON cid_tech.cid_technician_id = technicians.csu_id
-                LEFT JOIN cs_services AS services_type ON cid.cid_service_id = services_type.cs_service_id
-                WHERE cid_tech.cid_technician_id = ?
-                GROUP BY cid.cid_number, cid.cid_created, services_type.cs_service_name
+                LEFT JOIN cs_devices AS devices_type ON cid.cid_device_id = devices_type.cs_device_id
+                WHERE cid_tech.cid_technician_id = ? AND cid.isDeleted = 0
+                GROUP BY cid.cid_number, cid.cid_created, devices_type.cs_device_name
                 ORDER BY cid.cid_created DESC";
     $stmt = $conn->prepare($sql_cids);
     $stmt->bind_param("i", $user_id);
 } else if ($type === "unclaimed") {
     $sql_cids = "SELECT 
                 cid.*, 
-                services_type.cs_service_name AS service_name, 
+                devices_type.cs_device_name AS service_name, 
                 DATE_FORMAT(cid.cid_created, '%M %e, %Y %l:%i %p') AS formatted_created,
                 GROUP_CONCAT(technicians.csu_name) AS technician_names
                 FROM cs_cid_information AS cid
                 LEFT JOIN cs_cid_technicians AS cid_tech ON cid.cid_number = cid_tech.cid_number
                 LEFT JOIN cs_users AS technicians ON cid_tech.cid_technician_id = technicians.csu_id
-                LEFT JOIN cs_services AS services_type ON cid.cid_service_id = services_type.cs_service_id
-                WHERE cid_tech.cid_technician_id IS NULL OR cid_tech.cid_technician_id = ''
-                GROUP BY cid.cid_number, cid.cid_created, services_type.cs_service_name
+                LEFT JOIN cs_devices AS devices_type ON cid.cid_device_id = devices_type.cs_device_id
+                WHERE cid_tech.cid_technician_id IS NULL OR cid_tech.cid_technician_id = '' AND  cid.isDeleted = 0
+                GROUP BY cid.cid_number, cid.cid_created, devices_type.cs_device_name
                 ORDER BY cid.cid_created DESC";
     $stmt = $conn->prepare($sql_cids);
     $stmt->execute();
+} else if ($type === "recent-claimed") {
+    $sql_cids = "SELECT 
+                cid.*, 
+                devices_type.cs_device_name AS service_name, 
+                DATE_FORMAT(cid.cid_created, '%M %e, %Y %l:%i %p') AS formatted_created,
+                GROUP_CONCAT(technicians.csu_name) AS technician_names
+            FROM cs_cid_information AS cid
+            LEFT JOIN cs_cid_technicians AS cid_tech ON cid.cid_number = cid_tech.cid_number
+            LEFT JOIN cs_users AS technicians ON cid_tech.cid_technician_id = technicians.csu_id
+            LEFT JOIN cs_devices AS devices_type ON cid.cid_device_id = devices_type.cs_device_id
+            WHERE cid_tech.cid_technician_id = ? AND cid.cid_created >= DATE_SUB(NOW(), INTERVAL 7 DAY)  AND cid.isDeleted = 0
+            GROUP BY cid.cid_number, cid.cid_created, devices_type.cs_device_name
+            ORDER BY cid.cid_created DESC";
+    $stmt = $conn->prepare($sql_cids);
+    $stmt->bind_param("i", $user_id);
 } else {
     $response = array("status" => "error", "message" => "Invalid type");
     echo json_encode($response);

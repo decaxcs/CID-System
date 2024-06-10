@@ -1,6 +1,53 @@
+var cid_data = [];
+var payments_data = [];
+var checklist_data = [];
+
+var components = [
+    {name: 'Wifi', key: 'cs_cid_c_wifi'},
+    {name: 'Keyboard (FN Keys)', key: 'cs_cid_c_keyboard'},
+    {name: 'Temperature', key: 'cs_cid_c_temperature'},
+    {name: 'Tracepad', key: 'cs_cid_c_tracepad'},
+    {name: 'Bluetooth', key: 'cs_cid_c_bluetooth'},
+    {name: 'Audio Jack', key: 'cs_cid_c_audiojack'},
+    {name: 'Speaker', key: 'cs_cid_c_speaker'},
+    {name: 'Camera', key: 'cs_cid_c_camera'},
+    {name: 'LCD (Brightness)', key: 'cs_cid_c_lcd'},
+    {name: 'Stress Test', key: 'cs_cid_c_stresstest'}
+];
+
+var checklistText = ''; // Variable to store checklist text
+
+components.forEach(function(component) {
+    var value = checklist_data ? checklist_data[component.key] : null;
+    var status = '';
+
+    // Assign text representation based on value
+    if (value === 1) {
+        status = 'Ok';
+    } else if (value === 2) {
+        status = 'Not Ok';
+    } else {
+        status = 'N/A';
+    }
+
+    // Append text to checklistText variable
+    checklistText += `${component.name}: ${status}\n`;
+});
+
+console.log(checklistText); // Output checklistText to console or use it as needed
+
 $(document).ready(function () {
 
-
+    function formatDate(dateString) {
+        if (!dateString) return ''; // Return empty string if dateString is null or empty
+        const date = new Date(dateString);
+        const options = {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        };
+        return date.toLocaleDateString('en-US', options);
+    }
     document.getElementById('btn_create').addEventListener('click', function () {
         window.location.href = 'create_cid.php';
     });
@@ -66,6 +113,7 @@ $(document).ready(function () {
             type: "GET",
             success: function (response) {
                 if (response.status === "success") {
+                    console.log("Technician");
                     console.log(response.data);
                     populate_technician_ongoing(response.data);
                 } else {
@@ -83,17 +131,23 @@ $(document).ready(function () {
         technician_ongoing_container.empty();
 
         data.forEach(function (item) {
+            // Calculate the width of the progress bar based on the ongoing service count
+            var progressWidth = (item.ongoing_service_count / 10) * 100; // Assuming a maximum of 10 services
+
             var technician_ongoing_HTML =
                 `
                 <p class="technician_name">${item.technician_names ? item.technician_names : "No Technician"}</p>
                 <div class="progress">
-                    <div class="progress-bar w-75" role="progressbar" aria-valuenow="${item.ongoing_service_count}" aria-valuemin="0"
-                        aria-valuemax="10">${item.ongoing_service_count}</div>
+                    <div class="progress-bar" role="progressbar" style="width: ${progressWidth}%" 
+                         aria-valuenow="${item.ongoing_service_count}" aria-valuemin="0" aria-valuemax="10">
+                        ${item.ongoing_service_count}
+                    </div>
                 </div>
                 `;
             technician_ongoing_container.append(technician_ongoing_HTML);
         });
     }
+
 
     function get_services() {
         $.ajax({
@@ -135,9 +189,6 @@ $(document).ready(function () {
             var service_HTML =
                 `<div class="card services_card">
                     <div class="card-body services_card_body">
-                        <div class="services_icon_container">
-                            <iconify-icon icon="iconoir:laptop-fix"></iconify-icon>
-                        </div>
                         <div class="info_container">
                             <p class="services_name">${item.service_name} Service</p>
                             <p class="services_number">${item.cid_count}</p>
@@ -166,12 +217,12 @@ $(document).ready(function () {
     }
 
     function populate_status_count(data) {
-        $('#release_count').text(data.Release);
-        $('#ongoing_count').text(data["On-going"]);
-        $('#warranty_count').text(data.Warranty);
+        $('#release_count').text(data["For Release"] ? data["For Release"] : '0');
+        $('#ongoing_count').text(data["On-going"] ? data["On-going"] : '0');
+        $('#warranty_count').text(data["On-going Warranty"] ? data["On-going Warranty"] : '0');
     }
 
-    var cid_data;
+
 
     function get_cid_info(cid_number, callback) {
         $.ajax({
@@ -182,8 +233,11 @@ $(document).ready(function () {
             },
             success: function (response) {
                 if (response.status === "success") {
-                    callback(response.cids_data);
+                    callback(response);
+                    console.log(response);
+                    checklist_data = response.checklist_data[0];
                     cid_data = response.cids_data;
+                    payments_data = response.payments_data;
                 } else {
                     console.log("Error: No data found.");
                 }
@@ -212,8 +266,8 @@ $(document).ready(function () {
                 },
                 {
                     "data": "technician_names", // Display technician names here
-                    "render": function(data) {
-                        if(data) {
+                    "render": function (data) {
+                        if (data) {
                             return data.split(',').join(', ');
                         }
                         return '';
@@ -223,7 +277,20 @@ $(document).ready(function () {
                     "data": "cid_unit_details"
                 },
                 {
-                    "data": "formatted_created"
+                    "data": "cid_status"
+                },
+                {
+                    "data": "formatted_created",
+                    "render": function (data) {
+                        // Convert the formatted date string to a Date object
+                        const date = new Date(data);
+                        // Format the date as "MM/DD/YYYY"
+                        return date.toLocaleDateString('en-US', {
+                            month: 'short',
+                            day: '2-digit',
+                            year: 'numeric'
+                        });
+                    }
                 },
                 {
                     "render": function (data, type, row) {
@@ -238,10 +305,11 @@ $(document).ready(function () {
             ],
             "columnDefs": [{
                 "orderable": false,
-                "searchable": false
+                "searchable": false,
+                "targets": [6] // Disable sorting for the button column
             }],
             "order": [
-                [4, 'asc']
+                [5, "desc"] // Sort by the formatted date column in descending order
             ]
         });
 
@@ -252,11 +320,145 @@ $(document).ready(function () {
 
             get_cid_info(cid_number, populate_cid_contents);
 
-            function populate_cid_contents(data) {
+            function populate_cid_contents(cids) {
+                var data = cids.cids_data;
+                var payments = cids.payments_data;
+                var checklist = cids.checklist_data[0];
+                console.log(payments);
                 console.log(data);
+                console.log("data");
+                console.log(checklist);
                 var cid_contents_container = $('#cid_contents_container');
 
                 cid_contents_container.empty();
+
+                var paymentHTML = ''; // Define paymentHTML variable
+
+                payments.forEach(function (payment) {
+                    paymentHTML += `
+                    <div class="col-auto me-auto mb-4">
+                        <span class="cid_bold">Payment: </span>
+                        <table class="table table-borderless">
+                            <tbody>
+                                <tr>
+                                <td><span class="cid_bold">Service:</span></td>
+                                    <td><span>${payment.cs_service_name}</span></td>
+                                </tr>
+                                <tr>
+                                <td><span class="cid_bold">Cost:</span></td>
+                                    <td><span>${payment.cid_sop_cost}</span></td>
+                                </tr>
+                                <!-- Display Discount and Discounted Price only if Discount is greater than 0 -->
+                                ${payment.cid_sop_discount > 0 ? `
+                                    <tr>
+                                    <td><span class="cid_bold">Discount:</span></td>
+                                        <td><span>${payment.cid_sop_discount}%</span></td>
+                                    </tr>
+                                    <tr>
+                                    <td><span class="cid_bold">Discounted Price:</span></td>
+                                        <td><span>${payment.cid_sop_discounted_price}</span></td>
+                                    </tr>
+                                ` : ''}
+                                <!-- Display Mode of Payment and Ref# only if Paid is Yes -->
+                                ${payment.cid_sop_paid == 1 ? `
+                                    <tr>
+                                    <td><span class="cid_bold">Mode of Payment:</span></td>
+                                        <td><span>${payment.cid_sop_payment_method}</span></td>
+                                    </tr>
+                                    <!-- Display Ref# only if Mode of Payment is not 'Cash' -->
+                                    ${payment.cid_sop_payment_method != 'Cash' ? `
+                                        <tr>
+                                        <td><span class="cid_bold">Ref#:</span></td>
+                                            <td><span>${payment.cid_sop_ref_no ? payment.cid_sop_ref_no : 'N/A'}</span></td>
+                                        </tr>
+                                        
+                                    ` : ''}
+                                    
+                                ` : ''}
+                                <tr>
+                                    <td><span class="cid_bold">Paid?</span></td>
+                                    <td><span>${payment.cid_sop_paid == 1 ? 'Yes' : 'No'}</span></td>
+                                </tr>
+
+                                ${payment.cid_sop_warranty_start != null ? `
+                                <tr>
+                                    <td><span class="cid_bold">Warranty Start:</span></td>
+                                    <td><span>${formatDate(payment.cid_sop_warranty_start)} </span></td>
+                                </tr>
+                                <tr>
+                                    <td><span class="cid_bold">Warranty End:</span></td>
+                                    <td><span>${formatDate(payment.cid_sop_warranty_end)} | ${payment.cid_sop_warranty_duration} ${payment.cid_sop_warranty_unit}(s) ${payment.cid_sop_warranty_type} Warranty</span></td>
+                                </tr>
+                            ` : ''}
+
+                            </tbody>
+                        </table>
+                    </div>
+                    `;
+                });
+
+                var components = [
+                    {name: 'Wifi', key: 'cs_cid_c_wifi'},
+                    {name: 'Keyboard (FN Keys)', key: 'cs_cid_c_keyboard'},
+                    {name: 'Temperature', key: 'cs_cid_c_temperature'},
+                    {name: 'Tracepad', key: 'cs_cid_c_tracepad'},
+                    {name: 'Bluetooth', key: 'cs_cid_c_bluetooth'},
+                    {name: 'Audio Jack', key: 'cs_cid_c_audiojack'},
+                    {name: 'Speaker', key: 'cs_cid_c_speaker'},
+                    {name: 'Camera', key: 'cs_cid_c_camera'},
+                    {name: 'LCD (Brightness)', key: 'cs_cid_c_lcd'},
+                    {name: 'Stress Test', key: 'cs_cid_c_stresstest'}
+                ];
+                
+                var checklistText = ''; // Variable to store checklist text
+                
+                // Calculate the midpoint index
+                var midpointIndex = Math.ceil(components.length / 2);
+                
+                // Update the checklistText generation to create HTML elements
+                var checklistText = `
+                <div class="row">
+                    <div class="col">
+                `;
+                components.forEach(function(component, index) {
+                var value = checklist ? parseInt(checklist[component.key]) : null;
+                var status = '';
+
+                // Assign text representation based on value
+                if (value !== null && value !== undefined) {
+                    if (value === 1) {
+                        status = 'Ok';
+                    } else if (value === 2) {
+                        status = 'Not Ok';
+                    } else {
+                        status = 'N/A';
+                    }
+                } else {
+                    status = 'N/A';
+                }
+
+                // Append HTML for the component
+                checklistText += `
+                    <div>${component.name}: ${status}</div>
+                `;
+                // If it's the midpoint, close the first column and start the second column
+                if (index === midpointIndex - 1) {
+                    checklistText += `
+                    </div>
+                    <div class="col">
+                    `;
+                }
+                });
+                // Close the second column and the row
+                checklistText += `
+                    </div>
+                </div>
+                `;
+
+                // Log or use checklistText as needed
+                console.log(checklistText); 
+
+                console.log(checklistText); 
 
                 var cid_contents_HTML =
                     `
@@ -267,62 +469,66 @@ $(document).ready(function () {
                         <div class="">
                             <div class="row">
                                 <div class="col-auto me-auto" id="person_in_charge">FILL UP BY PERSON IN CHARGE ONLY</div>
-                                <div class="col-auto" id="cid_bold">DIAGNOSTIC REPAIR REPORT</div>
+                                <div class="col-auto cid_bold">DIAGNOSTIC REPAIR REPORT</div>
                             </div>
                             <div class="row">
-                                <div class="col-auto me-auto" id="cid_bold">SPECIFY THE FF:</div>
-                                <div class="col-auto" id="cid_number">CID ${data[0].cid_number}</div>
+                                <div class="col-auto me-auto cid_bold">SPECIFY THE FF:</div>
+                                CID#:<div class="col-auto" id="cid_number">${data[0].cid_number}</div>
                             </div>
                             <div class="row">
-                            <div class="col-auto ms-auto" id="cid_bold">Claiming Slip: ${data[0].cid_cs_number ? data[0].cid_cs_number : ''} <span></p>
+                            <div class="col-auto ms-auto" class="cid_bold">Claiming Slip: ${data[0].cid_cs_number ? data[0].cid_cs_number : 'N/A'} <span></p>
                             </div>
                             </div>
                             <div class="row">
-                                <div class="col-auto me-auto" id="cid_bold">Unit Details / Brand Model: <span
-                                        class="cid_text">${data[0].cid_unit_details}</p>
+                                <div class="col-auto me-auto cid_bold">Unit Details / Brand Model: <span
+                                        class="cid_text">
+                                        <p>
+                                        ${data[0].cid_unit_details ? '<ul><li>' + data[0].cid_unit_details.split('\n').join('</li><li>') + '</li></ul>' : ''}
+                                        </p>
                                 </div>
                             
                             </div>
                             <div class="line"></div>
                             <div class="row">
-                                <div class="col-auto me-auto" id="cid_bold">REMARKS: (SCRATCHES, COLORS, LCD, ETC)<span
+                                <div class="col-auto me-auto cid_bold">REMARKS: (SCRATCHES, COLORS, LCD, ETC)<span
                                         class="cid_text"></p>
                                 </div>
                                 <div>
-                                ${data[0].cid_remarks}
+                                ${data[0].cid_remarks ? '<ul><li>' + data[0].cid_remarks.split('\n').join('</li><li>') + '</li></ul>' : ''}
                                 </div>
                             </div>
                             <div class="line"></div>
                             <div class="row" id="unit_history">
-                                <div class="col-auto me-auto" id="cid_bold">UNIT HISTORY / PROBLEMS / ISSUES & INFORMATION
-                                    PROVIDED BY CLIENT:<span class="cid_text"></p>
+                                <div class="col-auto me-auto">
+                                    <p class="cid_bold">
+                                    UNIT HISTORY / PROBLEMS / ISSUES & INFORMATION PROVIDED BY CLIENT:<span class="cid_text">
+                                    </p>
+                                    ${data[0].cid_unit_history ? '<ul><li>' + data[0].cid_unit_history.split('\n').join('</li><li>') + '</li></ul>' : ''}
                                 </div>
                             </div>
                             <div class="line"></div>
                             <div class="row mb-2">
-                                <div class="d-flex flex-row justify-content-between">
-                                    <div>
-                                        <p><span class="cid_print_text_bold" id="cid_bold">SUMMARY OF REPAIRS / DIAGNOSTIC /
-                                                OBSERVATION ETC:
-                                            </span>
-                                        </p>
+                                <div class="d-flex flex-row justify-content-between w-100">
+                                    <div class="d-flex flex-column col-7"> <!-- Adjusted class name -->
+                                        <p><span class="cid_print_text_bold cid_bold">SUMMARY OF REPAIRS / DIAGNOSTIC /
+                                                OBSERVATION ETC:</span></p>
                                     </div>
-                                    <div>
-                                        <p><span class="cid_print_text_bold text_red" id="cid_number">Date of 1st
-                                                Notification of Release: <span></p></span>
-                                        </p>
-                                        <p><span class="cid_print_text_bold text_red" id="cid_number">Warranty
-                                                End: <span></p></span></p>
+                                    <div class="col-5">
                                     </div>
                                 </div>
+                                <div>
+                                ${checklistText}
+                                <p>${data[0].cid_sor_content ? '<ul><li>' + data[0].cid_sor_content.split('\n').join('</li><li>') + '</li></ul>' : ''}</p>
+                                </div>
                             </div>
+
                             <div>
                                 <p class="summary_of_repairs_content mb-4"></p>
                             </div>
                             <div class="row d-flex justify-content-center justify-content-between">
-                                <div class="col-auto"><span class="cid_bold">START OF REPAIR DATE: </span>${data[0].formatted_created}</p>
+                                <div class="col-auto"><span class="cid_bold">START OF REPAIR DATE: </span>${data[0].cid_sor_start_date ? data[0].cid_sor_start_date : ''}</p>
                                 </div>
-                                <div class="col-auto"><span class="cid_bold">END OF REPAIR DATE: </span></p>
+                                <div class="col-auto"><span class="cid_bold">END OF REPAIR DATE: </span>${data[0].cid_sor_end_date ? data[0].cid_sor_end_date : ''}</p>
                                 </div>
                                 <div class="col-auto"><span class="cid_bold">TECH IN CHARGE: </span> ${data[0].technician_names ? data[0].technician_names : ""}</p>
                                 </div>
@@ -333,25 +539,23 @@ $(document).ready(function () {
                                     <div class="col-auto me-auto cid_bold">
                                         RECOMMENDATIONS: <span class="cid_text"></p>
                                     </div>
+                                    <div>
+                                    <p>${data[0].cid_r_content ? '<ul><li>' + data[0].cid_r_content.split('\n').join('</li><li>') + '</li></ul>' : ''}</p>
+                                    </div>
                                 </div>
                                 <div class="line"></div>
 
                                 <div class="row d-flex justify-content-between mb-4" id="mode_of_payments">
                                     <div class="col-auto cid_bold">SUMMARY OF PAYMENTS:</div>
-                                    <div class="col-auto"><span class="cid_bold">CR: </span></p>
+                                    <div class="col-auto"><span class="cid_bold">CR: </span> ${data[0].cid_sop_cr ? data[0].cid_sop_cr : ''}
                                     </div>
-                                    <div class="col-auto"><span class="cid_bold">OR: </span></p>
-                                    </div>
-                                    <div class="col-auto"><span class="cid_bold">MODE OF PAYMENTS: </span></p>
+                                    <div class="col-auto"><span class="cid_bold">OR: </span> ${data[0].cid_sop_or ? data[0].cid_sop_or : ''}
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-auto me-auto mb-4">
-                                        <span></p>
-                                    </div>
+                                    ${paymentHTML}
                                 </div>
                             </div>
-                            
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -376,6 +580,7 @@ $(document).ready(function () {
         });
 
         function create_cid_cs_number(cid_number) {
+            console.log(cid_number);
             $.ajax({
                 url: "../PHP/create_claiming_slip_number.php",
                 type: "GET",
@@ -408,12 +613,9 @@ $(document).ready(function () {
                 cid_number: cid_info[0].cid_number,
                 current_datetime: current_datetime,
                 technician_names: cid_info[0].technician_names,
-                service_name: cid_info[0].service_name,
+                device_name: cid_info[0].device_name,
                 cid_unit_details: cid_info[0].cid_unit_details,
                 cid_remarks: cid_info[0].cid_remarks,
-
-                cs_color: cid_info[0].cid_cs_color,
-                cs_accesories: cid_info[0].cid_cs_accesories
             }
 
             var claiming_slip_HTML =
@@ -424,29 +626,28 @@ $(document).ready(function () {
                         </h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <div class="modal-body">
+                    <div class="modal-body m-0">
                         <div id="claiming_slip_details">
                             <p>Claiming Slip #: <span id="cs_number">${claiming_slip_data.claiming_slip_number}</span></p>
                             <p>Name: ${claiming_slip_data.cid_client_full_name}</p>
                             <p>Contact Number: ${claiming_slip_data.cid_client_contact}</p>
                             <p>CID #: <span id="cid_number">${claiming_slip_data.cid_number}</span></p>
                             <p>Date: ${claiming_slip_data.current_datetime}</p>
-                            <p>Tech in Charge: ${claiming_slip_data.technician_names}</p>
+                            <p>Tech in Charge: ${claiming_slip_data.technician_names ? claiming_slip_data.technician_names : 'No Technician'}</p>
                             <hr>
                             <p>ITEM/SERVICES: WARRANTY CLAIM</p>
                             <p id="cs_title">Unit Details</p>
-                            <p>Unit Type: ${claiming_slip_data.service_name}</p>
+                            <p>Unit Type: ${claiming_slip_data.device_name}</p>
                             <p>Brand: ${claiming_slip_data.cid_unit_details}</p>
-                            <div>
-                                <label for="cs_color">Color:</label>
-                                <input type="text" name="cs_color" id="cs_color" value="${claiming_slip_data.cs_color ? claiming_slip_data.cs_color : ''}">
-                            </div>
-                            <div>
-                                <label for="cs_accesories">Accesories:</label>
-                                <input type="text" name="cs_accesories" id="cs_accesories" value="${claiming_slip_data.cs_accesories ? claiming_slip_data.cs_accesories : ''}">
-                            </div>
-                            <p>Notes / Remarks: ${claiming_slip_data.cid_remarks}</p>
+                            <p>Notes / Remarks: ${claiming_slip_data.cid_remarks ? claiming_slip_data.cid_remarks : 'N/A'}</p>
                         </div>
+                    </div>
+                    <div class="modal-footer mb-4">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                            Close
+                        </button>
+                        <button type="button" class="btn btn-info" id="print_claiming_slip">Print</button>
+                        <button type="button" class="btn btn-primary" id="save_claiming_slip">Save</button>
                     </div>
                 `;
             claiming_slip_container.append(claiming_slip_HTML);
@@ -457,10 +658,9 @@ $(document).ready(function () {
 
     $(document).on('click', '#print_claiming_slip', function () {
         function print_claiming_slip() {
+            console.log();
             var printWindow = window.open('', '_blank');
 
-            var cs_color = $("#cs_color").val();
-            var cs_accesories = $("#cs_accesories").val();
             var claimingSlipContent =
                 `
             <!DOCTYPE html>
@@ -508,7 +708,7 @@ $(document).ready(function () {
                                         </div>
                                     </div>
                                     <div class="row mb-3">
-                                        <p class="claiming_text_samp"><span class="claiming_text">Tech In Charge:</span> ${claiming_slip_data.technician_names}</p>
+                                        <p class="claiming_text_samp"><span class="claiming_text">Tech In Charge:</span> ${claiming_slip_data.technician_names ? claiming_slip_data.technician_names : 'No Technician'}</p>
                                     </div>
                                     <hr id="claiming_hr">
                                     <div class="row mb-3">
@@ -522,16 +722,12 @@ $(document).ready(function () {
                                         </div>
                                         <div class="row">
                                             <div class="col-6  mb-3">
-                                                <p class="claiming_text_samp"><span class="claiming_text">Type:</span> ${claiming_slip_data.service_name}</p>
+                                                <p class="claiming_text_samp"><span class="claiming_text">Type:</span> ${claiming_slip_data.device_name}</p>
                                             </div>
                                             <div class="col-6  mb-3">
                                                 <p class="claiming_text_samp"><span class="claiming_text">Brand:</span> ${claiming_slip_data.cid_unit_details}</p>
                                             </div>
-                                            <div class="col-3  mb-3">
-                                                <p class="claiming_text_samp"><span class="claiming_text">Color:</span> ${cs_color}</p>
-                                            </div>
                                         </div>
-                                        <p class="claiming_text_samp"><span class="claiming_text">Accessories:</span> ${cs_accesories}</p>
                                         <p class="claiming_text_samp"><span class="claiming_text">Notes/Remarks:</span> ${claiming_slip_data.cid_remarks}</p>
                                     </div>
                                     <div class="claiming_instructions">
@@ -569,17 +765,16 @@ $(document).ready(function () {
     function create_claiming_slip() {
         var cs_number = $('#cs_number').text();
         var cid_number = $('#cid_number').text();
-        var cs_color = $('#cs_color').val();
-        var cs_accesories = $('#cs_accesories').val();
 
+        console.log(cs_number);
+        console.log(cid_number);
         $.ajax({
             url: "../PHP/create_claiming_slip.php",
             type: "POST",
             data: {
                 cs_number: cs_number,
                 cid_number: cid_number,
-                cs_color: cs_color,
-                cs_accesories: cs_accesories
+
             },
             success: function (response) {
                 if (response.status === "success") {
@@ -596,12 +791,134 @@ $(document).ready(function () {
 
     $(document).on('click', '#print_cid', function () {
         function print_cid() {
-            console.log(cid_data);
             var printWindow = window.open('', '_blank');
 
             fetch('../../header.php')
                 .then(response => response.text())
+
                 .then(headerContent => {
+                    var paymentHTML = '';
+                    var paymentCount = 1;
+
+                    payments_data.forEach(function (payment) {
+                        paymentHTML += `
+                        <div class="col mb-3">
+                            <div class="d-flex flex-column summary_of_payments mx-2">
+                                <span class="fw-bold">Payment #${paymentCount}: </span>
+                                <table class="table table-borderless">
+                                    <tbody>
+                                        <tr>
+                                            <td><span class="cid_bold">Service:</span></td>
+                                            <td>${payment.cs_service_name}</td>
+                                        </tr>
+                                        <tr>
+                                            <td><span class="cid_bold">Cost:</span></td>
+                                            <td>${payment.cid_sop_cost}</td>
+                                        </tr>
+                                        ${payment.cid_sop_discount > 0 ? `
+                                            <tr>
+                                                <td><span class="cid_bold">Discount:</span></td>
+                                                <td>${payment.cid_sop_discount}%</td>
+                                            </tr>
+                                            <tr>
+                                                <td><span class="cid_bold">Final Price:</span></td>
+                                                <td>${payment.cid_sop_discounted_price}</td>
+                                            </tr>
+                                        ` : ''}
+                                        ${payment.cid_sop_paid == 1 ? `
+                                            <tr>
+                                                <td><span class="cid_bold">MOP:</span></td>
+                                                <td>${payment.cid_sop_payment_method}</td>
+                                            </tr>
+                                            ${payment.cid_sop_payment_method != 'Cash' ? `
+                                                <tr>
+                                                    <td><span class="cid_bold">Ref#:</span></td>
+                                                    <td>${payment.cid_sop_ref_no ? payment.cid_sop_ref_no : 'N/A'}</td>
+                                                </tr>
+                                            ` : ''}
+                                        ` : ''}
+                                        <tr>
+                                            <td><span class="cid_bold">Paid?</span></td>
+                                            <td>${payment.cid_sop_paid == 1 ? 'Yes' : 'No'}</td>
+                                        </tr>
+                                        ${payment.cid_sop_warranty_start != null ? `
+
+                                            <tr>
+                                                <td><span class="cid_bold">Warranty:</span></td>
+                                                <td>${formatDate(payment.cid_sop_warranty_start)} to ${formatDate(payment.cid_sop_warranty_end)} | ${payment.cid_sop_warranty_duration} ${payment.cid_sop_warranty_unit}(s) ${payment.cid_sop_warranty_type} Warranty</td>
+                                            </tr>
+                                        ` : ''}
+                                    </tbody>
+                                </table>
+                            </div>
+                            </div>
+                        `;
+                        paymentCount++;
+                    });
+
+                    var components = [
+                        {name: 'Wifi', key: 'cs_cid_c_wifi'},
+                        {name: 'Keyboard (FN Keys)', key: 'cs_cid_c_keyboard'},
+                        {name: 'Temperature', key: 'cs_cid_c_temperature'},
+                        {name: 'Tracepad', key: 'cs_cid_c_tracepad'},
+                        {name: 'Bluetooth', key: 'cs_cid_c_bluetooth'},
+                        {name: 'Audio Jack', key: 'cs_cid_c_audiojack'},
+                        {name: 'Speaker', key: 'cs_cid_c_speaker'},
+                        {name: 'Camera', key: 'cs_cid_c_camera'},
+                        {name: 'LCD (Brightness)', key: 'cs_cid_c_lcd'},
+                        {name: 'Stress Test', key: 'cs_cid_c_stresstest'}
+                    ];
+                    
+                    var checklistText = ''; // Variable to store checklist text
+                    
+                    // Calculate the midpoint index
+                    var midpointIndex = Math.ceil(components.length / 2);
+                    
+                    // Update the checklistText generation to create HTML elements
+                    var checklistText = `
+                    <div class="row">
+                        <div class="col">
+                    `;
+                    components.forEach(function(component, index) {
+                    var value = checklist_data ? parseInt(checklist_data[component.key]) : null;
+                    var status = '';
+    
+                    // Assign text representation based on value
+                    if (value !== null && value !== undefined) {
+                        if (value === 1) {
+                            status = 'Ok';
+                        } else if (value === 2) {
+                            status = 'Not Ok';
+                        } else {
+                            status = 'N/A';
+                        }
+                    } else {
+                        status = 'N/A';
+                    }
+    
+                    // Append HTML for the component
+                    checklistText += `
+                        <div>${component.name}: ${status}</div>
+                    `;
+                    // If it's the midpoint, close the first column and start the second column
+                    if (index === midpointIndex - 1) {
+                        checklistText += `
+                        </div>
+                        <div class="col">
+                        `;
+                    }
+                    });
+                    // Close the second column and the row
+                    checklistText += `
+                        </div>
+                    </div>
+                    `;
+    
+                    // Log or use checklistText as needed
+                    console.log(checklistText); 
+    
+                    console.log(checklistText); 
+
                     var cid_content =
                         `
                 <!DOCTYPE html>
@@ -618,7 +935,9 @@ $(document).ready(function () {
                 
                     <title>Print CID</title>
                     <style>
-                        
+                    .table>:not(caption)>*>* {
+                        padding: 2px;
+                    }
                     </style>
                 </head>
                 
@@ -641,7 +960,9 @@ $(document).ready(function () {
                                 <p class="text-right"><span class="cid_print_text_bold">Claiming Slip: ${cid_data[0].cid_cs_number ? cid_data[0].cid_cs_number : ''}</span></p>
                             </div>
                             <div>
-                                <p><span class="cid_print_text_bold">Unit Details / Brand Model: </span>${cid_data[0].cid_unit_details}</p>
+                                <p><span class="cid_print_text_bold">Unit Details / Brand Model: </span>
+                                ${cid_data[0].cid_unit_details ? '<ul><li>' + cid_data[0].cid_unit_details.split('\n').join('</li><li>') + '</li></ul>' : ''}
+                                </p>
                                 <div>
                                     <p class="unit_details_content"></p>
                                 </div>
@@ -653,7 +974,9 @@ $(document).ready(function () {
                                 <div>
                                     <p><span class="cid_print_text_bold">REMARKS: (SCRATCHES, COLORS, LCD, ETC)</span></p>
                                     <div>
-                                        <p class="remarks_content">${cid_data[0].cid_remarks}</p>
+                                        <p class="remarks_content">
+                                        ${cid_data[0].cid_remarks ? '<ul><li>' + cid_data[0].cid_remarks.split('\n').join('</li><li>') + '</li></ul>' : ''}
+                                        </p>
                                     </div>
                                 </div>
                 
@@ -663,7 +986,9 @@ $(document).ready(function () {
                                     <p><span class="cid_print_text_bold">UNIT HISTORY / PROBLEMS / ISSUES & INFORMATION PROVIDED BY
                                             CLIENT:</span></p>
                                     <div>
-                                        <p class="unit_history_content"></p>
+                                        <p class="unit_history_content">
+                                        ${cid_data[0].cid_unit_history ? '<ul><li>' + cid_data[0].cid_unit_history.split('\n').join('</li><li>') + '</li></ul>' : ''}
+                                        </p>
                                     </div>
                                 </div>
                             </div>
@@ -672,24 +997,22 @@ $(document).ready(function () {
                 
                             <div>
                                 <div class="d-flex flex-row justify-content-between">
-                                    <div>
+                                    <div class="col-6">
                                         <p><span class="cid_print_text_bold">SUMMARY OF REPAIRS / DIAGNOSTIC / OBSERVATION ETC:
                                             </span>
                                         </p>
                                     </div>
-                                    <div>
-                                        <p><span class="cid_print_text_bold text_red">Date of 1st Notification of Release: </span>
-                                        </p>
-                                        <p><span class="cid_print_text_bold text_red">Warranty End: </span></p>
-                                    </div>
+                                  
                                 </div>
+                                ${checklistText}
+                                ${cid_data[0].cid_sor_content ? '<ul><li>' + cid_data[0].cid_sor_content.split('\n').join('</li><li>') + '</li></ul>' : ''}
                                 <div>
                                     <p class="summary_of_repairs_content"></p>
                                 </div>
                                 <div class="d-flex flex-row justify-content-between">
-                                    <p><span class="cid_print_text_bold">START OF REPAIR DATE: </span>${cid_data[0].formatted_created}</p>
-                                    <p><span class="cid_print_text_bold">END OF REPAIR DATE: </span></p>
-                                    <p><span class="cid_print_text_bold">TECH IN CHARGE: </span>${cid_data[0].technician_names ? cid_data[0].technician_names : ""}</p>
+                                    <p><span class="cid_print_text_bold">START OF REPAIR DATE: </span>${cid_data[0].cid_sor_start_date ? cid_data[0].cid_sor_start_date : ''}</p>
+                                    <p><span class="cid_print_text_bold">END OF REPAIR DATE: </span>${cid_data[0].cid_sor_end_date ? cid_data[0].cid_sor_end_date : ''}</p>
+                                    <p><span class="cid_print_text_bold">TECH IN CHARGE: </span>${cid_data[0].technician_names ? cid_data[0].technician_names : "No Technician"}</p>
                                 </div>
                             </div>
                 
@@ -698,7 +1021,8 @@ $(document).ready(function () {
                             <div>
                                 <p><span class="cid_print_text_bold">RECCOMENDATIONS: </span></p>
                                 <div>
-                                    <p class="reccomendations_content"></p>
+                                    <p class="reccomendations_content">
+                                    ${cid_data[0].cid_r_content ? '<ul><li>' + cid_data[0].cid_r_content.split('\n').join('</li><li>') + '</li></ul>' : ''}
                                 </div>
                             </div>
                 
@@ -707,12 +1031,12 @@ $(document).ready(function () {
                             <div>
                                 <div class="d-flex flex-row justify-content-between">
                                     <p><span class="cid_print_text_bold">SUMMARY OF PAYMENTS: </span></p>
-                                    <p><span class="cid_print_text_bold">CR: </span></p>
-                                    <p><span class="cid_print_text_bold">OR: </span></p>
-                                    <p><span class="cid_print_text_bold">MODE OF PAYMENT:</span> </p>
+                                    <p><span class="cid_print_text_bold">CR: </span>${cid_data[0].cid_sop_cr ? cid_data[0].cid_sop_cr : ""}</p>
+                                    <p><span class="cid_print_text_bold">OR: </span>${cid_data[0].cid_sop_or ? cid_data[0].cid_sop_or : ""}</p>
                                 </div>
-                                <div>
-                                    <p class="summary_of_payments_content"></p>
+                                <div class="d-flex flex-row justify-content-around mt-1">
+                                    ${paymentHTML}
+
                                 </div>
                             </div>
                 

@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- Header -->
-    <?php include "header.php"; ?>
+    <?php include "header_login.php"; ?>
 
     <!-- CSS -->
     <link rel="stylesheet" href="style.css">
@@ -20,11 +20,14 @@
         <div class="card">
             <div class="card-body">
                 <div id="login_text_container">
+                <img class="logo" src="Assets/Images/logo.png" alt="logo" srcset="">
                     <p class="title_text">WELCOME BACK! <span>LOGIN</span>
                         <p>
                             <p class="subtle_text">Fill in your login details to access</p>
                 </div>
+
                 
+
                 <div class="alert alert-danger" id="login_alert" style="display: none;" role="alert">
                 </div>
 
@@ -56,6 +59,9 @@
             </div>
         </div>
     </div>
+
+    <!-- Check Warranty -->
+
 
     <!-- JS -->
     <script src="login.js"></script>

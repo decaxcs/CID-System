@@ -29,7 +29,9 @@
                                     <th>CID</th>
                                     <th>Client</th>
                                     <th>Unit Details</th>
+                                    <th>Remarks</th>
                                     <th>Unit History</th>
+                                    <th>Status</th>
                                     <th>Date Added</th>
                                 </tr>
                             </thead>

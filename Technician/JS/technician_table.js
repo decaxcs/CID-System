@@ -9,13 +9,15 @@ function get_cids(type) {
         url: "../PHP/get_cids.php",
         method: "GET",
         dataType: "json",
-        data: { type: type },
+        data: {
+            type: type
+        },
         success: function (data) {
             populate_cids_table(data);
             console.log(data);
         },
         error: function (xhr, status, error) {
-            console.error("Error fetching data:", error);
+            console.error("Error fetching data:", xhr, status, error);
         }
     });
 }
@@ -30,18 +32,20 @@ function populate_cids_table(data) {
                 cid.cid_number,
                 cid.cid_client_full_name,
                 cid.cid_unit_details,
+                cid.cid_remarks,
                 cid.cid_unit_history,
+                cid.cid_status,
                 cid.formatted_created
             ]).draw(false);
         });
     }
 }
 
-$('#cids_table[data-type="claimed"] tbody').on('click', 'tr', function () {
+$('#cids_table[data-type="claimed"] tbody, #cids_table[data-type="recent-claimed"] tbody').on('click', 'tr', function () {
     var rowData = $(this).closest('table').DataTable().row(this).data();
     var cid_number = rowData[0];
 
     sessionStorage.setItem('cid_number', cid_number);
-
+    
     window.location.href = 'cidsedit.php';
 });

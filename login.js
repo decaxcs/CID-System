@@ -11,7 +11,6 @@ document.getElementById('toggle_password').addEventListener('click', function ()
     }
 });
 
-
 $(document).ready(function () {
     function login() {
         var username = $("#user_username").val();
@@ -31,7 +30,7 @@ $(document).ready(function () {
                 password: password
             },
             success: function (response) {
-                var data = JSON.parse(response);    
+                var data = JSON.parse(response);
                 console.log(data);
                 if (data.status === "success") {
                     switch (data.permission) {
@@ -48,6 +47,12 @@ $(document).ready(function () {
                             alert("Invalid permission level.");
                             break;
                     }
+                } else if (data.status === "deleted") {
+                    $("#login_alert").text("This account has been deleted.");
+                    $("#login_alert").fadeIn().delay(2000).fadeOut();
+                } else if (data.status === "no_user") {
+                    $("#login_alert").text("Incorrect username.");
+                    $("#login_alert").fadeIn().delay(2000).fadeOut();
                 } else {
                     $("#login_alert").text("Incorrect username or password.");
                     $("#login_alert").fadeIn().delay(2000).fadeOut();
@@ -67,4 +72,3 @@ $(document).ready(function () {
 
     $("#login_button").click(login);
 });
- 

@@ -11,11 +11,11 @@
         bottom: 0;
         margin-bottom: 20px;
         margin-right: 40px;
-    }
+    }   
 }
 
 @page {
-    size: A4;
+    size: A4; /* Change to the desired paper size, e.g., A4 */
     margin: 0;
 }
 

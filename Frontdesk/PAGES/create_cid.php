@@ -72,17 +72,17 @@
                                 </select>
                             </div>
                             <div class="mb-5"> <span class="tos_span">HOW DO YOU KNOW ABOUT US?:</span>
-                                <select id="how_know" name="how_know" class="custom-select required">
-                                    <option value="Advertisement">Advertisement</option>
+                                <select id="how_know" name="how_know" id="source" class="custom-select select_source required">
+                                    <!-- <option value="Advertisement">Advertisement</option>
                                     <option value="Word of Mouth">Word of Mouth</option>
-                                    <option value="Online Search">Online Search</option>
+                                    <option value="Online Search">Online Search</option> -->
                                     <!-- Add more options as needed -->
                                 </select>
                             </div>
                         </div>
                         <div id="alertContainer"></div>
                         <div class="add_cid_footer">
-                            <button type="button" class="btn btn-primary btn_cancel">CANCEL</button>
+                            <button type="button" class="btn btn-primary btn_cancel" id="cancel_button">CANCEL</button>
                             <button type="button" class="btn btn-primary btn_save" id="proceed_button">PROCEED</button>
                         </div>
                     </div>
@@ -149,19 +149,26 @@
                                 </div>
                             </div>
                         </div>
-                    
-                        <div class="mb-3" id="dropdown">
+
+                        <div class="mb-3" id="dropdown" class="w-100">
                             <p><span class="tos_span">Select Technician(s):</span> </p>
-                            <select class="select_technician multiple_select form-control" id="technician" multiple="multiple">
+                            <select class="select_technician multiple_select form-control" id="technician"
+                                multiple="multiple">
 
                             </select>
-                            <div class="ms-5 mb-3">
-                                <span class="tos_span ">Computer Service:</span>
-                                <select id="computer_service" name="computer_service"
-                                    class="custom-select select_services">
-                                </select>
-                                </p>
-                            </div>
+
+                            <p class="ms-2"><span class="tos_span">Select Service(s):</span> </p>
+                            <select class="select_service multiple_select form-control" id="computer_service"
+                                multiple="multiple">
+
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <p><span class="tos_span">Select Device(s):</span> </p>
+                            <select class="select_device form-control" id="device">
+
+                            </select>
                         </div>
                     </div>
                     <div class="modal-footer justify-content-end" id="ads_slip">

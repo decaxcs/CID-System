@@ -19,7 +19,7 @@ function get_data() {
     if (cid_number) {
         $.ajax({
             url: "../PHP/get_data.php",
-            method: "GET",
+            method: "POST",
             dataType: "json",
             data: {
                 cid_number: cid_number,
@@ -65,18 +65,42 @@ function claim_cid(type) {
     save_data(dataToSend);
 }
 
-function save_data(data) {
-    console.log(data);
+function save_data(data) {  
     $.ajax({
         url: "../PHP/save_data.php",
         method: "POST",
         dataType: "json",
         data: data,
         success: function (data) {
-            console.log(data);
+            get_data();
+            alert_display(data.message);
         },
         error: function (xhr, status, error) {
             console.error("Error fetching data:", error, xhr, status);
         }
     });
+}
+
+function alert_display(data, type) {
+    var alert_container = $('.alert_container');
+    alert_container.empty();
+
+    // Default to success if type is not provided
+    if (!type) {
+        type = 'success';
+    }
+
+    var alert_HTML =
+        `
+    <div class="alert alert-${type}" role="alert">
+    ${data}
+    </div>
+    `
+    alert_container.append(alert_HTML);
+
+    setTimeout(function () {
+        $('.alert').fadeOut('slow', function() {
+            $('#u_cid_modal').modal('hide'); // Close the modal
+        });
+    }, 3000);
 }

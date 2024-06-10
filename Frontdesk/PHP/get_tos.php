@@ -5,6 +5,7 @@ header('Content-Type: application/json');
 
 $tos_sql = "SELECT tos_id, tos_content, tos_required, tos_sequence, 'tos' AS source
             FROM cs_terms_of_service
+            WHERE isDeleted = 0
             ORDER BY tos_sequence";
 
     $additional_sql = "SELECT tos_a_id, tos_id, tos_a_content AS additional_content, tos_a_type AS additional_type, 'tos_additional' AS source

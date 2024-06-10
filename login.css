@@ -85,3 +85,10 @@ label, .input_underline {
 #toggle_password:hover {
     cursor: pointer;
 }
+
+.logo {
+    width: 30px;
+    height: auto;
+    align-self: center;
+    margin-bottom: 20px;
+}

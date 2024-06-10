@@ -13,7 +13,7 @@ if(isset($_GET['cid_status']) && !empty($_GET['cid_status'])) {
                  FROM cs_cid_information AS cid
                  LEFT JOIN cs_cid_technicians AS cid_tech ON cid.cid_number = cid_tech.cid_number
                  LEFT JOIN cs_users AS technicians ON cid_tech.cid_technician_id = technicians.csu_id
-                 WHERE cid.cid_status = '$cid_status'
+                 WHERE cid.cid_status = '$cid_status' AND cid.isDeleted = 0
                  GROUP BY cid.cid_number, cid.cid_created
                  ORDER BY cid.cid_created DESC";
 } else {
@@ -24,6 +24,7 @@ if(isset($_GET['cid_status']) && !empty($_GET['cid_status'])) {
                  FROM cs_cid_information AS cid
                  LEFT JOIN cs_cid_technicians AS cid_tech ON cid.cid_number = cid_tech.cid_number
                  LEFT JOIN cs_users AS technicians ON cid_tech.cid_technician_id = technicians.csu_id
+                 WHERE cid.isDeleted = 0
                  GROUP BY cid.cid_number, cid.cid_created
                  ORDER BY cid.cid_created DESC";
 }

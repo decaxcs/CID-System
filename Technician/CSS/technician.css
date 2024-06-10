@@ -91,3 +91,154 @@ p {
     z-index: 99999;
 }
 
+
+#ongoing_tech{
+    height: 100px;
+    width: 80%;
+    text-align: center;
+    font-weight: 500;
+    font-size: 50px;
+
+}
+
+#warranty_tech{
+    height: 100px;
+    width: 80%;
+    text-align: center;
+    font-weight: 500;
+    font-size: 50px;
+}
+
+#rto_tech{
+    height: 100px;
+    width: 80%;
+    text-align: center;
+    font-weight: 500;
+    font-size: 50px;
+}
+
+#cids_tech{
+    height: 100px;
+    width: 80%;
+    text-align: center;
+    font-weight: 500;
+    font-size: 50px;
+}
+
+#release_tech{
+    height: 100px;
+    width: 80%;
+    text-align: center;
+    font-weight: 500;
+    font-size: 50px;
+}
+
+#pending_tech{
+    height: 100px;
+    width: 80%;
+    text-align: center;
+    font-weight: 500;
+    font-size: 50px;
+}
+
+#abandoned_tech{
+    height: 100px;
+    width: 80%;
+    text-align: center;
+    font-weight: 500;
+    font-size: 50px;
+}
+
+#completed_tech{
+    height: 100px;
+    width: 80%;
+    text-align: center;
+    font-weight: 500;
+    font-size: 50px;
+}
+
+#technician_table_container{
+    padding: 10px;
+}
+
+.text_tech{
+    text-align: center;
+    justify-content: center;
+}
+
+#tech_dashboard{
+    text-decoration: none; 
+    color: inherit; 
+}
+
+#tech_see_more{
+    text-align: center;
+}
+
+#tech_header{
+    text-align: center;
+}
+
+#icons_tech{
+    text-align: left;
+}
+
+#text_tech_ongoing{
+    text-align: center;
+    justify-content: center;
+    font-size: 50px;
+    font-weight: 500;
+}
+
+#text_tech_warranty{
+    text-align: center;
+    justify-content: center;
+    font-size: 50px;
+    font-weight: 500;
+}
+
+#text_tech_rto{
+    text-align: center;
+    justify-content: center;
+    font-size: 50px;
+    font-weight: 500;
+}
+
+#text_tech_cids{
+    text-align: center;
+    justify-content: center;
+    font-size: 50px;
+    font-weight: 500;
+}
+
+#text_tech_release{
+    text-align: center;
+    justify-content: center;
+    font-size: 50px;
+    font-weight: 500;
+}
+
+#text_tech_pending{
+    text-align: center;
+    justify-content: center;
+    font-size: 50px;
+    font-weight: 500;
+}
+
+#text_tech_abandoned{
+    text-align: center;
+    justify-content: center;
+    font-size: 50px;
+    font-weight: 500;
+}
+
+#text_tech_completed{
+    text-align: center;
+    justify-content: center;
+    font-size: 50px;
+    font-weight: 500;
+}
+
+#technician_table_container{
+    padding: 10px;
+}
