@@ -15,11 +15,11 @@ function get_analytics(type, start_date, end_date, csu_id, cid_number) {
         data: requestData,
         success: function (data) {
             console.log(data);
-        if (type === 'analytics') {
-            populate_analytics(data.data);
-        } else if (type === 'cids') {
-            populate_cids(data.data.cids);
-        }
+            if (type === 'analytics') {
+                populate_analytics(data.data);
+            } else if (type === 'cids') {
+                populate_cids(data.data.cids);
+            }
         },
         error: function (xhr, status, error) {
             console.error("Error fetching data:", error, xhr, status);
@@ -49,13 +49,29 @@ function populate_analytics(analytics) {
     var home_analytics_container = $("#home_analytics_container");
     home_analytics_container.empty();
 
-    var home_analytics_HTML = `
-    <div class="row mt-2">
+    var home_analytics_HTML = ` 
+    <div>
         <div class="col mb-4">
             <a id="super_dashboard" href="cids.php">
                 <div class="card shadow">
+                    <div class="card-header bg-info text-white" id="super_header">
+                        <i class="fas fa-id-card mr-2"></i> CIDs
+                    </div>
+                    <div class="card-body">
+                        <p id="text_super_cids">${unique_cid_numbers[0].unique_cid_numbers}</p>
+                    </div>
+                    <div class="card-footer bg-info text-white" id="super_see_more">See More
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+    <div class="row mt-2">
+        <div class="col mb-4">
+            <a id="super_dashboard" href="ongoing.php">
+                <div class="card shadow">
                     <div class="card-header bg-primary text-white" id="super_header">
-                        <i class="fas fa-tasks mr-2"></i>Ongoing
+                        <i class="fas fa-tasks mr-2"></i> Ongoing
                     </div>
                     <div class="card-body">
                         <p id="text_super_ongoing">${ongoingCount}</p>
@@ -66,10 +82,10 @@ function populate_analytics(analytics) {
             </a>
         </div>
         <div class="col mb-4">
-            <a id="super_dashboard" href="cids.php">
+            <a id="super_dashboard" href="warranty.php">
                 <div class="card shadow">
                     <div class="card-header bg-success text-white" id="super_header">
-                        <i class="fas fa-shield-alt mr-2"></i>Warranty
+                        <i class="fas fa-shield-alt mr-2"></i> Warranty
                     </div>
                     <div class="card-body">
                         <p id="text_super_ongoing">${ongoingWarrantyCount}</p>
@@ -80,10 +96,10 @@ function populate_analytics(analytics) {
             </a>
         </div>
         <div class="col mb-4">
-            <a id="super_dashboard" href="cids.php">
+            <a id="super_dashboard" href="rto.php">
                 <div class="card shadow">
                     <div class="card-header bg-warning text-white" id="super_header">
-                        <i class="fas fa-car mr-2"></i>RTO
+                        <i class="fas fa-car mr-2"></i> RTO
                     </div>
                     <div class="card-body">
                         <p id="text_super_rto">${rtoCount}</p>
@@ -93,25 +109,12 @@ function populate_analytics(analytics) {
                 </div>
             </a>
         </div>
+        
         <div class="col mb-4">
-            <a id="super_dashboard" href="cids.php">
-                <div class="card shadow">
-                    <div class="card-header bg-info text-white" id="super_header">
-                        <i class="fas fa-id-card mr-2"></i>CIDs
-                    </div>
-                    <div class="card-body">
-                        <p id="text_super_cids">${unique_cid_numbers[0].unique_cid_numbers}</p>
-                    </div>
-                    <div class="card-footer bg-info text-white" id="super_see_more">See More
-                    </div>
-                </div>
-            </a>
-        </div>
-        <div class="col mb-4">
-            <a id="super_dashboard" href="cids.php">
+            <a id="super_dashboard" href="release.php">
                 <div class="card shadow">
                     <div class="card-header bg-dark text-white" id="super_header">
-                        <i class="fas fa-code-branch mr-2"></i>Release
+                        <i class="fas fa-code-branch mr-2"></i> Release
                     </div>
                     <div class="card-body">
                         <p id="text_super_release">${releaseCount}</p>
@@ -124,10 +127,10 @@ function populate_analytics(analytics) {
     </div>
     <div class="row justify-content-center">
         <div class="col-md-3 mb-4">
-            <a id="super_dashboard" href="cids.php">
+            <a id="super_dashboard" href="pending.php">
                 <div class="card shadow">
                     <div class="card-header bg-danger text-white" id="super_header">
-                        <i class="fas fa-hourglass-start mr-2"></i>Pending
+                        <i class="fas fa-hourglass-start mr-2"></i> Pending
                     </div>
                     <div class="card-body">
                         <p id="text_super_pending">${pendingCount}</p>
@@ -138,10 +141,10 @@ function populate_analytics(analytics) {
             </a>
         </div>
         <div class="col-md-3 mb-4">
-            <a id="super_dashboard" href="cids.php">
+            <a id="super_dashboard" href="abandoned.php">
                 <div class="card shadow">
                     <div class="card-header bg-secondary text-white" id="super_header">
-                        <i class="fas fa-trash-alt mr-2"></i>Abandoned
+                        <i class="fas fa-trash-alt mr-2"></i> Abandoned
                     </div>
                     <div class="card-body">
                         <p id="text_super_abandoned">${abandonedCount}</p>
@@ -152,10 +155,10 @@ function populate_analytics(analytics) {
             </a>
         </div>
         <div class="col-md-3 mb-4">
-            <a id="super_dashboard" href="cids.php">
+            <a id="super_dashboard" href="completed.php">
                 <div class="card shadow">
                     <div class="card-header bg-dark text-white" id="super_header">
-                        <i class="fas fa-check-circle mr-2"></i>Completed
+                        <i class="fas fa-check-circle mr-2"></i> Completed
                     </div>
                     <div class="card-body">
                         <p id="text_super_completed">${completedCount}</p>
@@ -181,14 +184,14 @@ function populate_analytics(analytics) {
         <div id="service_count_chart" class="chart"></div>
     </div>
 
-    <div class="chart-container mb-3">
+    <!-- <div class="chart-container mb-3">
         <select id="chartType2">
             <option value="bar">Bar Chart</option>
             <option value="line">Line Chart</option>
             <option value="pie">Pie Chart</option>
         </select>
         <div id="service_payments_chart" class="chart"></div>
-    </div>
+    </div> -->
 
     <div class="chart-container mb-3">
         <select id="chartType3">
@@ -246,55 +249,56 @@ function populate_analytics(analytics) {
         Plotly.newPlot('service_count_chart', newServiceCountData, serviceCountLayout);
     });
 
+
     // Plotly for Service Payments
-    var servicePaymentData = {
-        x: [],
-        y: [],
-        type: 'bar',
-        text: [],
-        hoverinfo: 'x+y+text'
-    };
-    for (var i = 0; i < service_counts.length; i++) {
-        servicePaymentData.x.push(service_counts[i].cs_service_name);
-        servicePaymentData.y.push(service_counts[i].total_amount);
-        var text = `Total Amount: ${service_counts[i].total_amount}<br>Total Paid: ${service_counts[i].total_paid_amount}<br>Total Unpaid: ${service_counts[i].total_unpaid_amount}`;
-        servicePaymentData.text.push(text);
-    }
-    var servicePaymentLayout = {
-        title: 'Service Total Amounts',
-        xaxis: {
-            title: 'Service Name'
-        },
-        yaxis: {
-            title: 'Total Amount'
-        }
-    };
-    Plotly.newPlot('service_payments_chart', [servicePaymentData], servicePaymentLayout);
-    $('#chartType2').change(function () {
-        var chartType = $(this).val();
-        var newServicePaymentData;
+    // var servicePaymentData = {
+    //     x: [],
+    //     y: [],
+    //     type: 'bar',
+    //     text: [],
+    //     hoverinfo: 'x+y+text'
+    // };
+    // for (var i = 0; i < service_counts.length; i++) {
+    //     servicePaymentData.x.push(service_counts[i].cs_service_name);
+    //     servicePaymentData.y.push(service_counts[i].total_amount);
+    //     var text = `Total Amount: ${service_counts[i].total_amount}<br>Total Paid: ${service_counts[i].total_paid_amount}<br>Total Unpaid: ${service_counts[i].total_unpaid_amount}`;
+    //     servicePaymentData.text.push(text);
+    // }
+    // var servicePaymentLayout = {
+    //     title: 'Service Total Amounts',
+    //     xaxis: {
+    //         title: 'Service Name'
+    //     },
+    //     yaxis: {
+    //         title: 'Total Amount'
+    //     }
+    // };
+    // Plotly.newPlot('service_payments_chart', [servicePaymentData], servicePaymentLayout);
+    // $('#chartType2').change(function () {
+    //     var chartType = $(this).val();
+    //     var newServicePaymentData;
 
-        if (chartType === 'bar') {
-            newServicePaymentData = [{
-                ...servicePaymentData,
-                type: 'bar'
-            }];
-        } else if (chartType === 'line') {
-            newServicePaymentData = [{
-                ...servicePaymentData,
-                type: 'scatter',
-                mode: 'lines+markers'
-            }];
-        } else if (chartType === 'pie') {
-            newServicePaymentData = [{
-                labels: servicePaymentData.x,
-                values: servicePaymentData.y,
-                type: 'pie'
-            }];
-        }
+    //     if (chartType === 'bar') {
+    //         newServicePaymentData = [{
+    //             ...servicePaymentData,
+    //             type: 'bar'
+    //         }];
+    //     } else if (chartType === 'line') {
+    //         newServicePaymentData = [{
+    //             ...servicePaymentData,
+    //             type: 'scatter',
+    //             mode: 'lines+markers'
+    //         }];
+    //     } else if (chartType === 'pie') {
+    //         newServicePaymentData = [{
+    //             labels: servicePaymentData.x,
+    //             values: servicePaymentData.y,
+    //             type: 'pie'
+    //         }];
+    //     }
 
-        Plotly.newPlot('service_payments_chart', newServicePaymentData, servicePaymentLayout);
-    });
+    //     Plotly.newPlot('service_payments_chart', newServicePaymentData, servicePaymentLayout);
+    // });
 
     // Plotly for Device Counts
     var deviceCountData = {
@@ -420,9 +424,13 @@ function populate_cids(cids) {
     home_cids_container.append(home_cids_HTML);
 
     $('#cids_table').DataTable({
-        "order": [[5, 'desc']]
+        "order": [
+            [5, 'desc']
+        ]
     });
     $('#home_cids_table').DataTable({
-        "order": [[5, 'desc']]
+        "order": [
+            [5, 'desc']
+        ]
     });
 }

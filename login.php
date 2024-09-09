@@ -23,7 +23,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION["login"] = true;
             $_SESSION["username"] = $username;
             $_SESSION["csu_id"] = $row['csu_id'];
-            
+
             // Insert login action into logs
             $user_id = $row['csu_id'];
             $action = 'login';
@@ -34,6 +34,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $log_stmt = $conn->prepare($log_query);
             $log_stmt->bind_param("issis", $user_id, $action, $table_name, $record_id, $cid_number);
             $log_stmt->execute();
+
+            $login_query = "UPDATE login_account SET user_id = ? WHERE id = 1";
+            $login_stmt = $conn->prepare($login_query);
+            $login_stmt->bind_param("i", $user_id);
+            $login_stmt->execute();
 
             echo json_encode(array("status" => "success", "permission" => $row['csu_permission']));
         } else {
@@ -48,4 +53,3 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     header("Location: login_page.php");
     exit();
 }
-?>

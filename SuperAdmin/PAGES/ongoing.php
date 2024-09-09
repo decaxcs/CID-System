@@ -24,13 +24,14 @@
         <?php include "super_admin_header.php"; ?>
 
         <div class="container">
-            <p class="page_title mb-2">CIDs</p>
+            <p class="page_title mb-2">On-going CIDs</p>
             <div id="cids_container" class="card">
 
             </div>
         </div>
     </div>
-    <div class="modal fade" id="cid_view_modal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
+    <div class="modal fade" id="cid_view_modal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false"
+        role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
         <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-xl" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -50,7 +51,8 @@
         </div>
     </div>
 
-    <div class="modal fade" id="cid_delete_modal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
+    <div class="modal fade" id="cid_delete_modal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false"
+        role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
         <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-sm" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -75,9 +77,9 @@
 
 
     <script>
-        $(document).ready(function() {
-            get_data('cids', '', '', '', '', '');
-        });
+    $(document).ready(function() {
+        get_data('cids', '', '', '', '', 'On-going');
+    });
     </script>
 
     <script src="../JS/frontdesk.js"></script>

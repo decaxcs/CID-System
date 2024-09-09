@@ -138,10 +138,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $cid_number = $_POST["cid_number"];
             $cost = $_POST["cost"];
             $discounted_price = $_POST["discounted_price"];
-            $payment_method = $_POST["payment_method"];
-            $ref_number = $_POST["ref_number"];
             $discount = $_POST["discount"];
-            $paid = $_POST["paid"];
             $warranty_start = isset($_POST["warranty_start"]) ? $_POST["warranty_start"] : null;
             $warranty_duration = isset($_POST["warranty_duration"]) ? $_POST["warranty_duration"] : null;
             $warranty_unit = isset($_POST["warranty_unit"]) ? $_POST["warranty_unit"] : null;
@@ -152,21 +149,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if ($sop_id === null) {
                 // Insert new data
                 $insertQuery = "INSERT INTO cid_summary_of_payments 
-                                (cid_number, cid_service_id, cid_sop_cost, cid_sop_discounted_price, cid_sop_payment_method, cid_sop_ref_no, cid_sop_discount, cid_sop_paid, cid_sop_warranty_start, cid_sop_warranty_end, cid_sop_warranty_duration, cid_sop_warranty_unit, cid_sop_warranty_type)
-                                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                                (cid_number, cid_service_id, cid_sop_cost, cid_sop_discounted_price, cid_sop_discount, cid_sop_warranty_start, cid_sop_warranty_end, cid_sop_warranty_duration, cid_sop_warranty_unit, cid_sop_warranty_type)
+                                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
                 // Prepare the statement
                 $stmt = $conn->prepare($insertQuery);
                 // Bind parameters
-                $stmt->bind_param("sssssssisssss", $cid_number, $service, $cost, $discounted_price, $payment_method, $ref_number, $discount, $paid, $warranty_start, $warranty_end, $warranty_duration, $warranty_unit, $warranty_type);
+                $stmt->bind_param("ssssssssss", $cid_number, $service, $cost, $discounted_price,  $discount, $warranty_start, $warranty_end, $warranty_duration, $warranty_unit, $warranty_type);
             } else {
                 // Update existing data
                 $updateQuery = "UPDATE cid_summary_of_payments 
-                                SET cid_sop_cost = ?, cid_sop_discounted_price = ?, cid_sop_payment_method = ?, cid_sop_ref_no = ?, cid_sop_discount = ?, cid_sop_paid = ?, cid_sop_warranty_start = ?, cid_sop_warranty_end = ?, cid_sop_warranty_duration = ?, cid_sop_warranty_unit = ?, cid_sop_warranty_type = ?
+                                SET cid_service_id = ?, cid_sop_cost = ?, cid_sop_discounted_price = ?, cid_sop_discount = ?, cid_sop_warranty_start = ?, cid_sop_warranty_end = ?, cid_sop_warranty_duration = ?, cid_sop_warranty_unit = ?, cid_sop_warranty_type = ?
                                 WHERE cid_number = ? AND cid_sop_id = ?";
                 // Prepare the statement
                 $stmt = $conn->prepare($updateQuery);
                 // Bind parameters
-                $stmt->bind_param("sssssisssssss", $cost, $discounted_price, $payment_method, $ref_number, $discount, $paid, $warranty_start, $warranty_end, $warranty_duration, $warranty_unit, $warranty_type, $cid_number, $sop_id);
+                $stmt->bind_param("sssssssssss", $service, $cost, $discounted_price, $discount, $warranty_start, $warranty_end, $warranty_duration, $warranty_unit, $warranty_type, $cid_number, $sop_id);
             }
 
             // Execute the statement
@@ -294,6 +291,52 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             } else {
                 $response['status'] = 'error';
                 $response['message'] = 'Failed to update data.';
+            }
+        } else if ($type === "add_payment" || $type === "delete_payment") {
+            if ($type === "add_payment") {
+                $cid_number = $_POST["cid_number"];
+                $note = $_POST["note"];
+                $amount = $_POST["amount"];
+                $mop = $_POST["mop"];
+                $reference = $_POST["reference"];
+                $vat = $_POST["vat"];
+                $cf = $_POST["cf"];
+                $total = $_POST["total"];
+                $paid_date = $_POST["paid_date"];
+                $ds = $_POST["ds"];
+                $or = $_POST["or"];
+                $balance = $_POST["balance"];
+
+                $insertQuery = "INSERT INTO cs_payment 
+                                (cs_p_note, cs_p_amount, cs_p_mop, cid_number, cs_p_reference, cs_p_vat, cs_p_cf, cs_p_total, cs_p_paid_date, cs_p_ds, cs_p_or, cs_p_balance) 
+                                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+                $stmt = $conn->prepare($insertQuery);
+
+                $stmt->bind_param("sdsssdddsiid", $note, $amount, $mop, $cid_number, $reference, $vat, $cf, $total, $paid_date, $ds, $or, $balance);
+
+                if ($stmt->execute()) {
+                    $response['status'] = 'success';
+                    $response['message'] = 'Successfully added payment.';
+                } else {
+                    $response['status'] = 'error';
+                    $response['message'] = 'Failed to add payment.';
+                }
+            } else if ($type === "delete_payment") {
+                $cs_p_id  = $_POST["cs_p_id"];
+
+                $deleteQuery = "DELETE FROM cs_payment WHERE cs_p_id  = ?";
+
+                $stmt = $conn->prepare($deleteQuery);
+                $stmt->bind_param("i", $cs_p_id);
+
+                if ($stmt->execute()) {
+                    $response['status'] = 'success';
+                    $response['message'] = 'Payment record deleted successfully.';
+                } else {
+                    $response['status'] = 'error';
+                    $response['message'] = 'Failed to delete data.';
+                }
             }
         } else {
             $response['status'] = 'error';

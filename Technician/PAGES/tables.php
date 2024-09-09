@@ -35,14 +35,6 @@
         </div>
         <div class="container">
             <p class="title">CIDs</p>
-            <div id="home_cids_container" class="card">
-
-            </div>
-            <p class="title">Graphs</p>
-            <div id="analytics_container">
-
-            </div>
-
             <br>
         </div>
     </div>

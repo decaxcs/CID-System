@@ -22,7 +22,7 @@ $(document).ready(function () {
                 break;
             case 'sor_save':
                 sor_save(type);
-              
+
                 break;
             case 'reco_save':
                 reco_save(type);
@@ -40,7 +40,7 @@ $(document).ready(function () {
                 return;
         }
     });
-    
+
 
 
     sop_validations();
@@ -51,6 +51,32 @@ $(document).ready(function () {
 
     $(document).on('click', '.edit_tech', function () {
         $('#u_tech_edit_modal').modal('show');
+    });
+
+
+    $(document).on('click', '.add-payment', function () {
+        $('#add_payment_modal').modal('show');
+    });
+
+    $(document).on('click', '.view-payment', function () {
+        $('#view_payment_modal').modal('show');
+    });
+
+    $("#add_payment_modal").on('shown.bs.modal', function () {
+        get_data();
+    });
+
+    $("#view_payment_modal").on('shown.bs.modal', function () {
+        get_data();
+    });
+
+    $(".add_payment").on('click', function () {
+        save_payment('add_payment', this);
+    });
+
+
+    $(document).on('click', '#delete_payment', function () {
+        save_payment('delete_payment', this);
     });
 
     get_technician();
@@ -70,9 +96,11 @@ function get_data() {
             success: function (data) {
                 console.log(data);
                 populate_cid_content(data);
-                populate_summary_of_payments(data.payments_data);
+                populate_summary_of_payments(data);
                 populate_sor_service(data.payments_data, data.data[0]);
                 populate_checklist(data);
+                populate_add_payment(data);
+                populate_view_payment(data);
                 console.log("Select Device Value:", $('#cid_type').val());
             },
             error: function (xhr, status, error) {
@@ -82,6 +110,319 @@ function get_data() {
     } else {
         console.error("cid_number not found in session storage");
     }
+}
+
+function populate_add_payment(data) {
+
+    let add_payment_container = $('#add_payment_container');
+    add_payment_container.empty();
+
+    let mop_data = data.mop_data;
+    let service_data = data.payments_data;
+    let vat_percent = data.settings_data[0].cs_settings_value;
+    let vat_name = data.settings_data[0].cs_settings_unit;
+    let total_discounted_price = data.total_discounted_price.total_discounted_price;
+
+    let payments_data = data.cs_payment_data;
+
+
+    let cf_cost = 0;
+    let vat_cost = (vat_percent / 100) * total_discounted_price;
+    let total = 0;
+    let balance = 0;
+
+    let previous_payments = ``;
+    let previous_payments_cost = ``;
+
+    let paymentNumber = 1
+    payments_data.forEach(function (payment) {
+        previous_payments += `
+            <p>Payment #${paymentNumber}</p>
+        `;
+
+        previous_payments_cost += `
+            <p>${payment.cs_p_amount}</p>
+        `;
+
+        paymentNumber++; // Increment the payment number
+    });
+
+
+    console.log(vat_cost)
+
+    let service_names = ``;
+    let service_cost = ``;
+
+
+    service_data.forEach(function (service) {
+        service_names += `
+                <p>${service.service_name}</p>
+            `;
+
+        service_cost += `
+                <p>${service.cid_sop_discounted_price}</p>
+            `;
+    })
+
+    let payments_HTML = `
+        <div>
+            <p>Payments</p>
+            <div class="row text-start">
+                <div class="col-6">
+                    ${service_names}
+                    <p>${vat_name}(${vat_percent}%):</p>
+                    <p class="fw-bold">Total:</p>
+                    <p>Amount:</p>
+                    ${previous_payments}
+                    <p>Balance:</p>
+                    <br>
+                    <p>Convinience Fee(<span id="cf_percent"></span>)%:</p>
+                </div>
+                <div class="col-6">
+                    ${service_cost}
+                    <p id="vat">${vat_cost}</p>
+                    <p id="total">${total || 0}</p>
+                    <p id="amount"></p>
+                    ${previous_payments_cost}
+                    <p id="balance"></p>
+                    <br>
+                    <p id="mop_cf">${cf_cost || 0}</p>
+                </div>
+            </div>
+        <div>
+        `;
+
+    let select_mop = ``;
+
+    mop_data.forEach(function (mop_data) {
+        select_mop += `
+            <option value="${mop_data.cs_mop_id}" data-fee="${mop_data.cs_mop_fee}">${mop_data.cs_mop_name}</option>
+            `;
+    })
+
+    let add_payment_HTML = `
+        ${payments_HTML}
+        <div>
+            <div>
+                <p>Notes:</p>
+                <textarea class="form-control add_note" name="" id="" cols="30" rows="3"></textarea>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <p>DS #:</p>
+                <input class="form-control add_ds" type="number" name="" id="">
+            </div>
+            <div class="col">
+                <p>OR #:</p>
+                <input class="form-control add_or" type="number" name="" id="">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <p>Amount:</p>
+                <input class="form-control add_amount" type="number" name="" id="">
+            </div>
+            <div class="col">
+                <p>Mode of Payment:</p>
+                <select name="" class="form-control add_mop" id="">
+                    ${select_mop}
+                </select>
+            </div>
+            <div class="col">
+                <p>Reference #:</p>
+                <input class="form-control add_reference" type="text" name="" id="">
+            </div>
+            <div class="col">
+                <p>Date of Payment:</p>
+                <input class="form-control add_datepayment" type="datetime-local" name="payment_date"
+                    id="payment_date">
+            </div>
+        </div>
+        <div class="alert_container mt-2">
+
+        </div>
+        `;
+
+    add_payment_container.append(add_payment_HTML);
+
+    $('.add_amount').on('input', function () {
+        calculateTotal();
+        let amount = parseFloat($(this).val());
+        if (amount > total) {
+            // Display a message or prevent further input
+            $(this).val(total.toFixed(2)); // Set the input value to the total
+        }
+    });
+
+    $('.add_mop').on('change', function () {
+        calculateTotal();
+    });
+
+    function calculateTotal() {
+        let amount = parseFloat($('.add_amount').val());
+        let selectedMopFee = parseFloat($('.add_mop option:selected').data('fee'));
+        if (isNaN(amount)) {
+            cf_cost = 0;
+            amount = 0;
+        } else {
+            cf_cost = (selectedMopFee / 100) * amount;
+        }
+
+        $('#cf_percent').text(selectedMopFee);
+        $('#mop_cf').text(cf_cost.toFixed(2));
+        total = vat_cost + total_discounted_price;
+        $('#total').text(total.toFixed(2));
+
+        let totalPreviousPayments = 0;
+        payments_data.forEach(function (payment) {
+            totalPreviousPayments += parseFloat(payment.cs_p_amount);
+        });
+
+        let remainingTotal = total - totalPreviousPayments;
+
+        $('#amount').text(amount.toFixed(2));
+
+        balance = remainingTotal - amount;
+        $('#balance').text(balance.toFixed(2));
+    }
+    calculateTotal();
+}
+
+function populate_view_payment(data) {
+    let view_payment_container = $('#view_payment_container');
+    view_payment_container.empty();
+
+    let mop_data = data.mop_data;
+    let service_data = data.payments_data;
+    let vat_percent = data.settings_data[0].cs_settings_value;
+    let vat_name = data.settings_data[0].cs_settings_unit;
+    let total_discounted_price = data.total_discounted_price.total_discounted_price;
+
+    let payments_data = data.cs_payment_data;
+
+    let vat_cost = (vat_percent / 100) * total_discounted_price;
+    let total = total_discounted_price + vat_cost;
+
+    let service_names = ``;
+    let service_cost = ``;
+
+
+    service_data.forEach(function (service) {
+        service_names += `
+                <p>${service.service_name}</p>
+            `;
+
+        service_cost += `
+                <p>${service.cid_sop_discounted_price}</p>
+            `;
+    })
+
+    let payments = ``;
+
+    let paymentNumber = 1
+    payments_data.forEach(function (payment) {
+        payments += `
+            <p class="">Payment #${paymentNumber}</p>
+            <div>
+                <p>Notes:<p>
+                <textarea class="form-control" name="" id="" cols="30" rows="3" disabled>${payment.cs_p_note}</textarea>
+            </div>   
+            <div class="row mb-2">
+                <div class="col">
+                    <p>DS:<p>
+                    <input class="form-control" value="${payment.cs_p_ds}" type="number" disabled>
+                </div>
+                <div class="col">
+                    <p>OR:<p>
+                    <input class="form-control" value="${payment.cs_p_or}" type="number" disabled>
+                </div> 
+            </div>
+            <div class="row">
+                <div class="col">
+                    <p>Amount Paid:<p>
+                    <input class="form-control" value="${payment.cs_p_amount}" type="text" disabled>
+                </div>
+                <div class="col">
+                    <p>Mode of Payment:<p>
+                    <input class="form-control" value="${payment.cs_mop_name}" type="text" disabled>
+                </div> 
+                <div class="col">
+                    <p>Reference #:<p>
+                    <input class="form-control" value="${payment.cs_p_reference}" type="text" disabled>
+                </div>
+                <div class="col">
+                    <p>Date of Payment:<p>
+                    <input class="form-control" value="${payment.formatted_paid_date}" type="text" disabled>
+                </div>    
+            <!-- <div class="my-2">
+                <button class="form-control btn-danger" data-id="${payment.cs_p_id}" id="delete_payment" data-type="delete_payment">Delete Payment</button>
+            </div> -->
+        `;
+        paymentNumber++;
+    });
+
+    let view_payment_HTML = `
+    <div class="text-start">
+        <p class="fw-bold">Services/Products</p>
+        <div class="row">
+            <div class="col">
+                ${service_names}
+                <p>${vat_name}(${vat_percent}%):</p>
+                <p class="fw-bold">Total:</p>
+            </div>
+            <div class="col">
+                ${service_cost}
+                <p id="vat">${vat_cost}</p>
+                <p id="total">${total || 0}</p>
+            </div>
+        </div>
+    </div>
+    <div class="text-start mt-2">
+        <p class="fw-bold">Payments</p>
+        ${payments}
+    </div>
+
+    <div class="alert_container mt-2">
+
+    </div>
+    `;
+
+    view_payment_container.append(view_payment_HTML);
+
+}
+
+function save_payment(type, clickedButton) {
+    if (type === "add_payment") {
+        var add_payment_modal = $(clickedButton).closest('.modal-content');
+
+        var data = {
+            type: type,
+            cid_number: cid_number,
+            note: add_payment_modal.find('.add_note').val(),
+            amount: add_payment_modal.find('.add_amount').val(),
+            mop: add_payment_modal.find('.add_mop').val(),
+            reference: add_payment_modal.find('.add_reference').val(),
+            vat: add_payment_modal.find('#vat').text(),
+            cf: add_payment_modal.find('#mop_cf').text(),
+            total: add_payment_modal.find('#total').text(),
+            paid_date: add_payment_modal.find('.add_datepayment').val(),
+            ds: add_payment_modal.find('.add_ds').val(),
+            or: add_payment_modal.find('.add_or').val(),
+            balance: add_payment_modal.find('#balance').text(),
+        };
+    } else if (type === "delete_payment") {
+        var data = {
+            cid_number: cid_number,
+            type: type,
+            cs_p_id: $(clickedButton).data('id')
+        };
+    }
+
+
+    console.log(data);
+
+    save_data(data);
 }
 
 function get_technician() {
@@ -111,20 +452,49 @@ function populate_checklist(data) {
     var checklist_tbody = $('#checklist_tbody');
     checklist_tbody.empty();
 
-    var components = [
-        {name: 'Wifi', key: 'cs_cid_c_wifi'},
-        {name: 'Keyboard(FN Keys)', key: 'cs_cid_c_keyboard'},
-        {name: 'Temperature', key: 'cs_cid_c_temperature'},
-        {name: 'Tracepad', key: 'cs_cid_c_tracepad'},
-        {name: 'Bluetooth', key: 'cs_cid_c_bluetooth'},
-        {name: 'Audio Jack', key: 'cs_cid_c_audiojack'},
-        {name: 'Speaker', key: 'cs_cid_c_speaker'},
-        {name: 'Camera', key: 'cs_cid_c_camera'},
-        {name: 'LCD (Brightness)', key: 'cs_cid_c_lcd'},
-        {name: 'Stress Test', key: 'cs_cid_c_stresstest'}
+    var components = [{
+            name: 'Wifi',
+            key: 'cs_cid_c_wifi'
+        },
+        {
+            name: 'Keyboard(FN Keys)',
+            key: 'cs_cid_c_keyboard'
+        },
+        {
+            name: 'Temperature',
+            key: 'cs_cid_c_temperature'
+        },
+        {
+            name: 'Tracepad',
+            key: 'cs_cid_c_tracepad'
+        },
+        {
+            name: 'Bluetooth',
+            key: 'cs_cid_c_bluetooth'
+        },
+        {
+            name: 'Audio Jack',
+            key: 'cs_cid_c_audiojack'
+        },
+        {
+            name: 'Speaker',
+            key: 'cs_cid_c_speaker'
+        },
+        {
+            name: 'Camera',
+            key: 'cs_cid_c_camera'
+        },
+        {
+            name: 'LCD (Brightness)',
+            key: 'cs_cid_c_lcd'
+        },
+        {
+            name: 'Stress Test',
+            key: 'cs_cid_c_stresstest'
+        }
     ];
 
-    components.forEach(function(component) {
+    components.forEach(function (component) {
         var value = checklist_data ? checklist_data[component.key] : null;
         var checked1 = value == 1 ? 'checked' : '';
         var checked2 = value == 2 ? 'checked' : '';
@@ -154,12 +524,12 @@ function populate_cid_content(cid_content) {
     // Populate Info
     var info_container = $('#info_container');
     info_container.empty();
-    var cid_device_id = data.cid_device_id.toString(); 
+    var cid_device_id = data.cid_device_id.toString();
 
     console.log("cid_device_id:" + cid_device_id);
     var select_device = '';
     device_list.forEach(function (device) {
-       // Declare cid_device_id here
+        // Declare cid_device_id here
         select_device += `
         <option value="${device.cs_device_id}" ${device.cs_device_id === cid_device_id ? 'selected' : ''}>${device.cs_device_name}</option>
         `;
@@ -261,9 +631,6 @@ function populate_cid_content(cid_content) {
     $('#sop_or').val(data.cid_sop_or ? data.cid_sop_or : '');
 
     //
-    $('#total_amount').text(data.total_discounted_price ? data.total_discounted_price : '0');
-    $('#unpaid_amount').text(data.unpaid_discounted_price ? data.unpaid_discounted_price : '0');
-    $('#paid_amount').text(data.paid_discounted_price ? data.paid_discounted_price : '0');
 }
 
 
@@ -287,6 +654,7 @@ function save_infos(type, clickedButton) {
     console.log(dataToSend);
     save_data(dataToSend);
 }
+
 function populate_select_technician(data) {
     var select_technician_containers = $('.select_technician');
     select_technician_containers.empty();
@@ -326,36 +694,41 @@ function populate_select_technician(data) {
 
 //Populate Summmry of Payments
 function populate_summary_of_payments(data) {
+    let payment = data.payments_data;
+    let service = data.service_data;
     var sop_data_container = $('#sop_data_container');
-    sop_data_container.empty();
 
-    data.forEach(function (payment, index) {
+    sop_data_container.empty();
+    console.log("data");
+    console.log(data);
+
+    payment.forEach(function (payment, index) {
+        let service_select_HTML = `
+            
+        `;
+
+        service.forEach(function (service) {
+            service_select_HTML += `
+                <option value="${service.cs_service_id}" ${service.cs_service_id == payment.cid_service_id ? 'selected' : ''}>${service.cs_service_name}</option>
+            `;
+        });
+
         var sop_data_HTML =
             `
             <div class="d-flex flex-row w-100 mb-3 sop_group flex-wrap">
                 <div class="w-100">
-                    <p><span>Payment #${index + 1}</span></p>
+                    <p><span>Service/Product #${index + 1}</span></p>
                 </div>
                 <input type="hidden" class="sop_id" value="${payment.cid_sop_id}">
                 <div class="d-flex flex-column flex-fill me-3 mb-3">
                     <label for="service_${index}" class="form-label">Service/Product</label>
-                    <input id="service_${index}" class="form-control service" type="text" placeholder="Service/Product" value="${payment.service_name}" required>
+                    <select class="form-control service" id="service_${index}" required>
+                        ${service_select_HTML}
+                    </select>
                 </div>
                 <div class="d-flex flex-column flex-fill me-3 mb-3">
                     <label for="cost_${index}" class="form-label">Cost</label>
                     <input id="cost_${index}" class="form-control cost" type="number" min="0" placeholder="Cost" value="${payment.cid_sop_cost}" required>
-                </div>
-                <div class="d-flex flex-column flex-fill me-3 mb-3">
-                    <label for="payment_method_${index}" class="form-label">Payment Method</label>
-                    <select id="payment_method_${index}" class="form-control payment_method" required>
-                        <option value="Cash" ${payment.cid_sop_payment_method === 'Cash' ? 'selected' : ''}>Cash</option>
-                        <option value="GCash" ${payment.cid_sop_payment_method === 'GCash' ? 'selected' : ''}>Gcash</option>
-                        <option value="Credit" ${payment.cid_sop_payment_method === 'Credit' ? 'selected' : ''}>Credit Card</option>
-                    </select>
-                </div>
-                <div class="d-flex flex-column flex-fill me-3 mb-3">
-                    <label for="ref_number_${index}" class="form-label">Ref #</label>
-                    <input id="ref_number_${index}" class="form-control ref_number" type="text" placeholder="Ref #" value="${payment.cid_sop_ref_no}">
                 </div>
                 <div class="d-flex flex-column flex-fill me-3 mb-3">
                     <label for="discount_${index}" class="form-label">Discount (%)</label>
@@ -363,16 +736,12 @@ function populate_summary_of_payments(data) {
                 </div>
                 <div class="d-flex flex-column flex-fill me-3 mb-3">
                     <label for="discounted_price_${index}" class="form-label">Discounted Price</label>
-                    <input id="discounted_price_${index}" class="form-control" type="number" placeholder="Discounted Price" value="${payment.cid_sop_discounted_price}">
+                    <input id="discounted_price_${index}" class="form-control" type="number" placeholder="Discounted Price" value="${payment.cid_sop_discounted_price}" disabled>
                 </div>
                 <div class="d-flex flex-column flex-fill me-3 mb-3">
-                    <label for="paid_${index}" class="form-label">Paid</label>
-                    <input id="paid_${index}" class="form-check-input paid mx-auto my-auto" type="checkbox" value="${payment.cid_sop_paid ? 1 : 0}" ${payment.cid_sop_paid == 1 ? 'checked' : ''}>
+                    <label for="warranty_start_${index}" class="form-label">Warranty Start</label>
+                    <input id="warranty_start_${index}" class="form-control warranty_start" type="date" placeholder="Warranty Start" value="${payment.cid_sop_warranty_start}">
                 </div>
-                <div class="d-flex flex-column flex-fill me-3 mb-3">
-                <label for="warranty_start_${index}" class="form-label">Warranty Start</label>
-                <input id="warranty_start_${index}" class="form-control warranty_start" type="date" placeholder="Warranty Start" value="${payment.cid_sop_warranty_start}">
-            </div>
                 <div class="d-flex flex-column flex-fill me-3 mb-3">
                     <label for="warranty_duration_${index}" class="form-label">Warranty Duration</label>
                     <input id="warranty_duration_${index}" class="form-control warranty_duration" type="number" placeholder="Warranty Duration" value="${payment.cid_sop_warranty_duration}">
@@ -389,8 +758,8 @@ function populate_summary_of_payments(data) {
                 <div class="d-flex flex-column flex-fill me-3 mb-3">
                     <label for="warranty_type_${index}" class="form-label">Warranty Type</label>
                     <select id="warranty_type_${index}" class="form-control warranty_type">
-                        <option value="Service" ${payment.cid_sop_warranty_unit === 'Service' ? 'selected' : ''}>Service</option>
-                        <option value="Manufacturer" ${payment.cid_sop_warranty_unit === 'Manufacturer' ? 'selected' : ''}>Manufacturer</option>
+                        <option value="Service" ${payment.cid_sop_warranty_type === 'Service' ? 'selected' : ''}>Service</option>
+                        <option value="Manufacturer" ${payment.cid_sop_warranty_type === 'Manufacturer' ? 'selected' : ''}>Manufacturer</option>
                     </select>
                 </div>
                 <div class="d-flex flex-row w-100 mb-3">
@@ -402,7 +771,6 @@ function populate_summary_of_payments(data) {
         sop_data_container.append(sop_data_HTML);
     });
 }
-
 
 
 function opt_tech(type) {
@@ -447,13 +815,14 @@ function status_save(type) {
 
     save_data(dataToSend);
 }
+
 function getValues() {
     var components = document.querySelectorAll('.checklist-table tbody tr');
     var results = {};
-    components.forEach(function(component) {
+    components.forEach(function (component) {
         var componentName = component.querySelector('td').textContent.trim();
         var radios = component.querySelectorAll('input[type="radio"]');
-        radios.forEach(function(radio) {
+        radios.forEach(function (radio) {
             if (radio.checked) {
                 results[componentName] = radio.value;
             }
@@ -466,7 +835,7 @@ function sor_save(type) {
     var sor_content = $('#sor_ta').val();
     var sor_sord = $('#sor_sord').val();
     var sor_eord = $('#sor_eord').val();
-    
+
     var checklistValues = getValues();
 
     var dataToSend = {
@@ -508,16 +877,6 @@ function sop_validations() {
         var type = $(this).data('type');
         sop_delete(type, this);
     });
-
-    $('#sop_container').on('change', '.payment_method', function () {
-        var $refNumberInput = $(this).closest('.sop_group').find('.ref_number');
-        if ($(this).val() !== 'Cash') {
-            $refNumberInput.prop('required', true);
-        } else {
-            $refNumberInput.prop('required', false);
-        }
-    });
-
 }
 
 function sop_r_save(type) {
@@ -554,13 +913,11 @@ function add_sop() {
 function populate_add_sop(data) {
     var sop_container = $('#sop_container');
     var sop_form_HTML =
-        `
-        <div class="d-flex flex-row w-100 mb-5 sop_group flex-wrap">
-            <div class="w-100">
-                <p><span>New Payment: </span></p>
-            </div>
-            <div class="d-flex flex-column flex-fill me-3 mb-3">
-                <label for="service" class="form-label">Service</label>
+        ` 
+        <div class="sop_group">
+        <div class="row w-100 mb-3">
+            <div class="col-md-3">
+                <label for="service" class="form-label">Service/Product</label>
                 <select id="service" class="form-control service" required>
                     `;
     data.forEach(function (service) {
@@ -569,66 +926,56 @@ function populate_add_sop(data) {
 
     sop_form_HTML +=
         `</select>
+            </div>
+            <div class="col-md-3">
+                <label for="cost" class="form-label">Cost</label>
+                <input id="cost" class="form-control cost" type="number" min="0" placeholder="Cost" required>
+            </div>
+            <div class="col-md-3">
+                <label for="discount" class="form-label">Discount (%)</label>
+                <input id="discount" class="form-control discount" type="number" min="0" max="100" placeholder="Discount (%)" value="0">
+            </div>
+            <div class="col-md-3">
+                <label for="discounted_price" class="form-label">Discounted Price</label>
+                <input id="discounted_price" class="form-control" type="number" placeholder="Discounted Price" disabled>
+            </div>
         </div>
-        <div class="d-flex flex-column flex-fill me-3 mb-3">
-            <label for="cost" class="form-label">Cost</label>
-            <input id="cost" class="form-control cost" type="number" min="0" placeholder="Cost" required>
+        <div class="row w-100 mb-3">
+            <div class="col-md-3">
+                <label for="warranty_start" class="form-label">Warranty Start</label>
+                <input id="warranty_start" class="form-control warranty_start" type="date" placeholder="Warranty Start">
+            </div>
+            <div class="col-md-3">
+                <label for="warranty_duration" class="form-label">Warranty Duration</label>
+                <input id="warranty_duration" class="form-control warranty_duration" type="number" placeholder="Warranty Duration">
+            </div>
+            <div class="col-md-3">
+                <label for="warranty_unit" class="form-label">Warranty Unit</label>
+                <select id="warranty_unit" class="form-control warranty_unit" required>
+                    <option value="Day">Day</option>
+                    <option value="Week">Week</option>
+                    <option value="Month">Month</option>
+                    <option value="Year">Year</option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <label for="warranty_type" class="form-label">Warranty Type</label>
+                <select id="warranty_type" class="form-control warranty_type" required>
+                    <option value="Service">Service</option>
+                    <option value="Manufacturer">Manufacturer</option>
+                </select>
+            </div>
         </div>
-        <div class="d-flex flex-column flex-fill me-3 mb-3">
-            <label for="payment_method" class="form-label">Payment Method</label>
-            <select id="payment_method" class="form-control payment_method" required>
-                <option value="Cash">Cash</option>
-                <option value="GCash">Gcash</option>
-                <option value="Credit">Credit Card</option>
-            </select>
+        <div class="row w-100 mb-3">
+            <div class="col-md-12 d-flex justify-content-end">
+                <button class="form-control btn-primary save_btn me-2" data-type="sop_data_save">Save</button>
+            </div>
         </div>
-        <div class="d-flex flex-column flex-fill me-3 mb-3">
-            <label for="ref_number" class="form-label">Ref #</label>
-            <input id="ref_number" class="form-control ref_number" type="text" placeholder="Ref #">
         </div>
-        <div class="d-flex flex-column flex-fill me-3 mb-3">
-            <label for="discount" class="form-label">Discount (%)</label>
-            <input id="discount" class="form-control discount" type="number" min="0" max="100" placeholder="Discount (%)" value="0">
-        </div>
-        <div class="d-flex flex-column flex-fill me-3 mb-3">
-            <label for="discounted_price" class="form-label">Discounted Price</label>
-            <input id="discounted_price" class="form-control" type="number" placeholder="Discounted Price" disabled>
-        </div>
-        <div class="d-flex flex-column flex-fill me-3 mb-3">
-            <label for="paid" class="form-label">Paid</label>
-            <input id="paid" class="form-check-input paid mx-auto my-auto" type="checkbox" value="">
-        </div>
-        <div class="d-flex flex-column flex-fill me-3 mb-3">
-            <label for="warranty_start" class="form-label">Warranty Start</label>
-            <input id="warranty_start" class="form-control warranty_start" type="date" placeholder="Warranty Start">
-        </div>
-        <div class="d-flex flex-column flex-fill me-3 mb-3">
-            <label for="warranty_duration" class="form-label">Warranty Duration</label>
-            <input id="warranty_duration" class="form-control warranty_duration" type="number" placeholder="Warranty Duration">
-        </div>
-        <div class="d-flex flex-column flex-fill me-3 mb-3">
-            <label for="warranty_unit" class="form-label">Warranty Unit</label>
-            <select id="warranty_unit" class="form-control warranty_unit" required>
-                <option value="Day">Day</option>
-                <option value="Week">Week</option>
-                <option value="Month">Month</option>
-                <option value="Year">Year</option>
-            </select>
-        </div>
-        <div class="d-flex flex-column flex-fill me-3 mb-3">
-            <label for="warranty_type" class="form-label">Warranty Type</label>
-            <select id="warranty_type" class="form-control warranty_type" required>
-                <option value="Service">Service</option>
-                <option value="Manufacturer">Manufacturer</option>
-            </select>
-        </div>
-        <div class="d-flex flex-row w-100">
-            <button class="form-control btn-primary save_btn me-2" data-type="sop_data_save">Save</button>
-        </div>
-    </div>
     `;
     sop_container.append(sop_form_HTML);
 }
+
 
 
 function sop_data_save(type, clickedButton) {
@@ -653,8 +1000,6 @@ function sop_data_save(type, clickedButton) {
     var sop_id = $sopGroup.find('.sop_id').val();
     var service = $sopGroup.find('.service').val();
     var cost = parseFloat($sopGroup.find('.cost').val());
-    var payment_method = $sopGroup.find('.payment_method').val();
-    var ref_number = $sopGroup.find('.ref_number').val();
     var discount = parseFloat($sopGroup.find('.discount').val());
     var discounted_price = cost - (cost * (discount / 100));
     var paid = $sopGroup.find('.paid').is(":checked") ? "1" : "0";
@@ -670,8 +1015,6 @@ function sop_data_save(type, clickedButton) {
         service: service,
         cost: cost,
         discounted_price: discounted_price,
-        payment_method: payment_method,
-        ref_number: ref_number,
         discount: discount,
         paid: paid
     };

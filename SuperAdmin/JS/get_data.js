@@ -13,6 +13,7 @@ $(document).ready(function () {
         var cid_number = $sopGroup.find('.cid_number').val();
         save_cid(cid_number);
     });
+
     $('#delete-cid').click(function () {
         var cid_number = $('.delete_cid_number').val();
         console.log("", cid_number);
@@ -24,9 +25,7 @@ $(document).ready(function () {
     $('#add-account').click(function () {
         save_accounts('add_account', this);
     });
-    $('#add-account').click(function () {
-        save_accounts('add_account', this);
-    });
+
     $(document).on('click', '#update-account', function () {
         save_accounts('update_account', this);
     });
@@ -100,15 +99,40 @@ $(document).ready(function () {
         console.log("save_cms");
         save_cms('save_cms', this);
     });
+
+
+
+    $(document).on('click', '#delete-payment', function () {
+        console.log("payment_delete");
+        payment_delete('payment_delete', this);
+    });
 });
 
-function get_data(type, start_date, end_date, csu_id, cid_number) {
+function payment_delete(type, clickedButton) {
+    let cs_p_id = $(clickedButton).data('id');
+
+    var data = {
+        type: type,
+        cs_p_id: cs_p_id
+    };
+
+    save_data(data, type);
+    console.log(data);
+}
+
+function get_data(type, start_date, end_date, csu_id, cid_number, status) {
     var requestData = {
         type: type
     };
 
     if (type === 'view_cid') {
         requestData.cid_number = cid_number;
+    }
+
+
+    if (type === 'cids') {
+        requestData.cid_number = cid_number;
+        requestData.status = status;
     }
 
     if (type === 'view_account') {
@@ -147,6 +171,8 @@ function get_data(type, start_date, end_date, csu_id, cid_number) {
                 populate_logs(data.data.logs);
             } else if (type === 'cms' || type === 'save_cms') {
                 populate_cms(data.data);
+            } else if (type === 'payments' || type === 'add_payment' || type === 'update_payment' || type === 'delete_payment') {
+                populate_payments(data.data);
             }
         },
         error: function (xhr, status, error) {
@@ -155,428 +181,7 @@ function get_data(type, start_date, end_date, csu_id, cid_number) {
     });
 }
 
-// cids
-function populate_cids(cids) {
-    console.log(cids);
-    var cids_container = $('#cids_container');
-    cids_container.empty();
 
-    var home_cids_container = $('#home_cids_container');
-    home_cids_container.empty();
-
-    var cid_HTML = '';
-    var home_cid_HTML = '';
-
-    cids.forEach(function (cid) {
-        cid_HTML += `
-        <tr class="sop_group">
-            <input type="hidden" class="cid_number" value="${cid.cid_number}">
-            <td class="align-middle">${cid.cid_number}</td>
-            <td class="align-middle">${cid.cid_client_full_name}</td>
-            <td class="align-middle">${cid.cs_device_name}</td>
-            <td class="align-middle">${cid.technician_names ? cid.technician_names : 'No Technician'}</td>
-            <td class="align-middle">${cid.cid_status}</td>
-            <td class="align-middle">${cid.formatted_cid_created}</td>
-            <td class="align-middle">
-                <button type="button" class="btn btn-danger" id="delete-cid">Delete</button>
-            </td>
-        </tr>
-        `;
-
-        home_cid_HTML += `
-        <tr class="sop_group">
-            <input type="hidden" class="cid_number" value="${cid.cid_number}">
-            <td class="align-middle">${cid.cid_number}</td>
-            <td class="align-middle">${cid.cid_client_full_name}</td>
-            <td class="align-middle">${cid.cs_device_name}</td>
-            <td class="align-middle">${cid.technician_names ? cid.technician_names : 'No Technician'}</td>
-            <td class="align-middle">${cid.cid_status}</td>
-            <td class="align-middle">${cid.formatted_cid_created}</td>
-        </tr>
-        `;
-    });
-
-    var cids_HTML = `
-    <div class="card-body">
-        <table id="cids_table" class="table table-striped table-hover">
-            <thead>
-                <tr>
-                    <th>CID Number</th>
-                    <th>Client</th>
-                    <th>Device Type</th>
-                    <th>Technician(s)</th>
-                    <th>Status</th>
-                    <th>Date Added</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                ${cid_HTML}
-            </tbody>
-        </table>
-    </div>
-    `;
-
-    var home_cids_HTML = `
-    <div class="card-body">
-        <table id="home_cids_table" class="table table-striped table-hover">
-            <thead>
-                <tr>
-                    <th>CID Number</th>
-                    <th>Client</th>
-                    <th>Device Type</th>
-                    <th>Technician(s)</th>
-                    <th>Status</th>
-                    <th>Date Added</th>
-                </tr>
-            </thead>
-            <tbody>
-                ${home_cid_HTML}
-            </tbody>
-        </table>
-    </div>
-    `;
-
-    cids_container.append(cids_HTML);
-    home_cids_container.append(home_cids_HTML);
-
-    $('#cids_table').DataTable({
-        "order": [
-            [5, 'desc']
-        ]
-    });
-    $('#home_cids_table').DataTable({
-        "order": [
-            [5, 'desc']
-        ]
-    });
-}
-
-
-function populate_cid_view(cid_data) {
-    var cid = cid_data.cid_details[0];
-    var summary_of_payments = cid_data.cid_summary_payments;
-    var payments_amount = cid_data.payments_amount[0];
-    var terms_of_service = cid_data.terms_of_service;
-    var checklist_data = cid_data.checklist[0];
-
-    var checklist_tbody = $('#checklist_tbody');
-    checklist_tbody.empty();
-
-    console.log(cid_data);
-    $('#cid_view_modal').modal('show');
-
-    var view_cid_container = $('#view_cid_container');
-    view_cid_container.empty();
-
-    var cid_summary_of_payments = `
-    <table class="table table-bordered">
-        <thead>
-            <tr>
-                <th class="top-header"></th>
-    `;
-
-    summary_of_payments.forEach(function (sop, index) {
-        cid_summary_of_payments += `<th class="top-header">Payment ${index + 1}</th>`;
-    });
-
-    cid_summary_of_payments += `
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <th class="left-header">Service</th>
-    `;
-
-    summary_of_payments.forEach(function (sop) {
-        cid_summary_of_payments += `<td>${sop.cs_service_name}</td>`;
-    });
-
-    cid_summary_of_payments += `
-            </tr>
-            <tr>
-                <th class="left-header">Cost</th>
-    `;
-
-    summary_of_payments.forEach(function (sop) {
-        cid_summary_of_payments += `<td>PHP ${sop.cid_sop_cost}</td>`;
-    });
-
-    cid_summary_of_payments += `
-            </tr>
-            <tr>
-                <th class="left-header">Discount(%)</th>
-    `;
-
-    summary_of_payments.forEach(function (sop) {
-        cid_summary_of_payments += `<td>${sop.cid_sop_discount}%</td>`;
-    });
-
-    cid_summary_of_payments += `
-            </tr>
-            <tr>
-                <th class="left-header">Discounted Price</th>
-    `;
-
-    summary_of_payments.forEach(function (sop) {
-        cid_summary_of_payments += `<td>PHP ${sop.cid_sop_discounted_price}</td>`;
-    });
-
-    cid_summary_of_payments += `
-            </tr>
-            <tr>
-                <th class="left-header">Mode of Payment</th>
-    `;
-
-    summary_of_payments.forEach(function (sop) {
-        cid_summary_of_payments += `<td>${sop.cid_sop_payment_method}</td>`;
-    });
-
-    cid_summary_of_payments += `
-            </tr>
-            <tr>
-                <th class="left-header">Ref #</th>
-    `;
-
-    summary_of_payments.forEach(function (sop) {
-        cid_summary_of_payments += `<td>${sop.cid_sop_ref_no  ? sop.cid_sop_warranty_type : ''}</td>`;
-    });
-
-    cid_summary_of_payments += `
-            </tr>
-            <tr>
-                <th class="left-header">Paid?</th>
-    `;
-
-    summary_of_payments.forEach(function (sop) {
-        cid_summary_of_payments += `<td>${sop.cid_sop_paid ? 'Yes' : 'No'}</td>`;
-    });
-
-    cid_summary_of_payments += `
-            </tr>
-            <tr>
-                <th class="left-header">Warranty Type:</th>
-    `;
-
-    summary_of_payments.forEach(function (sop) {
-        cid_summary_of_payments += `<td>${sop.cid_sop_warranty_type ? sop.cid_sop_warranty_type : ''}</td>`;
-    });
-
-    cid_summary_of_payments += `
-            </tr>
-            <tr>
-                <th class="left-header">Warranty Start</th>
-    `;
-
-    summary_of_payments.forEach(function (sop) {
-        cid_summary_of_payments += `<td>${sop.formatted_warranty_start ? sop.formatted_warranty_start : ''}</td>`;
-    });
-
-    cid_summary_of_payments += `
-            </tr>
-            <tr>
-                <th class="left-header">Warranty End</th>
-    `;
-
-    summary_of_payments.forEach(function (sop) {
-        cid_summary_of_payments += `<td>${sop.formatted_warranty_end ? sop.formatted_warranty_end : ''}</td>`;
-    });
-
-    cid_summary_of_payments += `
-            </tr>
-        </tbody>
-    </table>
-    `;
-
-    var tos_HTML = ``;
-    terms_of_service.forEach(function (tos) {
-        tos_HTML += `
-        <tr>
-            <td>${tos.tos_content}</td>
-            <td>${tos.cid_tos_agreement ? 'Yes' : 'No'}</td>
-        </tr>
-        `;
-    });
-
-
-    var components = [{
-            name: 'Wifi',
-            key: 'cs_cid_c_wifi'
-        },
-        {
-            name: 'Keyboard(FN Keys)',
-            key: 'cs_cid_c_keyboard'
-        },
-        {
-            name: 'Temperature',
-            key: 'cs_cid_c_temperature'
-        },
-        {
-            name: 'Tracepad',
-            key: 'cs_cid_c_tracepad'
-        },
-        {
-            name: 'Bluetooth',
-            key: 'cs_cid_c_bluetooth'
-        },
-        {
-            name: 'Audio Jack',
-            key: 'cs_cid_c_audiojack'
-        },
-        {
-            name: 'Speaker',
-            key: 'cs_cid_c_speaker'
-        },
-        {
-            name: 'Camera',
-            key: 'cs_cid_c_camera'
-        },
-        {
-            name: 'LCD (Brightness)',
-            key: 'cs_cid_c_lcd'
-        },
-        {
-            name: 'Stress Test',
-            key: 'cs_cid_c_stresstest'
-        }
-    ];
-
-    var checklistRows = ''; // Variable to store checklist rows
-
-    components.forEach(function (component) {
-        var value = checklist_data ? checklist_data[component.key] : null;
-        var checked1 = value == 1 ? 'checked' : '';
-        var checked2 = value == 2 ? 'checked' : '';
-        var checked3 = value == 3 ? 'checked' : '';
-
-        // Append row to checklistRows variable
-        checklistRows += `
-            <tr>
-                <td>${component.name}</td>
-                <td><input type="radio" name="${component.key}_status" value="1" class="mx-auto d-block" ${checked1}></td>
-                <td><input type="radio" name="${component.key}_status" value="2" class="mx-auto d-block" ${checked2}></td>
-                <td><input type="radio" name="${component.key}_status" value="3" class="mx-auto d-block" ${checked3}></td>
-            </tr>
-        `;
-    });
-
-    // Use checklistRows variable inside HTML template string
-    var checklistHTML = `
-        <table class="table table-bordered checklist-table">
-            <thead>
-                <tr>
-                    <th scope="col">Component Name</th>
-                    <th scope="col" class="text-center">Working?</th>
-                    <th scope="col" class="text-center">Not Working?</th>
-                    <th scope="col" class="text-center">Not Applicable</th>
-                </tr>
-            </thead>
-            <tbody id="checklist_tbody">
-                ${checklistRows} <!-- Use checklistRows variable here -->
-            </tbody>
-        </table>
-    `;
-
-
-
-    var cid_HTML = `
-    <div class="px-3">
-        <p class="fw-bold text-center">Details<p>
-        <div class="d-flex flex-row justify-content-between w-100">
-            <div class="flex-fill">
-                <p class="fw-bold mb-2">CID Number:</p>
-                <p class="fw-bold mb-2">Client Name:</p>
-                <p class="fw-bold mb-2">Technician(s):</p>
-                <p class="fw-bold mb-2">Status:</p>
-            </div>
-            <div class="flex-fill">
-                <p class="mb-2">${cid.cid_number}</p>
-                <p class="mb-2">${cid.cid_client_full_name}</p>
-                <p class="mb-2">${cid.technician_names ? cid.technician_names : 'No Technician'}</p>
-                <p class="mb-2">${cid.cid_status}</p>
-            </div>
-            <div class="flex-fill">
-                <p class="fw-bold mb-2">Claiming Slip Number: </p>
-                <p class="fw-bold mb-2">Client Signature:</p>
-                <p class="fw-bold mb-2">Type:</p>
-                <p class="fw-bold mb-2">Date Added</p>
-            </div>
-            <div class="flex-fill">
-                <p class="mb-2">${cid.cid_cs_number ? cid.cid_cs_number : 'No Claiming Slip'}</p>
-                <p class="mb-2" id="clientSignature" data-bs-toggle="popover" data-bs-placement="bottom" title="Client Signature">Click To View Signature!</p>
-                <p class="mb-2">${cid.cs_device_name}</p>
-                <p class="mb-2">${cid.formatted_cid_created}</p>
-            </div>
-        </div>
-        <div>
-            <p class="fw-bold">Unti Details:</p>
-            <p>${cid.cid_unit_details}</p>
-            <p class="fw-bold mt-1">Remarks:</p>
-            <p>${cid.cid_remarks}</p>
-            <p class="fw-bold mt-1">Unit History:</p>
-            <p>${cid.cid_unit_history}</p>
-        </div>
-    </div>
-    <hr>
-    <div>
-        <p class="fw-bold text-center">Summary of Repairs<p>
-        <p class="fw-bold">Content:<p>
-        <p>${cid.cid_sor_content ? cid.cid_sor_content : 'No Summary of Repairs Data'}</p>
-        <p class="fw-bold mt-1">Start Date:<p>
-        <p>${cid.formatted_cid_sor_start_date ? cid.formatted_cid_sor_start_date : 'No Summary of Repairs Data'}</p>
-        <p class="fw-bold mt-1">End Date:<p>
-        <p>${cid.formatted_cid_sor_end_date ? cid.formatted_cid_sor_end_date : 'No Summary of Repairs Data'}</p>
-        <p class="fw-bold mt-1">Last Updated:<p>
-        <p>${cid.formatted_cid_sor_updated ? cid.formatted_cid_sor_updated : 'No Summary of Repairs Data'}</p>
-        ${checklistHTML}
-    </div>
-    <hr>
-    <div>
-        <p class="fw-bold text-center">Recommendations<p>
-        <p class="fw-bold">Content:<p>
-        <p>${cid.cid_r_content ? cid.cid_r_content : 'No Recommendation Data'}</p>
-        <p class="fw-bold mt-1">Last Updated:<p>
-        <p>${cid.formatted_recommendation_updated ? cid.formatted_recommendation_updated : 'No Recommendation Data'}</p>
-    </div>
-    <hr>
-    <div>
-        <p class="fw-bold text-center">Summary of Payments<p>
-        ${cid_summary_of_payments}
-        <p class="fw-bold">Total Amount:<p>
-        <p>${payments_amount.total_amount ? payments_amount.total_amount : '0'}</p>
-        <p class="fw-bold mt-1">Paid Amount:<p>
-        <p>${payments_amount.paid_amount ? payments_amount.paid_amount : '0'}</p>
-        <p class="fw-bold mt-1">Unpaid Amount:<p>
-        <p>${payments_amount.unpaid_amount ? payments_amount.unpaid_amount : '0'}</p>
-    </div>
-    <hr>
-    <div>
-        <p class="fw-bold text-center">Terms of Service<p>
-        <table id="" class="table w-100">
-            <thead>
-                <tr>
-                    <th>Terms</th>
-                    <th>Agreement</th>
-                </tr>
-            </thead>
-            <tbody>
-                ${tos_HTML}
-            </tbody>
-        </table>
-    </div>
-    `;
-
-
-
-    view_cid_container.append(cid_HTML);
-
-    var popoverTrigger = document.getElementById('clientSignature');
-    var popover = new bootstrap.Popover(popoverTrigger, {
-        content: `<div class='popover-image-container'><img src='${cid.cid_signature}' alt='Client Signature' class='img-fluid'></div>`,
-        html: true,
-        placement: 'left'
-    });
-}
 
 function save_cid(cid_number) {
     $('#cid_delete_modal').modal('show');
@@ -821,7 +426,6 @@ function populate_accounts_view(account) {
                 </table>
                 <div id="service_count_chart" class="chart"></div>
                 <div id="device_count_chart" class="chart"></div>
-                <div id="service_payments_chart" class="chart"></div>
             </div>
         </div>
         `;
@@ -880,30 +484,6 @@ function populate_accounts_view(account) {
     };
 
     Plotly.newPlot('device_count_chart', [deviceCountData], deviceCountLayout);
-
-    var servicePaymentData = {
-        x: [],
-        y: [],
-        type: 'bar',
-        text: [],
-        hoverinfo: 'x+y+text'
-    };
-    for (var i = 0; i < account_services.length; i++) {
-        servicePaymentData.x.push(account_services[i].cs_service_name);
-        servicePaymentData.y.push(account_services[i].total_amount);
-        var text = `Total Amount: ${account_services[i].total_amount}<br>Total Paid: ${account_services[i].total_paid_amount}<br>Total Unpaid: ${account_services[i].total_unpaid_amount}`;
-        servicePaymentData.text.push(text);
-    }
-    var servicePaymentLayout = {
-        title: 'Service Total Amounts',
-        xaxis: {
-            title: 'Service Name'
-        },
-        yaxis: {
-            title: 'Total Amount'
-        }
-    };
-    Plotly.newPlot('service_payments_chart', [servicePaymentData], servicePaymentLayout);
 }
 
 
@@ -1097,6 +677,387 @@ function save_tos(type, clickedButton) {
     save_data(data, type);
 }
 
+// cids
+function populate_cids(cids) {
+    console.log(cids);
+    var cids_container = $('#cids_container');
+    cids_container.empty();
+
+    var home_cids_container = $('#home_cids_container');
+    home_cids_container.empty();
+
+    var cid_HTML = '';
+    var home_cid_HTML = '';
+
+    cids.forEach(function (cid) {
+        cid_HTML += `
+    <tr class="sop_group">
+        <input type="hidden" class="cid_number" value="${cid.cid_number}">
+        <td class="align-middle">${cid.cid_number}</td>
+        <td class="align-middle">${cid.cid_client_full_name}</td>
+        <td class="align-middle">${cid.cs_device_name}</td>
+        <td class="align-middle">${cid.technician_names ? cid.technician_names : 'No Technician'}</td>
+        <td class="align-middle">${cid.cid_status}</td>
+        <td class="align-middle">${cid.formatted_cid_created}</td>
+        <td class="align-middle">
+            <button type="button" class="btn btn-danger" id="delete-cid">Delete</button>
+        </td>
+    </tr>
+    `;
+
+        home_cid_HTML += `
+    <tr class="sop_group">
+        <input type="hidden" class="cid_number" value="${cid.cid_number}">
+        <td class="align-middle">${cid.cid_number}</td>
+        <td class="align-middle">${cid.cid_client_full_name}</td>
+        <td class="align-middle">${cid.cs_device_name}</td>
+        <td class="align-middle">${cid.technician_names ? cid.technician_names : 'No Technician'}</td>
+        <td class="align-middle">${cid.cid_status}</td>
+        <td class="align-middle">${cid.formatted_cid_created}</td>
+    </tr>
+    `;
+    });
+
+    var cids_HTML = `
+<div class="card-body">
+    <table id="cids_table" class="table table-striped table-hover">
+        <thead>
+            <tr>
+                <th>CID Number</th>
+                <th>Client</th>
+                <th>Device Type</th>
+                <th>Technician(s)</th>
+                <th>Status</th>
+                <th>Date Added</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            ${cid_HTML}
+        </tbody>
+    </table>
+</div>
+`;
+
+    var home_cids_HTML = `
+<div class="card-body">
+    <table id="home_cids_table" class="table table-striped table-hover">
+        <thead>
+            <tr>
+                <th>CID Number</th>
+                <th>Client</th>
+                <th>Device Type</th>
+                <th>Technician(s)</th>
+                <th>Status</th>
+                <th>Date Added</th>
+            </tr>
+        </thead>
+        <tbody>
+            ${home_cid_HTML}
+        </tbody>
+    </table>
+</div>
+`;
+
+    cids_container.append(cids_HTML);
+    home_cids_container.append(home_cids_HTML);
+
+    $('#cids_table').DataTable({
+        "order": [] // Disable initial ordering
+    });
+    $('#home_cids_table').DataTable({
+        "order": [] // Disable initial ordering
+    });
+}
+
+
+function populate_cid_view(cid_data) {
+    var cid = cid_data.cid_details[0];
+    var terms_of_service = cid_data.terms_of_service;
+    var checklist_data = cid_data.checklist[0];
+
+
+    var checklist_tbody = $('#checklist_tbody');
+    checklist_tbody.empty();
+    console.log('cid_data');
+    console.log(cid_data);
+    $('#cid_view_modal').modal('show');
+
+    var view_cid_container = $('#view_cid_container');
+    view_cid_container.empty();
+    var tos_HTML = ``;
+    terms_of_service.forEach(function (tos) {
+        tos_HTML += `
+        <tr>
+            <td>${tos.tos_content}</td>
+            <td>${tos.cid_tos_agreement ? 'Yes' : 'No'}</td>
+        </tr>
+        `;
+    });
+
+
+
+
+    var components = [{
+            name: 'Wifi',
+            key: 'cs_cid_c_wifi'
+        },
+        {
+            name: 'Keyboard(FN Keys)',
+            key: 'cs_cid_c_keyboard'
+        },
+        {
+            name: 'Temperature',
+            key: 'cs_cid_c_temperature'
+        },
+        {
+            name: 'Tracepad',
+            key: 'cs_cid_c_tracepad'
+        },
+        {
+            name: 'Bluetooth',
+            key: 'cs_cid_c_bluetooth'
+        },
+        {
+            name: 'Audio Jack',
+            key: 'cs_cid_c_audiojack'
+        },
+        {
+            name: 'Speaker',
+            key: 'cs_cid_c_speaker'
+        },
+        {
+            name: 'Camera',
+            key: 'cs_cid_c_camera'
+        },
+        {
+            name: 'LCD (Brightness)',
+            key: 'cs_cid_c_lcd'
+        },
+        {
+            name: 'Stress Test',
+            key: 'cs_cid_c_stresstest'
+        }
+    ];
+
+    var checklistRows = ''; // Variable to store checklist rows
+
+    components.forEach(function (component) {
+        var value = checklist_data ? checklist_data[component.key] : null;
+        var checked1 = value == 1 ? 'checked' : '';
+        var checked2 = value == 2 ? 'checked' : '';
+        var checked3 = value == 3 ? 'checked' : '';
+
+        // Append row to checklistRows variable
+        checklistRows += `
+        <tr>
+            <td>${component.name}</td>
+            <td><input type="radio" name="${component.key}_status" value="1" class="mx-auto d-block" ${checked1} disabled></td>
+            <td><input type="radio" name="${component.key}_status" value="2" class="mx-auto d-block" ${checked2} disabled></td>
+            <td><input type="radio" name="${component.key}_status" value="3" class="mx-auto d-block" ${checked3} disabled></td>
+        </tr>
+    `;
+    });
+
+    // Use checklistRows variable inside HTML template string
+    var checklistHTML = `
+        <table class="table table-bordered checklist-table">
+            <thead>
+                <tr>
+                    <th scope="col">Component Name</th>
+                    <th scope="col" class="text-center">Working?</th>
+                    <th scope="col" class="text-center">Not Working?</th>
+                    <th scope="col" class="text-center">Not Applicable</th>
+                </tr>
+            </thead>
+            <tbody id="checklist_tbody">
+                ${checklistRows} <!-- Use checklistRows variable here -->
+            </tbody>
+        </table>
+    `;
+
+    var cs_payments_data = cid_data.cs_payments;
+    let cs_payments_rows = ``;
+
+    let payment_number = 1
+
+    cs_payments_data.forEach(function (payment) {
+        cs_payments_rows += `
+         <tr>
+            <td>Payment #${payment_number}</td>
+            <td>${payment.cs_p_note}</td>
+            <td>${payment.cs_p_amount}</td>
+            <td>${payment.cs_mop_name}</td>
+            <td>${payment.cs_p_reference}</td>
+            <td>${payment.cs_p_ds}</td>
+            <td>${payment.cs_p_or}</td>
+            <td>${payment.formatted_paid_date}</td>
+             <th><button type="button" data-id="${payment.cs_p_id}" class="btn btn-danger" id="delete-payment">Delete</button></th>
+        </tr>
+        `;
+        payment_number++
+    });
+
+
+    let cs_payments = `
+        <div>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Payments</th>
+                        <th>Notes</th>
+                        <th>Amount</th>
+                        <th>MOP</th>
+                        <th>Ref #</th>
+                        <th>DS</th>
+                        <th>OR</th>
+                        <th>Date of Payment</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+${cs_payments_rows}
+           
+                </tbody>
+            </table>
+        </div>
+        `;
+
+    var cid_summary_payments = cid_data.cid_summary_payments;
+    let cs_services_rows = ``;
+
+
+    cid_summary_payments.forEach(function (service) {
+        cs_services_rows += `
+         <tr>
+            <td>${service.cs_service_name}</td>
+            <td>${service.cid_sop_cost}</td>
+            <td>${service.cid_sop_discount}</td>
+            <td>${service.cid_sop_discounted_price}</td>
+            <td>${service.formatted_warranty_start || ''}</td>
+            <td>${service.formatted_warranty_end || ''}</td>
+            <td>${service.cid_sop_warranty_type || ''}</td>
+           
+        </tr>
+        `;
+    });
+
+
+    let cs_services = `
+        <div>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Service/Product</th>
+                        <th>Cost</th>
+                        <th>Discount</th>
+                        <th>Discounted Price</th>
+                        <th>Warranty Start</th>
+                        <th>Warranty End</th>
+                        <th>Warranty Type</th>
+                    </tr>
+                </thead>
+                <tbody>
+${cs_services_rows}
+                </tbody>
+            </table>
+        </div>
+        `;
+
+
+    var cid_HTML = `
+    <div class="px-3">
+        <input type="hidden" class="cid_number" value="${cid.cid_number}" name="">
+        <p class="fw-bold text-center">Details<p>
+        <div class="d-flex flex-row justify-content-between w-100">
+            <div class="flex-fill">
+                <p class="fw-bold mb-2">CID Number:</p>
+                <p class="fw-bold mb-2">Client Name:</p>
+                <p class="fw-bold mb-2">Technician(s):</p>
+                <p class="fw-bold mb-2">Status:</p>
+            </div>
+            <div class="flex-fill">
+                <p class="mb-2">${cid.cid_number}</p>
+                <p class="mb-2">${cid.cid_client_full_name}</p>
+                <p class="mb-2">${cid.technician_names ? cid.technician_names : 'No Technician'}</p>
+                <p class="mb-2">${cid.cid_status}</p>
+            </div>
+            <div class="flex-fill">
+                <p class="fw-bold mb-2">Claiming Slip Number: </p>
+                <p class="fw-bold mb-2">Client Signature:</p>
+                <p class="fw-bold mb-2">Type:</p>
+                <p class="fw-bold mb-2">Date Added</p>
+            </div>
+            <div class="flex-fill">
+                <p class="mb-2">${cid.cid_cs_number ? cid.cid_cs_number : 'No Claiming Slip'}</p>
+                <p class="mb-2" id="clientSignature" data-bs-toggle="popover" data-bs-placement="bottom" title="Client Signature">Click To View Signature!</p>
+                <p class="mb-2">${cid.cs_device_name}</p>
+                <p class="mb-2">${cid.formatted_cid_created}</p>
+            </div>
+        </div>
+        <div>
+            <p class="fw-bold">Unti Details:</p>
+            <p>${cid.cid_unit_details}</p>
+            <p class="fw-bold mt-1">Remarks:</p>
+            <p>${cid.cid_remarks}</p>
+            <p class="fw-bold mt-1">Unit History:</p>
+            <p>${cid.cid_unit_history}</p>
+        </div>
+    </div>
+    <hr>
+    <div>
+        <p class="fw-bold text-center">Summary of Repairs<p>
+        <p class="fw-bold">Content:<p>
+        <p>${cid.cid_sor_content ? cid.cid_sor_content : 'No Summary of Repairs Data'}</p>
+        <p class="fw-bold mt-1">Start Date:<p>
+        <p>${cid.formatted_cid_sor_start_date ? cid.formatted_cid_sor_start_date : 'No Summary of Repairs Data'}</p>
+        <p class="fw-bold mt-1">End Date:<p>
+        <p>${cid.formatted_cid_sor_end_date ? cid.formatted_cid_sor_end_date : 'No Summary of Repairs Data'}</p>
+        <p class="fw-bold mt-1">Last Updated:<p>
+        <p>${cid.formatted_cid_sor_updated ? cid.formatted_cid_sor_updated : 'No Summary of Repairs Data'}</p>
+        ${checklistHTML}
+    </div>
+    <hr>
+    <div>
+        <p class="fw-bold text-center">Recommendations<p>
+        <p class="fw-bold">Content:<p>
+        <p>${cid.cid_r_content ? cid.cid_r_content : 'No Recommendation Data'}</p>
+        <p class="fw-bold mt-1">Last Updated:<p>
+        <p>${cid.formatted_recommendation_updated ? cid.formatted_recommendation_updated : 'No Recommendation Data'}</p>
+    </div>
+    <hr>
+    <div>
+        <p class="fw-bold text-center">Summary of Payments<p>
+        ${cs_services}
+        ${cs_payments}
+    </div>
+    <hr>
+    <div>
+        <p class="fw-bold text-center">Terms of Service<p>
+        <table id="" class="table w-100">
+            <thead>
+                <tr>
+                    <th>Terms</th>
+                    <th>Agreement</th>
+                </tr>
+            </thead>
+            <tbody>
+                ${tos_HTML}
+            </tbody>
+        </table>
+    </div>
+    `;
+
+    view_cid_container.append(cid_HTML);
+
+    var popoverTrigger = document.getElementById('clientSignature');
+    var popover = new bootstrap.Popover(popoverTrigger, {
+        content: `<div class='popover-image-container'><img src='${cid.cid_signature}' alt='Client Signature' class='img-fluid'></div>`,
+        html: true,
+        placement: 'left'
+    });
+}
+
 // analytics
 function populate_analytics(analytics) {
     console.log(analytics);
@@ -1121,12 +1082,28 @@ function populate_analytics(analytics) {
     home_analytics_container.empty();
 
     var home_analytics_HTML = `
-    <div class="row mt-2">
-        <div class="col mb-4">
+    <div>
+    <div class="col mb-4 mt-2">
             <a id="super_dashboard" href="cids.php">
                 <div class="card shadow">
+                    <div class="card-header bg-info text-white" id="super_header">
+                        <i class="fas fa-id-card mr-2"></i> Total Number of CIDs
+                    </div>
+                    <div class="card-body">
+                        <p id="text_super_cids">${unique_cid_numbers[0].unique_cid_numbers}</p>
+                    </div>
+                    <div class="card-footer bg-info text-white" id="super_see_more">See More
+                    </div>
+                </div>
+            </a>
+        </div> 
+    </div>
+    <div class="row mt-2">
+        <div class="col mb-4">
+            <a id="super_dashboard" href="ongoing.php">
+                <div class="card shadow">
                     <div class="card-header bg-primary text-white" id="super_header">
-                        <i class="fas fa-tasks mr-2"></i>Ongoing
+                        <i class="fas fa-tasks mr-2"></i> Ongoing
                     </div>
                     <div class="card-body">
                         <p id="text_super_ongoing">${ongoingCount}</p>
@@ -1137,10 +1114,10 @@ function populate_analytics(analytics) {
             </a>
         </div>
         <div class="col mb-4">
-            <a id="super_dashboard" href="cids.php">
+            <a id="super_dashboard" href="warranty.php">
                 <div class="card shadow">
                     <div class="card-header bg-success text-white" id="super_header">
-                        <i class="fas fa-shield-alt mr-2"></i>Warranty
+                        <i class="fas fa-shield-alt mr-2"></i> Warranty
                     </div>
                     <div class="card-body">
                         <p id="text_super_ongoing">${ongoingWarrantyCount}</p>
@@ -1151,10 +1128,10 @@ function populate_analytics(analytics) {
             </a>
         </div>
         <div class="col mb-4">
-            <a id="super_dashboard" href="cids.php">
+            <a id="super_dashboard" href="rto.php">
                 <div class="card shadow">
                     <div class="card-header bg-warning text-white" id="super_header">
-                        <i class="fas fa-car mr-2"></i>RTO
+                        <i class="fas fa-car mr-2"></i> RTO
                     </div>
                     <div class="card-body">
                         <p id="text_super_rto">${rtoCount}</p>
@@ -1164,25 +1141,12 @@ function populate_analytics(analytics) {
                 </div>
             </a>
         </div>
+        
         <div class="col mb-4">
-            <a id="super_dashboard" href="cids.php">
-                <div class="card shadow">
-                    <div class="card-header bg-info text-white" id="super_header">
-                        <i class="fas fa-id-card mr-2"></i>CIDs
-                    </div>
-                    <div class="card-body">
-                        <p id="text_super_cids">${unique_cid_numbers[0].unique_cid_numbers}</p>
-                    </div>
-                    <div class="card-footer bg-info text-white" id="super_see_more">See More
-                    </div>
-                </div>
-            </a>
-        </div>
-        <div class="col mb-4">
-            <a id="super_dashboard" href="cids.php">
+            <a id="super_dashboard" href="release.php">
                 <div class="card shadow">
                     <div class="card-header bg-dark text-white" id="super_header">
-                        <i class="fas fa-code-branch mr-2"></i>Release
+                        <i class="fas fa-code-branch mr-2"></i> Release
                     </div>
                     <div class="card-body">
                         <p id="text_super_release">${releaseCount}</p>
@@ -1195,10 +1159,10 @@ function populate_analytics(analytics) {
     </div>
     <div class="row justify-content-center">
         <div class="col-md-3 mb-4">
-            <a id="super_dashboard" href="cids.php">
+            <a id="super_dashboard" href="pending.php">
                 <div class="card shadow">
                     <div class="card-header bg-danger text-white" id="super_header">
-                        <i class="fas fa-hourglass-start mr-2"></i>Pending
+                        <i class="fas fa-hourglass-start mr-2"></i> Pending
                     </div>
                     <div class="card-body">
                         <p id="text_super_pending">${pendingCount}</p>
@@ -1209,10 +1173,10 @@ function populate_analytics(analytics) {
             </a>
         </div>
         <div class="col-md-3 mb-4">
-            <a id="super_dashboard" href="cids.php">
+            <a id="super_dashboard" href="abandoned.php">
                 <div class="card shadow">
                     <div class="card-header bg-secondary text-white" id="super_header">
-                        <i class="fas fa-trash-alt mr-2"></i>Abandoned
+                        <i class="fas fa-trash-alt mr-2"></i> Abandoned
                     </div>
                     <div class="card-body">
                         <p id="text_super_abandoned">${abandonedCount}</p>
@@ -1223,10 +1187,10 @@ function populate_analytics(analytics) {
             </a>
         </div>
         <div class="col-md-3 mb-4">
-            <a id="super_dashboard" href="cids.php">
+            <a id="super_dashboard" href="completed.php">
                 <div class="card shadow">
                     <div class="card-header bg-dark text-white" id="super_header">
-                        <i class="fas fa-check-circle mr-2"></i>Completed
+                        <i class="fas fa-check-circle mr-2"></i> Completed
                     </div>
                     <div class="card-body">
                         <p id="text_super_completed">${completedCount}</p>
@@ -1250,15 +1214,6 @@ function populate_analytics(analytics) {
             <option value="pie">Pie Chart</option>
         </select>
         <div id="service_count_chart" class="chart"></div>
-    </div>
-
-    <div class="chart-container mb-3">
-        <select id="chartType2">
-            <option value="bar">Bar Chart</option>
-            <option value="line">Line Chart</option>
-            <option value="pie">Pie Chart</option>
-        </select>
-        <div id="service_payments_chart" class="chart"></div>
     </div>
 
     <div class="chart-container mb-3">
@@ -1323,56 +1278,6 @@ function populate_analytics(analytics) {
             }];
         }
         Plotly.newPlot('service_count_chart', newServiceCountData, serviceCountLayout);
-    });
-
-    // Plotly for Service Payments
-    var servicePaymentData = {
-        x: [],
-        y: [],
-        type: 'bar',
-        text: [],
-        hoverinfo: 'x+y+text'
-    };
-    for (var i = 0; i < service_counts.length; i++) {
-        servicePaymentData.x.push(service_counts[i].cs_service_name);
-        servicePaymentData.y.push(service_counts[i].total_amount);
-        var text = `Total Amount: ${service_counts[i].total_amount}<br>Total Paid: ${service_counts[i].total_paid_amount}<br>Total Unpaid: ${service_counts[i].total_unpaid_amount}`;
-        servicePaymentData.text.push(text);
-    }
-    var servicePaymentLayout = {
-        title: 'Service Total Amounts',
-        xaxis: {
-            title: 'Service Name'
-        },
-        yaxis: {
-            title: 'Total Amount'
-        }
-    };
-    Plotly.newPlot('service_payments_chart', [servicePaymentData], servicePaymentLayout);
-    $('#chartType2').change(function () {
-        var chartType = $(this).val();
-        var newServicePaymentData;
-
-        if (chartType === 'bar') {
-            newServicePaymentData = [{
-                ...servicePaymentData,
-                type: 'bar'
-            }];
-        } else if (chartType === 'line') {
-            newServicePaymentData = [{
-                ...servicePaymentData,
-                type: 'scatter',
-                mode: 'lines+markers'
-            }];
-        } else if (chartType === 'pie') {
-            newServicePaymentData = [{
-                labels: servicePaymentData.x,
-                values: servicePaymentData.y,
-                type: 'pie'
-            }];
-        }
-
-        Plotly.newPlot('service_payments_chart', newServicePaymentData, servicePaymentLayout);
     });
 
     // Plotly for Device Counts
@@ -1495,8 +1400,7 @@ function populate_settings(settings) {
             </div>
             <div class="col-3 my-auto">
                 <button type="button" class="btn btn-primary" id="save-settings">Save</button>
-            </div>
-            
+            </div>   
         </div>
     </div>
     `;
@@ -1527,9 +1431,12 @@ function save_cms(type, clickedButton) {
         company_name: $sopGroup.find('.company_name').val(),
         cp1: $sopGroup.find('.cp1').val(),
         cp2: $sopGroup.find('.cp2').val(),
-        cp3: $sopGroup.find('.cp3').val()
+        cp3: $sopGroup.find('.cp3').val(),
+        acknowledgement: $sopGroup.find('.acknowledgement').val(),
+        disclaimer: $sopGroup.find('.disclaimer').val()
     };
     save_data(data, type);
+    console.log(data);
 
 }
 
@@ -1542,7 +1449,9 @@ function save_data(data, type) {
         data: data,
         success: function (response) {
             alert(response.message);
-            get_data(type);
+            // Reload the page after the alert is dismissed
+            location.reload();
+            get_data(type); // This line will not be reached because the page reloads before it
             console.log(type);
         },
         error: function (xhr, status, error) {

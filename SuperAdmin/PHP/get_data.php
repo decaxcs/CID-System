@@ -13,7 +13,9 @@ if ($type === "") {
     echo json_encode($response);
     exit();
 } else if ($type === "cids" || $type === "delete_cid") {
-    $query = "SELECT
+    $status = $_GET["status"];
+    if (!$status) {
+        $query = "SELECT
                     i.*,
                     cd.cs_device_name,
                     DATE_FORMAT(i.cid_created, '%M %d, %Y') AS formatted_cid_created,
@@ -31,7 +33,30 @@ if ($type === "") {
                 GROUP BY
                     i.cid_number
                 ORDER BY
+                    i.cid_id DESC";
+    } else {
+        $status = $_GET["status"];
+        $query = "SELECT
+                i.*,
+                cd.cs_device_name,
+                DATE_FORMAT(i.cid_created, '%M %d, %Y') AS formatted_cid_created,
+                GROUP_CONCAT(csu.csu_name SEPARATOR ', ') AS technician_names
+                FROM
+                    cs_cid_information i
+                LEFT JOIN
+                    cs_cid_technicians cct ON cct.cid_number = i.cid_number
+                LEFT JOIN
+                    cs_users csu ON csu.csu_id = cct.cid_technician_id
+                LEFT JOIN
+                    cs_devices cd ON cd.cs_device_id = i.cid_device_id
+                WHERE
+                    i.isDeleted = 0 AND i.cid_status = '$status'
+                GROUP BY
+                    i.cid_number
+                ORDER BY
                     i.cid_created DESC";
+    }
+
     $stmt = $conn->prepare($query);
     if (!$stmt) {
         $response = array("status" => "error", "message" => "Error preparing query: " . $conn->error);
@@ -68,7 +93,7 @@ if ($type === "") {
                                 DATE_FORMAT(cid_sor.cid_sor_updated, '%M %d, %Y') AS formatted_cid_sor_updated,
                                 DATE_FORMAT(i.cid_created, '%M %d, %Y') AS formatted_cid_created,
                                 GROUP_CONCAT(csu.csu_name SEPARATOR ', ') AS technician_names,
-                                (SELECT GROUP_CONCAT(CONCAT('Cost: ', sop.cid_sop_cost, ', Discounted Price: ', sop.cid_sop_discounted_price, ', Payment Method: ', sop.cid_sop_payment_method, ', Reference No: ', sop.cid_sop_ref_no, ', Discount: ', sop.cid_sop_discount, ', Paid: ', sop.cid_sop_paid, ', Warranty Start: ', DATE_FORMAT(sop.cid_sop_warranty_start, '%M %d, %Y'), ', Warranty End: ', DATE_FORMAT(sop.cid_sop_warranty_end, '%M %d, %Y'), ', Warranty Duration: ', sop.cid_sop_warranty_duration, ' ', sop.cid_sop_warranty_unit, ', Warranty Type: ', sop.cid_sop_warranty_type) SEPARATOR '; ')
+                                (SELECT GROUP_CONCAT(CONCAT('Cost: ', sop.cid_sop_cost, ', Discounted Price: ', sop.cid_sop_discounted_price, ',  Discount: ', sop.cid_sop_discount, ', Warranty Start: ', DATE_FORMAT(sop.cid_sop_warranty_start, '%M %d, %Y'), ', Warranty End: ', DATE_FORMAT(sop.cid_sop_warranty_end, '%M %d, %Y'), ', Warranty Duration: ', sop.cid_sop_warranty_duration, ' ', sop.cid_sop_warranty_unit, ', Warranty Type: ', sop.cid_sop_warranty_type) SEPARATOR '; ')
                                 FROM cid_summary_of_payments sop
                                 WHERE sop.cid_number = i.cid_number) AS payment_summary
                             FROM
@@ -96,10 +121,7 @@ if ($type === "") {
                                 s.cs_service_name,
                                 sop.cid_sop_cost,
                                 sop.cid_sop_discounted_price,
-                                sop.cid_sop_payment_method,
-                                sop.cid_sop_ref_no,
                                 sop.cid_sop_discount,
-                                sop.cid_sop_paid,
                                 DATE_FORMAT(sop.cid_sop_warranty_start, '%M %d, %Y') AS formatted_warranty_start,
                                 DATE_FORMAT(sop.cid_sop_warranty_end, '%M %d, %Y') AS formatted_warranty_end,
                                 sop.cid_sop_warranty_duration,
@@ -115,14 +137,6 @@ if ($type === "") {
                                 sop.cid_service_id = s.cs_service_id 
                             WHERE
                                 sop.cid_number = ?",
-        "payments_amount" => "SELECT 
-                                SUM(CASE WHEN cid_sop_paid = 0 THEN cid_sop_discounted_price ELSE 0 END) AS unpaid_amount,
-                                SUM(CASE WHEN cid_sop_paid = 1 THEN cid_sop_discounted_price ELSE 0 END) AS paid_amount,
-                                SUM(cid_sop_discounted_price) AS total_amount
-                            FROM 
-                                cid_summary_of_payments
-                            WHERE
-                                cid_number = ?",
         "terms_of_service" => "SELECT c_c_tos.*,
                                 c_tos.tos_content
                             FROM 
@@ -138,7 +152,12 @@ if ($type === "") {
                             FROM 
                                 cs_cid_checklist
                             WHERE
-                                cid_number = ?"
+                                cid_number = ?",
+        "cs_payments" => "SELECT cs_p.*, cs_m.cs_mop_name, DATE_FORMAT(cs_p.cs_p_paid_date, '%M %e %Y %h:%i %p') AS formatted_paid_date
+                            FROM cs_payment cs_p
+                            LEFT JOIN cs_mop AS cs_m ON cs_p.cs_p_mop = cs_m.cs_mop_id 
+                            WHERE cs_p.cid_number = ? AND cs_p.isDeleted = 0 
+                            ORDER BY cs_p.cs_p_paid_date ASC"
     );
 
     foreach ($queries as $key => $query) {
@@ -221,10 +240,7 @@ if ($type === "") {
                                 i.isDeleted = 0 AND csu.csu_id = $csu_id
                             GROUP BY 
                                 csu.csu_id, csu.csu_name, i.cid_status",
-        "service_counts" => "SELECT s.cs_service_id, s.cs_service_name, COUNT(DISTINCT p.cid_number) AS num_cid_numbers,
-                                SUM(CASE WHEN p.cid_sop_paid = 1 THEN p.cid_sop_discounted_price ELSE 0 END) AS total_paid_amount,
-                                SUM(CASE WHEN p.cid_sop_paid = 0 THEN p.cid_sop_discounted_price ELSE 0 END) AS total_unpaid_amount,
-                                SUM(p.cid_sop_discounted_price) AS total_amount
+        "service_counts" => "SELECT s.cs_service_id, s.cs_service_name, COUNT(DISTINCT p.cid_number) AS num_cid_numbers
                                 FROM cs_services s
                                 LEFT JOIN cid_summary_of_payments p ON s.cs_service_id = p.cid_service_id
                                 LEFT JOIN cs_cid_information i ON p.cid_number = i.cid_number
@@ -350,16 +366,14 @@ if ($type === "") {
     $queries = array(
         "unique_cid_numbers" => "SELECT COUNT(DISTINCT cid_number) AS unique_cid_numbers FROM cs_cid_information WHERE isDeleted = 0 AND (? IS NULL OR cid_created >= ?) AND (? IS NULL OR cid_created <= ?)",
         "status_counts" => "SELECT cid_status, COUNT(cid_number) AS status_count FROM cs_cid_information WHERE isDeleted = 0 AND (? IS NULL OR cid_created >= ?) AND (? IS NULL OR cid_created <= ?) GROUP BY cid_status",
-        "service_counts" => "SELECT s.cs_service_id, s.cs_service_name, COUNT(DISTINCT p.cid_number) AS num_cid_numbers,
-                            SUM(CASE WHEN p.cid_sop_paid = 1 THEN p.cid_sop_discounted_price ELSE 0 END) AS total_paid_amount,
-                            SUM(CASE WHEN p.cid_sop_paid = 0 THEN p.cid_sop_discounted_price ELSE 0 END) AS total_unpaid_amount,
-                            SUM(p.cid_sop_discounted_price) AS total_amount
-                            FROM cs_services s
+        "service_counts" => "SELECT s.cs_service_id, s.cs_service_name, COUNT(DISTINCT p.cid_number) AS num_cid_numbers
+                             FROM cs_services s
                             LEFT JOIN cid_summary_of_payments p ON s.cs_service_id = p.cid_service_id
-                            LEFT JOIN cs_cid_information i ON p.cid_number = i.cid_number
-                            WHERE s.isDeleted = 0 AND i.isDeleted = 0 AND (? IS NULL OR i.cid_created >= ?) AND (? IS NULL OR i.cid_created <= ?)
-                            GROUP BY s.cs_service_id, s.cs_service_name
-                            ORDER BY num_cid_numbers DESC",
+                             LEFT JOIN cs_cid_information i ON p.cid_number = i.cid_number
+                             WHERE s.isDeleted = 0 AND i.isDeleted = 0 AND (? IS NULL OR i.cid_created >= ?) AND (? IS NULL OR i.cid_created <= ?)
+                             GROUP BY s.cs_service_id, s.cs_service_name
+                             ORDER BY num_cid_numbers DESC",
+
         "device_counts" => "SELECT d.cs_device_id, d.cs_device_name, COUNT(DISTINCT i.cid_number) AS num_cid_numbers
                             FROM cs_devices d
                             LEFT JOIN cs_cid_information i ON d.cs_device_id = i.cid_device_id
@@ -422,7 +436,7 @@ if ($type === "") {
     }
     $stmt->close();
 } else if ($type === "logs") {
-    $query = "SELECT l.*, cs_u.csu_name, DATE_FORMAT(l.timestamp, '%M %d, %Y') AS formatted_timestamp
+    $query = "SELECT l.*, cs_u.csu_name, DATE_FORMAT(l.timestamp, '%M %d, %Y %h:%i %p') AS formatted_timestamp
                 FROM logs l
                 LEFT JOIN cs_users cs_u ON l.user_id = cs_u.csu_id
                 ORDER BY l.log_id DESC";
@@ -468,6 +482,37 @@ if ($type === "") {
         }
     }
     $stmt->close();
+} else if ($type === "payments" || $type === "add_payment" || $type === "update_payment" || $type === "delete_payment") {
+    $queries = array(
+        "mop_list" => "SELECT * FROM cs_mop WHERE isDeleted = 0",
+        "vat_value" => "SELECT * FROM cs_settings WHERE cs_settings_id = 2"
+    );
+    foreach ($queries as $key => $query) {
+        $stmt = $conn->prepare($query);
+        if (!$stmt) {
+            $response = array("status" => "error", "message" => "Error preparing query: " . $conn->error);
+            echo json_encode($response);
+            exit();
+        }
+
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        if ($result === false) {
+            $response = array("status" => "error", "message" => "Error executing query: " . $stmt->error);
+            echo json_encode($response);
+            exit();
+        }
+
+        $data[$key] = array();
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                $data[$key][] = $row;
+            }
+        }
+
+        $stmt->close();
+    }
 } else {
     $response = array("status" => "error", "message" => "Invalid type");
     echo json_encode($response);

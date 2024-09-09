@@ -15,6 +15,7 @@ if (isset($_SESSION['csu_id']) && !empty($_SESSION['csu_id'])) {
 
 $type = $_GET['type'];
 
+
 if ($type === "claimed") {
     $sql_cids = "SELECT 
                     cid.*, 
@@ -27,7 +28,7 @@ if ($type === "claimed") {
                 LEFT JOIN cs_devices AS devices_type ON cid.cid_device_id = devices_type.cs_device_id
                 WHERE cid_tech.cid_technician_id = ? AND cid.isDeleted = 0
                 GROUP BY cid.cid_number, cid.cid_created, devices_type.cs_device_name
-                ORDER BY cid.cid_created DESC";
+                ORDER BY cid.cid_id DESC";
     $stmt = $conn->prepare($sql_cids);
     $stmt->bind_param("i", $user_id);
 } else if ($type === "unclaimed") {
@@ -42,7 +43,7 @@ if ($type === "claimed") {
                 LEFT JOIN cs_devices AS devices_type ON cid.cid_device_id = devices_type.cs_device_id
                 WHERE cid_tech.cid_technician_id IS NULL OR cid_tech.cid_technician_id = '' AND  cid.isDeleted = 0
                 GROUP BY cid.cid_number, cid.cid_created, devices_type.cs_device_name
-                ORDER BY cid.cid_created DESC";
+                ORDER BY cid.cid_id DESC";
     $stmt = $conn->prepare($sql_cids);
     $stmt->execute();
 } else if ($type === "recent-claimed") {
@@ -51,13 +52,29 @@ if ($type === "claimed") {
                 devices_type.cs_device_name AS service_name, 
                 DATE_FORMAT(cid.cid_created, '%M %e, %Y %l:%i %p') AS formatted_created,
                 GROUP_CONCAT(technicians.csu_name) AS technician_names
-            FROM cs_cid_information AS cid
-            LEFT JOIN cs_cid_technicians AS cid_tech ON cid.cid_number = cid_tech.cid_number
-            LEFT JOIN cs_users AS technicians ON cid_tech.cid_technician_id = technicians.csu_id
-            LEFT JOIN cs_devices AS devices_type ON cid.cid_device_id = devices_type.cs_device_id
-            WHERE cid_tech.cid_technician_id = ? AND cid.cid_created >= DATE_SUB(NOW(), INTERVAL 7 DAY)  AND cid.isDeleted = 0
-            GROUP BY cid.cid_number, cid.cid_created, devices_type.cs_device_name
-            ORDER BY cid.cid_created DESC";
+                FROM cs_cid_information AS cid
+                LEFT JOIN cs_cid_technicians AS cid_tech ON cid.cid_number = cid_tech.cid_number
+                LEFT JOIN cs_users AS technicians ON cid_tech.cid_technician_id = technicians.csu_id
+                LEFT JOIN cs_devices AS devices_type ON cid.cid_device_id = devices_type.cs_device_id
+                WHERE cid_tech.cid_technician_id = ? AND cid.cid_created >= DATE_SUB(NOW(), INTERVAL 7 DAY)  AND cid.isDeleted = 0
+                GROUP BY cid.cid_number, cid.cid_created, devices_type.cs_device_name
+                ORDER BY cid.cid_id DESC";
+    $stmt = $conn->prepare($sql_cids);
+    $stmt->bind_param("i", $user_id);
+} else if ($type === "status") {
+    $tableStatus = $_GET['tableStatus'];
+    $sql_cids = "SELECT 
+                cid.*, 
+                devices_type.cs_device_name AS service_name, 
+                DATE_FORMAT(cid.cid_created, '%M %e, %Y %l:%i %p') AS formatted_created,
+                GROUP_CONCAT(technicians.csu_name) AS technician_names
+                FROM cs_cid_information AS cid
+                LEFT JOIN cs_cid_technicians AS cid_tech ON cid.cid_number = cid_tech.cid_number
+                LEFT JOIN cs_users AS technicians ON cid_tech.cid_technician_id = technicians.csu_id
+                LEFT JOIN cs_devices AS devices_type ON cid.cid_device_id = devices_type.cs_device_id
+                WHERE cid_tech.cid_technician_id = ? AND cid.isDeleted = 0 AND cid.cid_status = '$tableStatus'
+                GROUP BY cid.cid_number, cid.cid_created, devices_type.cs_device_name
+                ORDER BY cid.cid_id DESC";
     $stmt = $conn->prepare($sql_cids);
     $stmt->bind_param("i", $user_id);
 } else {
@@ -91,4 +108,3 @@ echo json_encode($response);
 // Close statement and connection
 $stmt->close();
 $conn->close();
-?>

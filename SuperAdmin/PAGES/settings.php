@@ -33,7 +33,7 @@
     <script src="../JS/get_data.js"></script>
 
     <script>
-        $(document).ready(function () {
+        $(document).ready(function() {
             get_data('settings');
         });
     </script>

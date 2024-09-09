@@ -1,23 +1,54 @@
 var cid_data = [];
 var payments_data = [];
+var cs_payment_data = [];
 var checklist_data = [];
+var cms_data = [];
 
-var components = [
-    {name: 'Wifi', key: 'cs_cid_c_wifi'},
-    {name: 'Keyboard (FN Keys)', key: 'cs_cid_c_keyboard'},
-    {name: 'Temperature', key: 'cs_cid_c_temperature'},
-    {name: 'Tracepad', key: 'cs_cid_c_tracepad'},
-    {name: 'Bluetooth', key: 'cs_cid_c_bluetooth'},
-    {name: 'Audio Jack', key: 'cs_cid_c_audiojack'},
-    {name: 'Speaker', key: 'cs_cid_c_speaker'},
-    {name: 'Camera', key: 'cs_cid_c_camera'},
-    {name: 'LCD (Brightness)', key: 'cs_cid_c_lcd'},
-    {name: 'Stress Test', key: 'cs_cid_c_stresstest'}
+var components = [{
+        name: 'Wifi',
+        key: 'cs_cid_c_wifi'
+    },
+    {
+        name: 'Keyboard (FN Keys)',
+        key: 'cs_cid_c_keyboard'
+    },
+    {
+        name: 'Temperature',
+        key: 'cs_cid_c_temperature'
+    },
+    {
+        name: 'Tracepad',
+        key: 'cs_cid_c_tracepad'
+    },
+    {
+        name: 'Bluetooth',
+        key: 'cs_cid_c_bluetooth'
+    },
+    {
+        name: 'Audio Jack',
+        key: 'cs_cid_c_audiojack'
+    },
+    {
+        name: 'Speaker',
+        key: 'cs_cid_c_speaker'
+    },
+    {
+        name: 'Camera',
+        key: 'cs_cid_c_camera'
+    },
+    {
+        name: 'LCD (Brightness)',
+        key: 'cs_cid_c_lcd'
+    },
+    {
+        name: 'Stress Test',
+        key: 'cs_cid_c_stresstest'
+    }
 ];
 
 var checklistText = ''; // Variable to store checklist text
 
-components.forEach(function(component) {
+components.forEach(function (component) {
     var value = checklist_data ? checklist_data[component.key] : null;
     var status = '';
 
@@ -36,7 +67,35 @@ components.forEach(function(component) {
 
 console.log(checklistText); // Output checklistText to console or use it as needed
 
+
+function get_cid_info(cid_number, callback) {
+    $.ajax({
+        url: "../PHP/get_cids.php",
+        type: "GET",
+        data: {
+            cid_number: cid_number
+        },
+        success: function (response) {
+            if (response.status === "success") {
+                callback(response);
+                console.log(response);
+                checklist_data = response.checklist_data[0];
+                cid_data = response.cids_data;
+                payments_data = response.payments_data;
+                cs_payment_data = response.cs_payment_data;
+                cms_data = response.cms_data[0];
+            } else {
+                console.log("Error: No data found.");
+            }
+        },
+        error: function (xhr, status, error) {
+            ajax_error_handling(xhr, status, error);
+        }
+    });
+}
+
 $(document).ready(function () {
+
 
     function formatDate(dateString) {
         if (!dateString) return ''; // Return empty string if dateString is null or empty
@@ -224,29 +283,7 @@ $(document).ready(function () {
 
 
 
-    function get_cid_info(cid_number, callback) {
-        $.ajax({
-            url: "../PHP/get_cids.php",
-            type: "GET",
-            data: {
-                cid_number: cid_number
-            },
-            success: function (response) {
-                if (response.status === "success") {
-                    callback(response);
-                    console.log(response);
-                    checklist_data = response.checklist_data[0];
-                    cid_data = response.cids_data;
-                    payments_data = response.payments_data;
-                } else {
-                    console.log("Error: No data found.");
-                }
-            },
-            error: function (xhr, status, error) {
-                ajax_error_handling(xhr, status, error);
-            }
-        });
-    }
+
 
 
     function get_cids() {
@@ -397,57 +434,86 @@ $(document).ready(function () {
                     `;
                 });
 
-                var components = [
-                    {name: 'Wifi', key: 'cs_cid_c_wifi'},
-                    {name: 'Keyboard (FN Keys)', key: 'cs_cid_c_keyboard'},
-                    {name: 'Temperature', key: 'cs_cid_c_temperature'},
-                    {name: 'Tracepad', key: 'cs_cid_c_tracepad'},
-                    {name: 'Bluetooth', key: 'cs_cid_c_bluetooth'},
-                    {name: 'Audio Jack', key: 'cs_cid_c_audiojack'},
-                    {name: 'Speaker', key: 'cs_cid_c_speaker'},
-                    {name: 'Camera', key: 'cs_cid_c_camera'},
-                    {name: 'LCD (Brightness)', key: 'cs_cid_c_lcd'},
-                    {name: 'Stress Test', key: 'cs_cid_c_stresstest'}
+                var components = [{
+                        name: 'Wifi',
+                        key: 'cs_cid_c_wifi'
+                    },
+                    {
+                        name: 'Keyboard (FN Keys)',
+                        key: 'cs_cid_c_keyboard'
+                    },
+                    {
+                        name: 'Temperature',
+                        key: 'cs_cid_c_temperature'
+                    },
+                    {
+                        name: 'Tracepad',
+                        key: 'cs_cid_c_tracepad'
+                    },
+                    {
+                        name: 'Bluetooth',
+                        key: 'cs_cid_c_bluetooth'
+                    },
+                    {
+                        name: 'Audio Jack',
+                        key: 'cs_cid_c_audiojack'
+                    },
+                    {
+                        name: 'Speaker',
+                        key: 'cs_cid_c_speaker'
+                    },
+                    {
+                        name: 'Camera',
+                        key: 'cs_cid_c_camera'
+                    },
+                    {
+                        name: 'LCD (Brightness)',
+                        key: 'cs_cid_c_lcd'
+                    },
+                    {
+                        name: 'Stress Test',
+                        key: 'cs_cid_c_stresstest'
+                    }
                 ];
-                
+
                 var checklistText = ''; // Variable to store checklist text
-                
+
                 // Calculate the midpoint index
                 var midpointIndex = Math.ceil(components.length / 2);
-                
+
                 // Update the checklistText generation to create HTML elements
                 var checklistText = `
                 <div class="row">
                     <div class="col">
                 `;
-                components.forEach(function(component, index) {
-                var value = checklist ? parseInt(checklist[component.key]) : null;
-                var status = '';
+                components.forEach(function (component, index) {
+                    var value = checklist ? parseInt(checklist[component.key]) : null;
+                    var status = '';
 
-                // Assign text representation based on value
-                if (value !== null && value !== undefined) {
-                    if (value === 1) {
-                        status = 'Ok';
-                    } else if (value === 2) {
-                        status = 'Not Ok';
+                    // Assign text representation based on value
+                    if (value !== null && value !== undefined) {
+                        if (value === 1) {
+                            status = 'Ok';
+                        } else if (value === 2) {
+                            status = 'Not Ok';
+                        } else {
+                            status = 'N/A';
+                        }
                     } else {
                         status = 'N/A';
                     }
-                } else {
-                    status = 'N/A';
-                }
 
-                // Append HTML for the component
-                checklistText += `
+                    // Append HTML for the component
+                    checklistText += `
                     <div>${component.name}: ${status}</div>
                 `;
-                // If it's the midpoint, close the first column and start the second column
-                if (index === midpointIndex - 1) {
-                    checklistText += `
+                    // If it's the midpoint, close the first column and start the second column
+                    if (index === midpointIndex - 1) {
+                        checklistText += `
                     </div>
                     <div class="col">
                     `;
-                }
+                    }
                 });
                 // Close the second column and the row
                 checklistText += `
@@ -456,9 +522,9 @@ $(document).ready(function () {
                 `;
 
                 // Log or use checklistText as needed
-                console.log(checklistText); 
+                console.log(checklistText);
 
-                console.log(checklistText); 
+                console.log(checklistText);
 
                 var cid_contents_HTML =
                     `
@@ -797,127 +863,179 @@ $(document).ready(function () {
                 .then(response => response.text())
 
                 .then(headerContent => {
-                    var paymentHTML = '';
-                    var paymentCount = 1;
 
-                    payments_data.forEach(function (payment) {
-                        paymentHTML += `
-                        <div class="col mb-3">
-                            <div class="d-flex flex-column summary_of_payments mx-2">
-                                <span class="fw-bold">Payment #${paymentCount}: </span>
-                                <table class="table table-borderless">
-                                    <tbody>
-                                        <tr>
-                                            <td><span class="cid_bold">Service:</span></td>
-                                            <td>${payment.cs_service_name}</td>
-                                        </tr>
-                                        <tr>
-                                            <td><span class="cid_bold">Cost:</span></td>
-                                            <td>${payment.cid_sop_cost}</td>
-                                        </tr>
-                                        ${payment.cid_sop_discount > 0 ? `
-                                            <tr>
-                                                <td><span class="cid_bold">Discount:</span></td>
-                                                <td>${payment.cid_sop_discount}%</td>
-                                            </tr>
-                                            <tr>
-                                                <td><span class="cid_bold">Final Price:</span></td>
-                                                <td>${payment.cid_sop_discounted_price}</td>
-                                            </tr>
-                                        ` : ''}
-                                        ${payment.cid_sop_paid == 1 ? `
-                                            <tr>
-                                                <td><span class="cid_bold">MOP:</span></td>
-                                                <td>${payment.cid_sop_payment_method}</td>
-                                            </tr>
-                                            ${payment.cid_sop_payment_method != 'Cash' ? `
-                                                <tr>
-                                                    <td><span class="cid_bold">Ref#:</span></td>
-                                                    <td>${payment.cid_sop_ref_no ? payment.cid_sop_ref_no : 'N/A'}</td>
-                                                </tr>
-                                            ` : ''}
-                                        ` : ''}
-                                        <tr>
-                                            <td><span class="cid_bold">Paid?</span></td>
-                                            <td>${payment.cid_sop_paid == 1 ? 'Yes' : 'No'}</td>
-                                        </tr>
-                                        ${payment.cid_sop_warranty_start != null ? `
 
-                                            <tr>
-                                                <td><span class="cid_bold">Warranty:</span></td>
-                                                <td>${formatDate(payment.cid_sop_warranty_start)} to ${formatDate(payment.cid_sop_warranty_end)} | ${payment.cid_sop_warranty_duration} ${payment.cid_sop_warranty_unit}(s) ${payment.cid_sop_warranty_type} Warranty</td>
-                                            </tr>
-                                        ` : ''}
-                                    </tbody>
-                                </table>
-                            </div>
-                            </div>
-                        `;
-                        paymentCount++;
-                    });
-
-                    var components = [
-                        {name: 'Wifi', key: 'cs_cid_c_wifi'},
-                        {name: 'Keyboard (FN Keys)', key: 'cs_cid_c_keyboard'},
-                        {name: 'Temperature', key: 'cs_cid_c_temperature'},
-                        {name: 'Tracepad', key: 'cs_cid_c_tracepad'},
-                        {name: 'Bluetooth', key: 'cs_cid_c_bluetooth'},
-                        {name: 'Audio Jack', key: 'cs_cid_c_audiojack'},
-                        {name: 'Speaker', key: 'cs_cid_c_speaker'},
-                        {name: 'Camera', key: 'cs_cid_c_camera'},
-                        {name: 'LCD (Brightness)', key: 'cs_cid_c_lcd'},
-                        {name: 'Stress Test', key: 'cs_cid_c_stresstest'}
+                    var components = [{
+                            name: 'Wifi',
+                            key: 'cs_cid_c_wifi'
+                        },
+                        {
+                            name: 'Keyboard (FN Keys)',
+                            key: 'cs_cid_c_keyboard'
+                        },
+                        {
+                            name: 'Temperature',
+                            key: 'cs_cid_c_temperature'
+                        },
+                        {
+                            name: 'Tracepad',
+                            key: 'cs_cid_c_tracepad'
+                        },
+                        {
+                            name: 'Bluetooth',
+                            key: 'cs_cid_c_bluetooth'
+                        },
+                        {
+                            name: 'Audio Jack',
+                            key: 'cs_cid_c_audiojack'
+                        },
+                        {
+                            name: 'Speaker',
+                            key: 'cs_cid_c_speaker'
+                        },
+                        {
+                            name: 'Camera',
+                            key: 'cs_cid_c_camera'
+                        },
+                        {
+                            name: 'LCD (Brightness)',
+                            key: 'cs_cid_c_lcd'
+                        },
+                        {
+                            name: 'Stress Test',
+                            key: 'cs_cid_c_stresstest'
+                        }
                     ];
-                    
+
                     var checklistText = ''; // Variable to store checklist text
-                    
+
                     // Calculate the midpoint index
                     var midpointIndex = Math.ceil(components.length / 2);
-                    
+
                     // Update the checklistText generation to create HTML elements
                     var checklistText = `
-                    <div class="row">
-                        <div class="col">
-                    `;
-                    components.forEach(function(component, index) {
-                    var value = checklist_data ? parseInt(checklist_data[component.key]) : null;
-                    var status = '';
-    
-                    // Assign text representation based on value
-                    if (value !== null && value !== undefined) {
-                        if (value === 1) {
-                            status = 'Ok';
-                        } else if (value === 2) {
-                            status = 'Not Ok';
-                        } else {
-                            status = 'N/A';
-                        }
-                    } else {
-                        status = 'N/A';
-                    }
-    
-                    // Append HTML for the component
-                    checklistText += `
-                        <div>${component.name}: ${status}</div>
-                    `;
-                    // If it's the midpoint, close the first column and start the second column
-                    if (index === midpointIndex - 1) {
-                        checklistText += `
-                        </div>
-                        <div class="col">
+                        <div class="row">
+                            <div class="col">
                         `;
-                    }
+                    components.forEach(function (component, index) {
+                        var value = checklist_data ? parseInt(checklist_data[component.key]) : null;
+                        var status = '';
+
+                        // Assign text representation based on value
+                        if (value !== null && value !== undefined) {
+                            if (value === 1) {
+                                status = 'Ok';
+                            } else if (value === 2) {
+                                status = 'Not Ok';
+                            } else {
+                                // Skip components with status 3 or other values
+                                return;
+                            }
+                        } else {
+                            // Skip components with no value
+                            return;
+                        }
+
+                        // Append HTML for the component
+                        checklistText += `
+                                <div>${component.name}: ${status}</div>
+                            `;
+                        // If it's the midpoint, close the first column and start the second column
+                        if (index === midpointIndex - 1) {
+                            checklistText += `
+                                    </div>
+                                    <div class="col">
+                                    `;
+                        }
                     });
                     // Close the second column and the row
                     checklistText += `
+                            </div>
                         </div>
-                    </div>
-                    `;
-    
+                        `;
+
                     // Log or use checklistText as needed
-                    console.log(checklistText); 
-    
-                    console.log(checklistText); 
+
+                    console.log(cs_payment_data);
+
+
+                    var payment_number = 1;
+                    var paymentHTML = '';
+                    cs_payment_data.forEach(function (payment) {
+                        paymentHTML += `
+                <tr>
+                            <td>Payment #${payment_number}: ${payment.cs_p_note	}</td>
+                            <td>${payment.cs_p_amount}</td>
+                            <td>${payment.cs_mop_name}</td>
+                            <td>${payment.cs_p_reference}</td>
+                            <td>${payment.cs_p_ds}</td>
+                            <td>${payment.cs_p_or}</td>
+                            <td>${payment.formatted_paid_date}</td>
+                        </tr>
+                        `;
+                        payment_number++
+                    });
+
+                    var payment_table_HTML = `
+                     <div>
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Summary of Payments</th>
+                                <th>Amount</th>
+                                <th>MOP</th>
+                                <th>Ref #</th>
+                                <th>DS #</th>
+                                <th>OR #</th>
+                                <th>Date of Payment</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+        ${paymentHTML}
+                   
+                        </tbody>
+                    </table>
+                </div>
+                    `;
+
+                    console.log(payment_table_HTML);
+
+                    var serviceHTML = '';
+                    payments_data.forEach(function (service) {
+                        serviceHTML += `
+                        <tr>
+                            <td>${service.cs_service_name}</td>
+                            <td>${service.cid_sop_cost}</td>
+                            <td>${service.cid_sop_discount}</td>
+                            <td>${service.cid_sop_discounted_price}</td>
+                            <td>${service.cid_sop_warranty_start || ''}</td>
+                            <td>${service.cid_sop_warranty_end || ''}</td>
+                            <td>${service.cid_sop_warranty_type || ''}</td>
+                        </tr>
+                        `;
+                    });
+
+                    var service_table_HTML = `
+                     <div>
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Service/Product</th>
+                                <th>Cost</th>
+                                <th>Discount</th>
+                                <th>Discounted Price</th>
+                                <th>Warranty Start</th>
+                                <th>Warranty End</th>
+                                <th>Warranty Type</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        ${serviceHTML}
+                   
+                        </tbody>
+                    </table>
+                </div>
+                    `;
 
                     var cid_content =
                         `
@@ -929,7 +1047,7 @@ $(document).ready(function () {
                     <meta name="viewport" content="width=device-width, initial-scale=1.0">
                 
                     <!-- Header -->
-                    ${headerContent}
+                        ${headerContent}
                     <link rel="stylesheet" href="../../style.css">
                     <link rel="stylesheet" href="../CSS/cid_print.css">
                 
@@ -949,9 +1067,9 @@ $(document).ready(function () {
                                     <img src="../../Assets/Images/logo.png" class="logo" alt="" srcset="">
                                 </div>
                                 <div>
-                                    <p class="title">TechyDavid I.T Solutions</p>
-                                    <p>📌Daisy St. Plaridel 3 Subd. Bayan Luma 7 , Imus, Philippines</p>
-                                    <p>📱0968 855 5399 | 📱0961 149 4441 | ☎️046-424-5604 | 📩techydavid2020@techydavid.com</p>
+                                    <p class="title">${cms_data.cms_company_name}</p>
+                                    <p>📌${cms_data.cms_address}</p>
+                                    <p>${cms_data.cms_cp1 ? '📱'+ cms_data.cms_cp1 : ''} ${cms_data.cms_cp2 ? ' | 📱'+ cms_data.cms_cp2 : ''} ${cms_data.cms_cp3 ? ' | ☎️'+ cms_data.cms_cp3 : ''} | 📩${cms_data.cms_email}</p>
                                 </div>
                             </div>
                             <div>
@@ -1005,8 +1123,12 @@ $(document).ready(function () {
                                   
                                 </div>
                                 ${checklistText}
-                                ${cid_data[0].cid_sor_content ? '<ul><li>' + cid_data[0].cid_sor_content.split('\n').join('</li><li>') + '</li></ul>' : ''}
-                                <div>
+                                 <ul>
+                                <li>
+                                    ${cid_data[0].cid_sor_content ? cid_data[0].cid_sor_content : ''}
+                                </li>
+                            </ul>
+                               <div>
                                     <p class="summary_of_repairs_content"></p>
                                 </div>
                                 <div class="d-flex flex-row justify-content-between">
@@ -1022,20 +1144,33 @@ $(document).ready(function () {
                                 <p><span class="cid_print_text_bold">RECCOMENDATIONS: </span></p>
                                 <div>
                                     <p class="reccomendations_content">
-                                    ${cid_data[0].cid_r_content ? '<ul><li>' + cid_data[0].cid_r_content.split('\n').join('</li><li>') + '</li></ul>' : ''}
-                                </div>
+                                     <ul>
+                                <li>
+                                    ${cid_data[0].cid_r_content ? cid_data[0].cid_r_content : ''}
+                                </li>
+                            </ul>
+                                  </div>
                             </div>
                 
                             <div class="line"></div>
+
+                               <div>
+                            <div class="d-flex flex-row justify-content-between">
+                                <p><span class="cid_print_text_bold">Warranty Details: </span></p>
+                            </div>
+                            <div class="mt-1">
+                            ${service_table_HTML}
+
+                            </div>
+                        </div>
+             <div class="line"></div>
                 
                             <div>
                                 <div class="d-flex flex-row justify-content-between">
                                     <p><span class="cid_print_text_bold">SUMMARY OF PAYMENTS: </span></p>
-                                    <p><span class="cid_print_text_bold">CR: </span>${cid_data[0].cid_sop_cr ? cid_data[0].cid_sop_cr : ""}</p>
-                                    <p><span class="cid_print_text_bold">OR: </span>${cid_data[0].cid_sop_or ? cid_data[0].cid_sop_or : ""}</p>
-                                </div>
-                                <div class="d-flex flex-row justify-content-around mt-1">
-                                    ${paymentHTML}
+                   </div>
+                                <div class="mt-1">
+                                    ${payment_table_HTML}
 
                                 </div>
                             </div>
@@ -1043,29 +1178,7 @@ $(document).ready(function () {
                             <div class="cid_footer">
                                 <div>
                                     <div class="line"></div>
-                                    <p class="cid_print_text_small">I hereby acknowledge that I have received and throughly reviewed
-                                        the
-                                        diagnostic summary provided by the
-                                        TECHYDAVID I.T SOLUTIONS .1. The
-                                        diagnostic summary outlines the findings ,recommendations , and necessary repairs for the
-                                        units
-                                        or
-                                        items
-                                        in questions. I have the opportunity to
-                                        discuss and clarify the questions. I understand that any actions or decisions made regarding
-                                        the
-                                        repairs
-                                        and recommendations mentioned in the
-                                        diagnostic summary are my sole responsibility.4.TECHYDAVID I.T SOLUTIONS is not liable to
-                                        any
-                                        consequences ,damages, or losses that may arise
-                                        from my decisions or actions taken based on the diagnostic summary or representatives
-                                        explanations.
-                                        Furthermore, I confirm that I have recieved
-                                        all the items mentioned in our agreement and find them to be complete and in satisfactory
-                                        conditions. By
-                                        signing below, I acknowledge that I have
-                                        read, understood and agree terms outlined in the disclaimer.</p>
+                                    <p class="cid_print_text_small">${cms_data.cms_acknowledgement}</p>
                                     <br>
                                 </div>
                                 <div class="d-flex flex-row">
@@ -1096,15 +1209,8 @@ $(document).ready(function () {
                                         <input type="text" id="released_thru" name="released_thru"><br>
                                     </div>
                                 </div>
-                                <div class="cid_print_text_small text_red mt-3">Confidentiality, Copyright and other Intellectual property rights.
-                                </div>
                                 <div class="cid_print_text_small">
-                                    The information contained herein is confidential and proprietary to TECHYDAVID I.T SOLUTIONS.It may
-                                    not be disclosed or transferred, directly or indirectly, to any third party without the explicit
-                                    written permission of TECHYDAVID I.T SOLUTIONS. All rights reserved. No part of this document may be
-                                    reproduced, stored in a retrieval system, translated, or transmitted in any form or by any means,
-                                    electronic, mechanical, photocopying, recording, or otherwise, without prior written permission of
-                                    TECHYDAVID I.T SOLUTIONS.
+                                ${cms_data.cms_disclaimer}
                                 </div>
                             </div>
                         </div>

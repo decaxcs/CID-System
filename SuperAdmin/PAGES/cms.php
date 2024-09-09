@@ -63,6 +63,12 @@
                     <p class="mt-2">Cellphone #3:</p>
                     <input type="text" name="cellphone3" value="${cms_data.cms_cp3}" class="form-control cp3" id="cellphone3">
 
+                    <p class="mt-2">Acknowledgement:</p>
+                    <textarea name="acknowledgement"  class="form-control acknowledgement" id="acknowledgement" cols="30" rows="3">${cms_data.cms_acknowledgement}</textarea>
+
+                    <p class="mt-2">Disclaimer:</p>
+                    <textarea name="disclaimer"  class="form-control disclaimer" id="disclaimer" cols="30" rows="3">${cms_data.cms_disclaimer}</textarea>
+
                     <button class="btn btn-primary mt-3" id="save_cms">Save</button>
                 </div>
                 `;

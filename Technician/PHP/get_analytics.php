@@ -15,9 +15,7 @@ if ($type === "") {
     $response = array("status" => "error", "message" => "Type parameter is missing");
     echo json_encode($response);
     exit();
-}
-
-else if ($type === "cids" || $type === "delete_cid") {
+} else if ($type === "cids" || $type === "delete_cid") {
     $query = "SELECT
                     i.*,
                     cd.cs_device_name,
@@ -57,13 +55,11 @@ else if ($type === "cids" || $type === "delete_cid") {
             $data['cids'][] = $row;
         }
     }
-    $stmt->close(); 
-}
-
-else if ($type === "analytics") {
+    $stmt->close();
+} else if ($type === "analytics") {
     $start_date = isset($_GET['start_date']) ? $_GET['start_date'] : null;
     $end_date = isset($_GET['end_date']) ? $_GET['end_date'] : null;
-  
+
     $queries = array(
         "unique_cid_numbers" => "SELECT COUNT(DISTINCT i.cid_number) AS unique_cid_numbers 
                                 FROM cs_cid_information i
@@ -78,19 +74,6 @@ else if ($type === "analytics") {
                                  (? IS NULL OR i.cid_created >= ?) AND 
                                  (? IS NULL OR i.cid_created <= ?) 
                            GROUP BY i.cid_status",
-        "service_counts" => "SELECT s.cs_service_id, s.cs_service_name, COUNT(DISTINCT p.cid_number) AS num_cid_numbers,
-                            SUM(CASE WHEN p.cid_sop_paid = 1 THEN p.cid_sop_discounted_price ELSE 0 END) AS total_paid_amount,
-                            SUM(CASE WHEN p.cid_sop_paid = 0 THEN p.cid_sop_discounted_price ELSE 0 END) AS total_unpaid_amount,
-                            SUM(p.cid_sop_discounted_price) AS total_amount
-                            FROM cs_services s
-                            LEFT JOIN cid_summary_of_payments p ON s.cs_service_id = p.cid_service_id
-                            LEFT JOIN cs_cid_information i ON p.cid_number = i.cid_number
-                            LEFT JOIN cs_cid_technicians cct ON cct.cid_number = i.cid_number
-                            WHERE s.isDeleted = 0 AND i.isDeleted = 0 AND cct.cid_technician_id = ? AND
-                                  (? IS NULL OR i.cid_created >= ?) AND 
-                                  (? IS NULL OR i.cid_created <= ?)
-                            GROUP BY s.cs_service_id, s.cs_service_name
-                            ORDER BY num_cid_numbers DESC",
         "device_counts" => "SELECT d.cs_device_id, d.cs_device_name, COUNT(DISTINCT i.cid_number) AS num_cid_numbers
                             FROM cs_devices d
                             LEFT JOIN cs_cid_information i ON d.cs_device_id = i.cid_device_id
@@ -100,6 +83,7 @@ else if ($type === "analytics") {
                                   (? IS NULL OR i.cid_created <= ?)
                             GROUP BY d.cs_device_id, d.cs_device_name
                             ORDER BY num_cid_numbers DESC",
+
         "source_counts" => "SELECT i.cid_advertisement, COUNT(i.cid_number) AS source_count 
                            FROM cs_cid_information i
                            LEFT JOIN cs_cid_technicians cct ON cct.cid_number = i.cid_number
@@ -107,6 +91,15 @@ else if ($type === "analytics") {
                                  (? IS NULL OR i.cid_created >= ?) AND 
                                  (? IS NULL OR i.cid_created <= ?)
                            GROUP BY i.cid_advertisement",
+
+        "service_counts" => "SELECT s.cs_service_id, s.cs_service_name, COUNT(DISTINCT p.cid_number) AS num_cid_numbers
+                             FROM cs_services s
+                             LEFT JOIN cid_summary_of_payments p ON s.cs_service_id = p.cid_service_id
+                             LEFT JOIN cs_cid_information i ON p.cid_number = i.cid_number
+                             LEFT JOIN cs_cid_technicians cct ON cct.cid_number = i.cid_number
+                             WHERE s.isDeleted = 0 AND i.isDeleted = 0 AND cct.cid_technician_id = ? AND (? IS NULL OR i.cid_created >= ?) AND (? IS NULL OR i.cid_created <= ?)
+                             GROUP BY s.cs_service_id, s.cs_service_name
+                             ORDER BY num_cid_numbers DESC"
     );
 
     foreach ($queries as $key => $query) {
@@ -127,7 +120,7 @@ else if ($type === "analytics") {
             exit();
         }
 
-        $data[$key] = array();  
+        $data[$key] = array();
         if ($result->num_rows > 0) {
             while ($row = $result->fetch_assoc()) {
                 if ($key === "status_counts") {
@@ -139,9 +132,7 @@ else if ($type === "analytics") {
         }
         $stmt->close();
     }
-}
-
-else {
+} else {
     $response = array("status" => "error", "message" => "Invalid type");
     echo json_encode($response);
     exit();
@@ -151,4 +142,3 @@ $response = array("status" => "success", "data" => $data);
 echo json_encode($response);
 
 $conn->close();
-?>

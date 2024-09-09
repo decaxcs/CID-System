@@ -45,38 +45,86 @@
     <script src="../JS/get_data.js"></script>
 
     <script>
-    $(document).ready(function() {
-        get_data('logs');
-    });
+        $(document).ready(function() {
+            get_data('logs');
+        });
 
-    function populate_logs(logs) {
-        console.log(logs);
+        function populate_logs(logs) {
+            console.log(logs);
 
-        let logs_container = $('#logs_container');
-        logs_container.empty();
+            let logs_container = $('#logs_container');
+            logs_container.empty();
 
-        const tableNameTextMapping = [{
-                value: 'cs_users',
-                text: 'Users'
-            },
-            {
-                value: 'cs_cid_information',
-                text: 'CID Information'
-            },
-        ];
+            const tableNameTextMapping = [{
+                    value: 'cs_users',
+                    text: 'Users'
+                },
+                {
+                    value: 'cs_cid_information',
+                    text: 'CID Information'
+                }, {
+                    value: 'cid_claiming_slip',
+                    text: 'Claiming Slip'
+                }, {
+                    value: 'cid_recommendations',
+                    text: 'Recommendations'
+                }, {
+                    value: 'cid_summary_of_payments',
+                    text: 'Services/Payments'
+                }, {
+                    value: 'cid_summary_of_repairs',
+                    text: 'Summary of Repairs'
+                }, {
+                    value: 'cs_cid_checklist',
+                    text: 'Checklist'
+                }, {
+                    value: 'cs_cid_services',
+                    text: 'Services'
+                }, {
+                    value: 'cs_cid_technicians',
+                    text: 'Technicians'
+                }, {
+                    value: 'cs_cid_terms_of_service',
+                    text: 'Terms of Service'
+                }, {
+                    value: 'cs_cms',
+                    text: 'Content Management'
+                }, {
+                    value: 'cs_devices',
+                    text: 'Devices'
+                }, {
+                    value: 'cs_mop',
+                    text: 'Mode of Payment'
+                }, {
+                    value: 'cs_payment',
+                    text: 'Summary of Payments'
+                }, {
+                    value: 'cs_services',
+                    text: 'Services'
+                }, {
+                    value: 'cs_settings',
+                    text: 'Settings'
+                }, {
+                    value: 'cs_sources',
+                    text: 'Sources'
+                }, {
+                    value: 'cs_terms_of_service',
+                    text: 'Terms of Service'
+                },
+            ];
 
 
-        logs.forEach(function(log) {
+            logs.forEach(function(log) {
 
-            let tableNameText = '';
+                let tableNameText = '';
 
-            if (log.table_name) {
-                const foundMapping = tableNameTextMapping.find(mapping => mapping.value === log.table_name);
-                tableNameText = foundMapping ? foundMapping.text :
-                    '';
-            }
+                if (log.table_name) {
+                    const foundMapping = tableNameTextMapping.find(mapping => mapping.value === log.table_name);
+                    tableNameText = foundMapping ? foundMapping.text :
+                        '';
+                }
 
-            let logs_HTML = `
+                let logs_HTML = `
                     <tr>
                         <td>${log.log_id}</td>
                         <td>${log.csu_name}</td>
@@ -87,15 +135,15 @@
                     </tr>
                 `;
 
-            logs_container.append(logs_HTML);
-        });
+                logs_container.append(logs_HTML);
+            });
 
-        var table = $('#logs_table').DataTable({
-            order: [
-                [0, 'desc']
-            ]
-        });
-    }
+            var table = $('#logs_table').DataTable({
+                order: [
+                    [0, 'desc']
+                ]
+            });
+        }
     </script>
 
 

@@ -24,7 +24,7 @@
         <?php include "super_admin_header.php"; ?>
 
         <div class="container">
-            <p class="page_title mb-2">CIDs</p>
+            <p class="page_title mb-2">On-going Warranty CIDs</p>
             <div id="cids_container" class="card">
 
             </div>
@@ -76,7 +76,7 @@
 
     <script>
         $(document).ready(function() {
-            get_data('cids', '', '', '', '', '');
+            get_data('cids', '', '', '', '', 'On-going Warranty');
         });
     </script>
 

@@ -331,22 +331,14 @@ else if ($type === "update_settings") {
     $cp2 = $_POST["cp2"];
     $cp3 = $_POST["cp3"];
     $company_name = $_POST["company_name"];
+    $acknowledgement = $_POST["acknowledgement"];
+    $disclaimer = $_POST["disclaimer"];
 
-    // Check if the logo is set
-    if (isset($_POST["logo"])) {
-        $logo = $_POST["logo"];
-        $updateQuery = "UPDATE cs_cms 
-                        SET cms_email = ?, cms_address = ?, cms_cp1 = ?, cms_cp2 = ?, cms_cp3 = ?, cms_company_name = ?
-                        WHERE cms_id = 1";
-        $stmt = $conn->prepare($updateQuery);
-        $stmt->bind_param("ssssss", $email, $address, $cp1, $cp2, $cp3, $company_name);
-    } else {
-        $updateQuery = "UPDATE cs_cms 
-                        SET cms_email = ?, cms_address = ?, cms_cp1 = ?, cms_cp2 = ?, cms_cp3 = ?, cms_company_name = ?
-                        WHERE cms_id = 1";
-        $stmt = $conn->prepare($updateQuery);
-        $stmt->bind_param("ssssss", $email, $address, $cp1, $cp2, $cp3, $company_name);
-    }
+    $updateQuery = "UPDATE cs_cms 
+                    SET cms_email = ?, cms_address = ?, cms_cp1 = ?, cms_cp2 = ?, cms_cp3 = ?, cms_company_name = ?, cms_acknowledgement = ?, cms_disclaimer = ?
+                    WHERE cms_id = 1";
+    $stmt = $conn->prepare($updateQuery);
+    $stmt->bind_param("ssssssss", $email, $address, $cp1, $cp2, $cp3, $company_name, $acknowledgement, $disclaimer);
 
     if ($stmt->execute()) {
         $response['status'] = 'success';
@@ -354,6 +346,92 @@ else if ($type === "update_settings") {
     } else {
         $response['status'] = 'error';
         $response['message'] = 'Failed to update data.';
+    }
+} else if ($type === "save_vat" || $type === "add_payment" || $type === "update_payment" || $type === "delete_payment") {
+
+    if ($type === "save_vat") {
+        $vat = $_POST["vat"];
+        $vat_name = $_POST["vat_name"];
+
+
+        $updateQuery = "UPDATE cs_settings 
+                    SET cs_settings_value = ?, cs_settings_unit = ?
+                    WHERE cs_settings_id  = 2";
+        $stmt = $conn->prepare($updateQuery);
+        $stmt->bind_param("is", $vat, $vat_name);
+
+        if ($stmt->execute()) {
+            $response['status'] = 'success';
+            $response['message'] = 'Vat successfully updated.';
+        } else {
+            $response['status'] = 'error';
+            $response['message'] = 'Failed to update Vat.';
+        }
+    } else if ($type === "add_payment") {
+        $new_payment = $_POST["new_payment"];
+        $new_cf = $_POST["new_cf"];
+
+
+        $insertQuery = "INSERT INTO cs_mop 
+                            (cs_mop_name, cs_mop_fee)
+                            VALUES (?, ?)";
+        $stmt = $conn->prepare($insertQuery);
+        $stmt->bind_param("si", $new_payment, $new_cf);
+
+        if ($stmt->execute()) {
+            $response['status'] = 'success';
+            $response['message'] = 'MOP successfully added.';
+        } else {
+            $response['status'] = 'error';
+            $response['message'] = 'Failed to add MOP.';
+        }
+    } else if ($type === "update_payment") {
+        $cs_mop_id = $_POST["cs_mop_id"];
+        $cs_mop_name = $_POST["cs_mop_name"];
+        $cs_mop_fee = $_POST["cs_mop_fee"];
+
+        $updateQuery = "UPDATE cs_mop
+                        SET cs_mop_name = ?, cs_mop_fee = ?
+                        WHERE cs_mop_id = ?";
+        $stmt = $conn->prepare($updateQuery);
+        $stmt->bind_param("sii", $cs_mop_name, $cs_mop_fee, $cs_mop_id);
+
+        if ($stmt->execute()) {
+            $response['status'] = 'success';
+            $response['message'] = 'MOP successfully updated.';
+        } else {
+            $response['status'] = 'error';
+            $response['message'] = 'Failed to update MOP.';
+        }
+    } else if ($type === "delete_payment") {
+        $cs_mop_id = $_POST["cs_mop_id"];
+
+
+        $softDeleteQuery = "UPDATE cs_mop SET isDeleted = 1 WHERE cs_mop_id = ?";
+        $stmt = $conn->prepare($softDeleteQuery);
+        $stmt->bind_param("i", $cs_mop_id);
+
+        if ($stmt->execute()) {
+            $response['status'] = 'success';
+            $response['message'] = 'MOP successfully deleted.';
+        } else {
+            $response['status'] = 'error';
+            $response['message'] = 'Failed to delete MOP.';
+        }
+    }
+} else if ($type === "payment_delete") {
+    $cs_p_id = $_POST["cs_p_id"];
+
+    $softDeleteQuery = "DELETE FROM cs_payment WHERE cs_p_id = ?";
+    $stmt = $conn->prepare($softDeleteQuery);
+    $stmt->bind_param("i", $cs_p_id);
+
+    if ($stmt->execute()) {
+        $response['status'] = 'success';
+        $response['message'] = 'Payment successfully deleted.';
+    } else {
+        $response['status'] = 'error';
+        $response['message'] = 'Failed to delete payment.';
     }
 } else {
     $response = array("status" => "error", "message" => "Invalid type");

@@ -8,7 +8,7 @@
 
     <!-- Header -->
     <?php include "../../header.php"; ?>
-    
+
     <!-- CSS -->
     <link rel="stylesheet" href="../../style.css">
     <link rel="stylesheet" href="../CSS/super_admin.css">
@@ -39,10 +39,10 @@
     <script src="../JS/get_data.js"></script>
 
     <script>
-        $(document).ready(function () {
-            get_data('analytics');
-            get_data('cids');
-        });
+    $(document).ready(function() {
+        get_data('analytics');
+        get_data('cids', '', '', '', '', '');
+    });
     </script>
 
 

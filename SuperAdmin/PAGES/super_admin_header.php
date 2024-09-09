@@ -5,6 +5,7 @@
         <a class="nav_item ms-2" href="cids.php">CIDs</a>
         <a class="nav_item ms-2" href="accounts.php">Accounts</a>
         <a class="nav_item ms-2" href="file_management.php">File Management</a>
+        <a class="nav_item ms-2" href="payments.php">Payments</a>
         <a class="nav_item ms-2" href="cms.php">CMS</a>
         <a class="nav_item ms-2" href="tos.php">ToS</a>
         <a class="nav_item ms-2" href="analytics.php">Analytics</a>

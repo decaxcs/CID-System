@@ -1,16 +1,19 @@
 $(document).ready(function () {
     var tableType = $('#cids_table').data('type');
-    new DataTable('#cids_table');
-    get_cids(tableType);
+    var tableStatus = $('#cids_table').data('status');
+    // new DataTable('#cids_table');
+
+    get_cids(tableType, tableStatus);
 });
 
-function get_cids(type) {
+function get_cids(type, tableStatus) {
     $.ajax({
         url: "../PHP/get_cids.php",
         method: "GET",
         dataType: "json",
         data: {
-            type: type
+            type: type,
+            tableStatus: tableStatus
         },
         success: function (data) {
             populate_cids_table(data);
@@ -23,7 +26,9 @@ function get_cids(type) {
 }
 
 function populate_cids_table(data) {
-    var table = $('#cids_table').DataTable();
+    var table = $('#cids_table').DataTable({
+        "order": []
+    });
     table.clear().draw();
 
     if (data && data.cids_data) {
@@ -41,11 +46,11 @@ function populate_cids_table(data) {
     }
 }
 
-$('#cids_table[data-type="claimed"] tbody, #cids_table[data-type="recent-claimed"] tbody').on('click', 'tr', function () {
+$('#cids_table tbody').on('click', 'tr', function () {
     var rowData = $(this).closest('table').DataTable().row(this).data();
     var cid_number = rowData[0];
 
     sessionStorage.setItem('cid_number', cid_number);
-    
+
     window.location.href = 'cidsedit.php';
 });
